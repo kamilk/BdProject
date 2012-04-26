@@ -1,0 +1,47 @@
+﻿<Window x:Class="BdGui2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:view="clr-namespace:BdGui2.View"
+        xmlns:viewModel="clr-namespace:BdGui2.ViewModel"
+        Title="MainWindow" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}" Height="700" Width="700
+        " Loaded="Window_Loaded">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:ChooseInstitiutionAndPublisherPageViewModel}">
+            <view:ChooseInstitiutionView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ChooseResearchJournalPageViewModel}">
+            <view:ChooseResearchJournalView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ChooseIssuePageViewModel}">
+            <view:ChooseIssueView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:AddArticlePageViewModel}">
+            <view:AddArticleView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ChoosePublisherForReferencePageViewModel}">
+            <view:ChoosePublisherForFootnoteView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:AddArticleWithoutReferencesViewModel}">
+            <view:AddArticleWithoutReferencesView/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid Name="grid1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="165" />
+            <ColumnDefinition Width="437*" />
+        </Grid.ColumnDefinitions>
+        <view:SelectedContextView Margin="12,7,0,0" x:Name="selectedContextView1" />
+        <Button Content="Dalej" Height="23" HorizontalAlignment="Right" Margin="0,0,12,12" Name="button1" VerticalAlignment="Bottom" Width="75" Grid.Column="1" Click="button1_Click" IsEnabled="{Binding Path=PageManager.CanNavigateForward}" />
+        <Button Content="Wstecz" Height="23" HorizontalAlignment="Right" Margin="0,0,93,12" Name="button2" VerticalAlignment="Bottom" Width="75" Grid.Column="1" Click="button2_Click" IsEnabled="{Binding Path=PageManager.CanNavigateBackward}" />
+        <ContentControl
+            Margin="6,48,12,41"
+            Content="{Binding Path=PageManager.CurrentPage}"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch" Grid.Column="1" IsTabStop="False">
+        </ContentControl>
+        <Label Content="{Binding Path=PageManager.CurrentPage.Title}"  Grid.Column="1" Margin="6,7,12,0" Name="label1" VerticalAlignment="Top" FontSize="17" Height="35" />
+    </Grid>
+</Window>

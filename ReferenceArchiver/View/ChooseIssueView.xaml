@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="BdGui2.View.ChooseIssueView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="343" d:DesignWidth="458">
+    <Grid>
+        <GroupBox Header="Nr zeszytu" Height="98" HorizontalAlignment="Left" Name="groupBox1" VerticalAlignment="Top" Width="339">
+            <Grid>
+                <TextBox Height="23" Margin="126,8,6,0" Name="textBox1" VerticalAlignment="Top" />
+                <Label Content="Nr w wydawnictwie:" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label1" VerticalAlignment="Top" />
+                <Label Content="Nr w serii:" Height="28" HorizontalAlignment="Left" Margin="58,40,0,0" Name="label2" VerticalAlignment="Top" />
+                <TextBox Height="23" Margin="126,42,6,0" Name="textBox2" VerticalAlignment="Top" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Dane zeszytu" Height="189" HorizontalAlignment="Left" Margin="0,104,0,0" Name="groupBox2" VerticalAlignment="Top" Width="339">
+            <Grid>
+                <Label Content="Rok wydania:" Height="28" HorizontalAlignment="Left" Margin="6,35,0,0" Name="label3" VerticalAlignment="Top" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="92,37,0,0" Name="textBox3" VerticalAlignment="Top" Width="120" />
+                <Label Content="Tytuł:" Height="28" HorizontalAlignment="Left" Margin="47,69,0,0" Name="label4" VerticalAlignment="Top" />
+                <TextBox Height="23" Margin="92,71,6,0" Name="textBox4" VerticalAlignment="Top" />
+                <Label Content="Typ:" Height="28" HorizontalAlignment="Left" Margin="54,100,0,0" Name="label5" VerticalAlignment="Top" />
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="92,103,0,0" Name="comboBox1" VerticalAlignment="Top" Width="120" />
+                <Button Content="Wycofaj zmiany" Height="23" HorizontalAlignment="Left" Margin="92,6,0,0" Name="button3" VerticalAlignment="Top" Width="101" />
+                <Button Content="Edytuj zeszyt" Height="23" HorizontalAlignment="Left" Margin="11,6,0,0" Name="button1" VerticalAlignment="Top" Width="75" />
+                <Label Content="Nr typu:" Height="28" HorizontalAlignment="Left" Margin="33,129,0,0" Name="label6" VerticalAlignment="Top" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="92,134,0,0" Name="textBox5" VerticalAlignment="Top" Width="120" />
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>
