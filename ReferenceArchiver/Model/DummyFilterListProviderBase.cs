@@ -25,6 +25,20 @@ namespace ReferenceArchiver.Model
             }
         }
 
+        private T _selectedItem;
+        public T SelectedItem
+        {
+            get
+            {
+                return _selectedItem;
+            }
+            set
+            {
+                _selectedItem = value;
+                NotifyPropertyChanged("SelectedItem");
+            }
+        }
+
         public void Filter(string input)
         {
             _filterCriterion = input;

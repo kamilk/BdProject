@@ -13,7 +13,7 @@
             <Grid>
                 <TextBox Height="23" Margin="6,6,87,0" Name="institutionNameTextBox" VerticalAlignment="Top" TextChanged="institutionNameTextBox_TextChanged" />
                 <Button Content="Dodaj nową" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="button1" VerticalAlignment="Top" Width="75" />
-                <ListBox Margin="6,35" Name="institutionsListBox" ItemsSource="{Binding Path=Institutions.Items}" />
+                <ListBox Margin="6,35" Name="institutionsListBox" ItemsSource="{Binding Path=Institutions.Items}" SelectedItem="{Binding Path=Institutions.SelectedItem, Mode=TwoWay}" />
                 <Button Content="Otwórz okno zarządzania instytucjami" Height="23" HorizontalAlignment="Left" Margin="6,0,0,6" Name="button2" VerticalAlignment="Bottom" Width="248" />
             </Grid>
         </GroupBox>
@@ -21,7 +21,7 @@
             <Grid>
                 <TextBox Height="23" Margin="6,6,87,0" Name="publisherNameTextBox" VerticalAlignment="Top" TextChanged="publisherNameTextBox_TextChanged" />
                 <Button Content="Dodaj nowe" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="button3" VerticalAlignment="Top" Width="75" />
-                <ListBox Margin="6,35" Name="publisherListBox" ItemsSource="{Binding Path=Publishers.Items}" />
+                <ListBox Margin="6,35" Name="publisherListBox" ItemsSource="{Binding Path=Publishers.Items}" SelectedItem="{Binding Path=Publishers.SelectedItem, Mode=TwoWay}" />
                 <Button Content="Otwórz okno zarządzania wydawnictwami" Height="23" HorizontalAlignment="Left" Margin="6,0,0,6" Name="button4" VerticalAlignment="Bottom" Width="248" />
             </Grid>
         </GroupBox>

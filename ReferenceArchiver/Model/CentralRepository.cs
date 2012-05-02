@@ -9,7 +9,7 @@ namespace ReferenceArchiver.Model
     {
         public abstract IEnumerable<Institution> GetInstitutions();
         public abstract IEnumerable<Publisher> GetPublishers();
-        public abstract IEnumerable<Publisher> GetPublishersAssignedToInstitution();
+        public abstract IEnumerable<Publisher> GetPublishersAssignedToInstitution(Institution institution);
 
         private static CentralRepository _instance;
         public static CentralRepository Instance
