@@ -39,5 +39,13 @@ namespace ReferenceArchiver.View
 
             dataContext.Institutions.Filter(institutionNameTextBox.Text);
         }
+
+        private void publisherNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (dataContext == null)
+                return;
+
+            dataContext.Publishers.Filter(publisherNameTextBox.Text);
+        }
     }
 }

@@ -8,5 +8,18 @@ namespace ReferenceArchiver.Model
     class Publisher
     {
         public string Title { get; set; }
+
+        public Publisher()
+        { }
+
+        public Publisher(string title)
+        {
+            this.Title = title;
+        }
+
+        public override string ToString()
+        {
+            return Title;
+        }
     }
 }

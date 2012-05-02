@@ -13,17 +13,31 @@ namespace ReferenceArchiver.ViewModel
             get { return "Wybierz instytucję i wydawnictwo"; }
         }
 
-        private IFilteredListProvider<Institution> _Institutions;
+        private IFilteredListProvider<Institution> _institutions;
         public IFilteredListProvider<Institution> Institutions
         {
             get
             {
-                return _Institutions;
+                return _institutions;
             }
             set
             {
-                _Institutions = value;
+                _institutions = value;
                 NotifyPropertyChanged("Institutions");
+            }
+        }
+
+        private IFilteredListProvider<Publisher> _publishers;
+        public IFilteredListProvider<Publisher> Publishers
+        {
+            get
+            {
+                return _publishers;
+            }
+            set
+            {
+                _publishers = value;
+                NotifyPropertyChanged("Publishers");
             }
         }
 

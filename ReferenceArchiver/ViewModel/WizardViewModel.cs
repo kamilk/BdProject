@@ -68,6 +68,7 @@ namespace ReferenceArchiver.ViewModel
             _referencePageManager.BeginningReached += new EventHandler(_referencePageManager_BeginningReached);
 
             _institutionView.Institutions = new DummyInstitutionProvider();
+            _institutionView.Publishers = new DummyPublisherListProvider();
         }
 
         void _referencePageManager_BeginningReached(object sender, EventArgs e)
