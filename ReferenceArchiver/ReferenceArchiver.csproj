@@ -63,16 +63,12 @@
     <Compile Include="Model\Author.cs" />
     <Compile Include="Model\Authorship.cs" />
     <Compile Include="Model\DummyCentralRepository.cs" />
-    <Compile Include="Model\DummyInstitutionListProvider.cs" />
-    <Compile Include="Model\DummyPublisherListProvider.cs" />
     <Compile Include="Model\CentralRepository.cs" />
-    <Compile Include="Model\IFilteredListProvider.cs" />
     <Compile Include="Model\Institution.cs" />
     <Compile Include="Model\Issue.cs" />
     <Compile Include="Model\Publisher.cs" />
     <Compile Include="Model\Reference.cs" />
     <Compile Include="Model\ResearchJournal.cs" />
-    <Compile Include="Model\DummyFilterListProviderBase.cs" />
     <Compile Include="ViewModel\AddArticlePageViewModel.cs" />
     <Compile Include="ViewModel\AddArticleWithoutReferencesViewModel.cs" />
     <Compile Include="ViewModel\ChooseExternalPublisherViewModel.cs" />

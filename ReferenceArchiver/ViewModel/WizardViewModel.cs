@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
-using ReferenceArchiver.Model;
 
 namespace ReferenceArchiver.ViewModel
 {
@@ -66,9 +62,6 @@ namespace ReferenceArchiver.ViewModel
 
             _referencePageManager.CanNavigateBeyondBeginning = true;
             _referencePageManager.BeginningReached += new EventHandler(_referencePageManager_BeginningReached);
-
-            _institutionView.Institutions = new DummyInstitutionListProvider();
-            _institutionView.Publishers = new DummyPublisherListProvider();
         }
 
         void _referencePageManager_BeginningReached(object sender, EventArgs e)

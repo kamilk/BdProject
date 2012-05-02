@@ -37,7 +37,7 @@ namespace ReferenceArchiver.View
             if (dataContext == null)
                 return;
 
-            dataContext.Institutions.Filter(institutionNameTextBox.Text);
+            //dataContext.Institutions.Filter(institutionNameTextBox.Text);
         }
 
         private void publisherNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -45,7 +45,7 @@ namespace ReferenceArchiver.View
             if (dataContext == null)
                 return;
 
-            dataContext.Publishers.Filter(publisherNameTextBox.Text);
+            //dataContext.Publishers.Filter(publisherNameTextBox.Text);
         }
     }
 }
