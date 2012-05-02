@@ -62,8 +62,10 @@
     <Compile Include="Model\Article.cs" />
     <Compile Include="Model\Author.cs" />
     <Compile Include="Model\Authorship.cs" />
-    <Compile Include="Model\DummyInstitutionProvider.cs" />
+    <Compile Include="Model\DummyCentralRepository.cs" />
+    <Compile Include="Model\DummyInstitutionListProvider.cs" />
     <Compile Include="Model\DummyPublisherListProvider.cs" />
+    <Compile Include="Model\CentralRepository.cs" />
     <Compile Include="Model\IFilteredListProvider.cs" />
     <Compile Include="Model\Institution.cs" />
     <Compile Include="Model\Issue.cs" />

@@ -7,17 +7,9 @@ namespace ReferenceArchiver.Model
 {
     class DummyPublisherListProvider : DummyFilterListProviderBase<Publisher>
     {
-        IList<Publisher> _publishers;
-
         public DummyPublisherListProvider()
         {
-            _publishers = new List<Publisher>();
-            _publishers.Add(new Publisher("Wydawnictwo Politechniki Śląskiej"));
-            _publishers.Add(new Publisher("Wydawnictwo Politechniki Wrocławskiej"));
-            _publishers.Add(new Publisher("Wydawnictwo Politechniki Warszawskiej"));
-            _publishers.Add(new Publisher("Wydawnictwo Uniwersytetu Warszawskiego"));
-            _publishers.Add(new Publisher("Wydawnictwo AGH"));
-            SetBaseForFilter(_publishers);
+            SetBaseForFilter(CentralRepository.Instance.GetPublishers());
         }
 
         public override void AddNew(Publisher newItem)

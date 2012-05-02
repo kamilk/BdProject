@@ -11,8 +11,8 @@ namespace ReferenceArchiver.Model
         private List<T> _allItems = new List<T>();
         private string _filterCriterion;
 
-        private ICollection<T> _items = new List<T>();
-        public ICollection<T> Items
+        private IEnumerable<T> _items = new List<T>();
+        public IEnumerable<T> Items
         {
             get
             {
@@ -52,7 +52,7 @@ namespace ReferenceArchiver.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected void SetBaseForFilter(ICollection<T> allItems)
+        protected void SetBaseForFilter(IEnumerable<T> allItems)
         {
             _allItems = new List<T>(allItems);
             Filter(_filterCriterion);
