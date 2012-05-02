@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 
-namespace BdGui2
+namespace ReferenceArchiver
 {
     /// <summary>
     /// Interaction logic for App.xaml

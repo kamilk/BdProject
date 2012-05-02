@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace BdGui2.Model
+namespace ReferenceArchiver.Model
 {
     class DummyInstitutionProvider : IFilteredListProvider<Institution>
     {

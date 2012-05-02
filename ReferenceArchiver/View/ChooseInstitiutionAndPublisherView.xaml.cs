@@ -11,9 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BdGui2.ViewModel;
+using ReferenceArchiver.ViewModel;
 
-namespace BdGui2.View
+namespace ReferenceArchiver.View
 {
     /// <summary>
     /// Interaction logic for ChooseInstitiutionView.xaml

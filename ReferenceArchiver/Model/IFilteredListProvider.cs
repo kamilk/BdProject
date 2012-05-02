@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace BdGui2.Model
+namespace ReferenceArchiver.Model
 {
     interface IFilteredListProvider<T> : INotifyPropertyChanged
     {

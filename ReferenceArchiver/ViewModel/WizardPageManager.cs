@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 
-namespace BdGui2.ViewModel
+namespace ReferenceArchiver.ViewModel
 {
     class WizardPageManager : INotifyPropertyChanged
     {

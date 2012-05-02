@@ -8,7 +8,7 @@
     <ProjectGuid>{C043B636-CA33-45A3-A61D-6D9E3CD0CE65}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BdGui2</RootNamespace>
+    <RootNamespace>ReferenceArchiver</RootNamespace>
     <AssemblyName>BdGui2</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>

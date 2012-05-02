@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
-using BdGui2.Model;
+using ReferenceArchiver.Model;
 
-namespace BdGui2.ViewModel
+namespace ReferenceArchiver.ViewModel
 {
     class WizardViewModel : INotifyPropertyChanged
     {

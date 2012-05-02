@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BdGui2.View
+namespace ReferenceArchiver.View
 {
     /// <summary>
     /// Interaction logic for SelectedContextView.xaml

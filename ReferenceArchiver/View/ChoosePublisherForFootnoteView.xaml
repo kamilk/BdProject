@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="BdGui2.View.ChoosePublisherForFootnoteView"
+﻿<UserControl x:Class="ReferenceArchiver.View.ChoosePublisherForFootnoteView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:view="clr-namespace:BdGui2.View"
-             xmlns:viewModel="clr-namespace:BdGui2.ViewModel"
+             xmlns:view="clr-namespace:ReferenceArchiver.View"
+             xmlns:viewModel="clr-namespace:ReferenceArchiver.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded">
     <UserControl.Resources>
