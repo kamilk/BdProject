@@ -66,6 +66,8 @@ namespace BdGui2.ViewModel
 
             _referencePageManager.CanNavigateBeyondBeginning = true;
             _referencePageManager.BeginningReached += new EventHandler(_referencePageManager_BeginningReached);
+
+            _institutionView.Institutions = new DummyInstitutionProvider();
         }
 
         void _referencePageManager_BeginningReached(object sender, EventArgs e)
