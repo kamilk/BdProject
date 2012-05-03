@@ -9,6 +9,8 @@ namespace ReferenceArchiver.ViewModel
 {
     class ChooseInstitiutionAndPublisherPageViewModel : WizardPageViewModelBase
     {
+        private bool _selectedInstitutionIsNull;
+
         public override string Title
         {
             get { return "Wybierz instytucję i wydawnictwo"; }
@@ -107,29 +109,69 @@ namespace ReferenceArchiver.ViewModel
         {
             Institutions = new CollectionViewSource { Source = institutions }.View;
             Institutions.Filter = new Predicate<object>(FilterInstitutions);
+            _selectedInstitutionIsNull = true;
             Institutions.MoveCurrentTo(null);
             Institutions.CurrentChanged += new EventHandler(Institutions_CurrentChanged);
 
             Publishers = new CollectionViewSource { Source = publishers }.View;
             Publishers.Filter = new Predicate<object>(FilterPublishers);
+            Publishers.CurrentChanged += new EventHandler(Publishers_CurrentChanged);
+            Publishers.MoveCurrentTo(null);
 
             this.DeselectInstitution = new DelegateCommand(
-                (param) => 
+                (param) =>
                 {
+                    Publishers.MoveCurrentTo(null);
                     Institutions.MoveCurrentTo(null);
                     DeselectInstitution.RaiseCanExecuteChanged();
-                }, 
-                (param) => 
-                { 
-                    return Institutions.CurrentItem != null; 
+                },
+                (param) =>
+                {
+                    return Institutions.CurrentItem != null;
                 });
         }
 
         void Institutions_CurrentChanged(object sender, EventArgs e)
         {
-            Publishers.Refresh();
+            if (!(_selectedInstitutionIsNull && SelectedInstitution == null))
+                Publishers.Refresh();
+            _selectedInstitutionIsNull = SelectedInstitution == null;
+            if (!_selectedInstitutionIsNull)
+                Publishers.MoveCurrentToFirst();
             DeselectInstitution.RaiseCanExecuteChanged();
         }
+
+        void Publishers_CurrentChanged(object sender, EventArgs e)
+        {
+            var publisher = SelectedPublisher;
+            if (publisher == null)
+                return;
+
+            var institution = SelectedInstitution;
+            if (institution == null || institution.Id != publisher.InstitutionId)
+            {
+                if (Institutions.MoveCurrentToFirst())
+                {
+                    while (!Institutions.IsCurrentAfterLast)
+                    {
+                        if (SelectedInstitution.Id == publisher.InstitutionId)
+                            return;
+                        Institutions.MoveCurrentToNext();
+                    }
+                }
+                InstitutionFilteringString = "";
+                if (Institutions.MoveCurrentToFirst())
+                {
+                    while (!Institutions.IsCurrentAfterLast)
+                    {
+                        if (SelectedInstitution.Id == publisher.InstitutionId)
+                            return;
+                        Institutions.MoveCurrentToNext();
+                    }
+                }
+            }
+        }
+
 
         private bool FilterInstitutions(object obj)
         {
