@@ -71,6 +71,14 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
+        public Institution SelectedInstitution
+        {
+            get
+            {
+                return Institutions.CurrentItem as Institution;
+            }
+        }
+
         public ChooseInstitiutionAndPublisherPageViewModel(WizardViewModel parent, List<Institution> institutions, List<Publisher> publishers)
             : base(parent)
         {

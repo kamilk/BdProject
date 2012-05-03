@@ -57,20 +57,30 @@ namespace ReferenceArchiver.ViewModel
 
         public void NavigateForward()
         {
+            var oldPage = CurrentPage;
+
             if (currentPage < _pages.Count - 1)
                 CurrentPage = _pages[++currentPage];
             else if (EndReached != null)
                 EndReached(this, new EventArgs());
+
+            oldPage.OnNavigatedFromForward();
+            CurrentPage.OnNavigatedTo();
 
             NotfiyNavigateForwardBackwardMightHaveChanged();
         }
 
         public void NavigateBackward()
         {
+            var oldPage = CurrentPage;
+
             if (currentPage > 0)
                 CurrentPage = _pages[--currentPage];
             else if (BeginningReached != null)
                 BeginningReached(this, new EventArgs());
+
+            oldPage.OnNavigatedFromBackward();
+            CurrentPage.OnNavigatedTo();
 
             NotfiyNavigateForwardBackwardMightHaveChanged();
         }

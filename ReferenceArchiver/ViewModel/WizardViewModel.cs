@@ -37,6 +37,17 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
+        public Institution SelectedInstitution
+        {
+            get
+            {
+                if (_institutionView.IsDataLockedIn)
+                    return _institutionView.SelectedInstitution;
+                else
+                    return null;
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public WizardViewModel()
@@ -70,6 +81,8 @@ namespace ReferenceArchiver.ViewModel
 
             _referencePageManager.CanNavigateBeyondBeginning = true;
             _referencePageManager.BeginningReached += new EventHandler(_referencePageManager_BeginningReached);
+
+            _institutionView.DataLockedInChanged += new EventHandler(InstitutionView_DataLockedInChanged);
         }
 
         void _referencePageManager_BeginningReached(object sender, EventArgs e)
@@ -86,6 +99,11 @@ namespace ReferenceArchiver.ViewModel
         internal void NavigateToAddingReferenceArticle()
         {
             PageManager = _referencePageManager;
+        }
+
+        void InstitutionView_DataLockedInChanged(object sender, EventArgs e)
+        {
+            NotifyPropertyChanged("SelectedInstitution");
         }
     }
 }
