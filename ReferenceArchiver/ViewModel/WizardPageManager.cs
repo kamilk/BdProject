@@ -33,7 +33,7 @@ namespace ReferenceArchiver.ViewModel
         {
             get
             {
-                return CanNavigateBeyondEnd || currentPage < _pages.Count - 1;
+                return (CanNavigateBeyondEnd || currentPage < _pages.Count - 1) && CurrentPage.IsDataComplete;
             }
         }
 
@@ -82,6 +82,11 @@ namespace ReferenceArchiver.ViewModel
             oldPage.OnNavigatedFromBackward();
             CurrentPage.OnNavigatedTo();
 
+            NotfiyNavigateForwardBackwardMightHaveChanged();
+        }
+
+        public void RefreshCanNavigate()
+        {
             NotfiyNavigateForwardBackwardMightHaveChanged();
         }
 

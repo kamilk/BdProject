@@ -131,6 +131,14 @@ namespace ReferenceArchiver.ViewModel
                 });
         }
 
+        public override bool IsDataComplete
+        {
+            get
+            {
+                return SelectedInstitution != null && SelectedPublisher != null;
+            }
+        }
+
         void Institutions_CurrentChanged(object sender, EventArgs e)
         {
             if (!(_selectedInstitutionIsNull && SelectedInstitution == null))
@@ -139,6 +147,7 @@ namespace ReferenceArchiver.ViewModel
             if (!_selectedInstitutionIsNull)
                 Publishers.MoveCurrentToFirst();
             DeselectInstitution.RaiseCanExecuteChanged();
+            NotifyIsDataCompleteChanged();
         }
 
         void Publishers_CurrentChanged(object sender, EventArgs e)
@@ -150,24 +159,31 @@ namespace ReferenceArchiver.ViewModel
             var institution = SelectedInstitution;
             if (institution == null || institution.Id != publisher.InstitutionId)
             {
-                if (Institutions.MoveCurrentToFirst())
+                SelectInstitutionOwningPublisher(publisher);
+            }
+
+            NotifyIsDataCompleteChanged();
+        }
+
+        private void SelectInstitutionOwningPublisher(Publisher publisher)
+        {
+            if (Institutions.MoveCurrentToFirst())
+            {
+                while (!Institutions.IsCurrentAfterLast)
                 {
-                    while (!Institutions.IsCurrentAfterLast)
-                    {
-                        if (SelectedInstitution.Id == publisher.InstitutionId)
-                            return;
-                        Institutions.MoveCurrentToNext();
-                    }
+                    if (SelectedInstitution.Id == publisher.InstitutionId)
+                        return;
+                    Institutions.MoveCurrentToNext();
                 }
-                InstitutionFilteringString = "";
-                if (Institutions.MoveCurrentToFirst())
+            }
+            InstitutionFilteringString = "";
+            if (Institutions.MoveCurrentToFirst())
+            {
+                while (!Institutions.IsCurrentAfterLast)
                 {
-                    while (!Institutions.IsCurrentAfterLast)
-                    {
-                        if (SelectedInstitution.Id == publisher.InstitutionId)
-                            return;
-                        Institutions.MoveCurrentToNext();
-                    }
+                    if (SelectedInstitution.Id == publisher.InstitutionId)
+                        return;
+                    Institutions.MoveCurrentToNext();
                 }
             }
         }

@@ -30,6 +30,7 @@ namespace ReferenceArchiver.ViewModel
         }
 
         public event EventHandler DataLockedInChanged;
+        public event EventHandler IsDataCompleteChanged;
 
         public WizardPageViewModelBase(WizardViewModel parent)
             : base(parent)
@@ -50,6 +51,15 @@ namespace ReferenceArchiver.ViewModel
         public void OnNavigatedFromBackward()
         {
             IsDataLockedIn = false;
+        }
+
+        public virtual bool IsDataComplete
+        { get { return true; } }
+
+        protected void NotifyIsDataCompleteChanged()
+        {
+            if (IsDataCompleteChanged != null)
+                IsDataCompleteChanged(this, new EventArgs());
         }
     }
 }

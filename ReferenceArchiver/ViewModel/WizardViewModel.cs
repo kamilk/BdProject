@@ -88,6 +88,7 @@ namespace ReferenceArchiver.ViewModel
             _referencePageManager.BeginningReached += new EventHandler(_referencePageManager_BeginningReached);
 
             _institutionView.DataLockedInChanged += new EventHandler(InstitutionView_DataLockedInChanged);
+            _institutionView.IsDataCompleteChanged += new EventHandler(InstitutionView_IsDataCompleteChanged);
         }
 
         public void NavigateToAddingReferenceArticle()
@@ -110,6 +111,11 @@ namespace ReferenceArchiver.ViewModel
         {
             NotifyPropertyChanged("SelectedInstitution");
             NotifyPropertyChanged("SelectedPublisher");
+        }
+
+        void InstitutionView_IsDataCompleteChanged(object sender, EventArgs e)
+        {
+            PageManager.RefreshCanNavigate();
         }
     }
 }
