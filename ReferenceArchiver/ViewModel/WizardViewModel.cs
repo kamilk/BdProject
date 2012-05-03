@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using ReferenceArchiver.Model;
 
 namespace ReferenceArchiver.ViewModel
 {
@@ -17,6 +19,9 @@ namespace ReferenceArchiver.ViewModel
 
         WizardPageManager _mainPageManager;
         WizardPageManager _referencePageManager;
+
+        List<Institution> _institutions;
+        List<Publisher> _publishers;
 
         private WizardPageManager _pageManager;
         public WizardPageManager PageManager
@@ -36,7 +41,10 @@ namespace ReferenceArchiver.ViewModel
 
         public WizardViewModel()
         {
-            _institutionView = new ChooseInstitiutionAndPublisherPageViewModel(this);
+            _institutions = new List<Institution>(CentralRepository.Instance.GetInstitutions());
+            _publishers = new List<Publisher>(CentralRepository.Instance.GetPublishers());
+
+            _institutionView = new ChooseInstitiutionAndPublisherPageViewModel(this, _institutions, _publishers);
             _journalView = new ChooseResearchJournalPageViewModel(this);
             _issueView = new ChooseIssuePageViewModel(this);
             _articleView = new AddArticlePageViewModel(this);
@@ -49,7 +57,7 @@ namespace ReferenceArchiver.ViewModel
 
             PageManager = _mainPageManager;
 
-            _referenceInstitutionView = new ChoosePublisherForReferencePageViewModel(this);
+            _referenceInstitutionView = new ChoosePublisherForReferencePageViewModel(this, _institutions, _publishers);
             _referenceJournalView = new ChooseResearchJournalPageViewModel(this);
             _referenceIssueView = new ChooseIssuePageViewModel(this);
             _referenceArticleView = new AddArticleWithoutReferencesViewModel(this);

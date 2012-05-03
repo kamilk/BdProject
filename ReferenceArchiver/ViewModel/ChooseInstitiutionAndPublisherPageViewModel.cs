@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ReferenceArchiver.Model;
 using System.ComponentModel;
 using System.Windows.Data;
+using ReferenceArchiver.Model;
 
 namespace ReferenceArchiver.ViewModel
 {
@@ -54,7 +52,6 @@ namespace ReferenceArchiver.ViewModel
             {
                 _institutionFilteringString = value;
                 NotifyPropertyChanged("InstitutionFilteringString");
-                Institutions.Filter = new Predicate<object>(FilterInstitutions); //TODO find something better than this workaround
                 Institutions.Refresh();
             }
         }
@@ -70,25 +67,23 @@ namespace ReferenceArchiver.ViewModel
             {
                 _publisherFilteringString = value;
                 NotifyPropertyChanged("PublisherFilteringString");
-                Publishers.Filter = new Predicate<object>(FilterPublishers);
                 Publishers.Refresh();
             }
         }
 
-        public ChooseInstitiutionAndPublisherPageViewModel(WizardViewModel parent)
+        public ChooseInstitiutionAndPublisherPageViewModel(WizardViewModel parent, List<Institution> institutions, List<Publisher> publishers)
             : base(parent)
         {
-            Institutions = CollectionViewSource.GetDefaultView(CentralRepository.Instance.GetInstitutions());
+            Institutions = new CollectionViewSource { Source = institutions }.View;
             Institutions.Filter = new Predicate<object>(FilterInstitutions);
             Institutions.MoveCurrentTo(null);
             Institutions.CurrentChanged += new EventHandler(Institutions_CurrentChanged);
-            Publishers = CollectionViewSource.GetDefaultView(CentralRepository.Instance.GetPublishers());
+            Publishers = new CollectionViewSource { Source = publishers }.View;
             Publishers.Filter = new Predicate<object>(FilterPublishers);
         }
 
         void Institutions_CurrentChanged(object sender, EventArgs e)
         {
-            Publishers.Filter = new Predicate<object>(FilterPublishers);
             Publishers.Refresh();
         }
 

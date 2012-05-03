@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
+using ReferenceArchiver.Model;
 
 namespace ReferenceArchiver.ViewModel
 {
@@ -30,10 +27,10 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
-        public ChoosePublisherForReferencePageViewModel(WizardViewModel parent)
+        public ChoosePublisherForReferencePageViewModel(WizardViewModel parent, List<Institution> institutions, List<Publisher> publishers)
             : base(parent)
-        { 
-            _standardViewModel = new ChooseInstitiutionAndPublisherPageViewModel(parent);
+        {
+            _standardViewModel = new ChooseInstitiutionAndPublisherPageViewModel(parent, institutions, publishers);
             _externalViewModel = new ChooseExternalPublisherViewModel(parent);
             SelectedPublisherType = _standardViewModel;
         }
