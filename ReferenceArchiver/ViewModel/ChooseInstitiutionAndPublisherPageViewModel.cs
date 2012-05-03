@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Data;
 using ReferenceArchiver.Model;
+using System.Windows.Input;
 
 namespace ReferenceArchiver.ViewModel
 {
@@ -87,6 +88,20 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
+        private DelegateCommand _deselectInstitution;
+        public DelegateCommand DeselectInstitution
+        {
+            get
+            {
+                return _deselectInstitution;
+            }
+            private set
+            {
+                _deselectInstitution = value;
+                NotifyPropertyChanged("DeselectInstitution");
+            }
+        }
+
         public ChooseInstitiutionAndPublisherPageViewModel(WizardViewModel parent, List<Institution> institutions, List<Publisher> publishers)
             : base(parent)
         {
@@ -94,13 +109,26 @@ namespace ReferenceArchiver.ViewModel
             Institutions.Filter = new Predicate<object>(FilterInstitutions);
             Institutions.MoveCurrentTo(null);
             Institutions.CurrentChanged += new EventHandler(Institutions_CurrentChanged);
+
             Publishers = new CollectionViewSource { Source = publishers }.View;
             Publishers.Filter = new Predicate<object>(FilterPublishers);
+
+            this.DeselectInstitution = new DelegateCommand(
+                (param) => 
+                {
+                    Institutions.MoveCurrentTo(null);
+                    DeselectInstitution.RaiseCanExecuteChanged();
+                }, 
+                (param) => 
+                { 
+                    return Institutions.CurrentItem != null; 
+                });
         }
 
         void Institutions_CurrentChanged(object sender, EventArgs e)
         {
             Publishers.Refresh();
+            DeselectInstitution.RaiseCanExecuteChanged();
         }
 
         private bool FilterInstitutions(object obj)
