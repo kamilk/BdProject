@@ -22,6 +22,18 @@ namespace ReferenceArchiver.View
     public partial class StepDataControl : UserControl
     {
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(StepDataControl));
+        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register(
+            "Items", 
+            typeof(List<Control>), 
+            typeof(StepDataControl), 
+            new PropertyMetadata(new List<Control>()), 
+            new ValidateValueCallback(ValidateItems));
+
+        private static bool ValidateItems(object value)
+        {
+            var list = value as List<Control>;
+            return list != null;
+        }
 
         public string Title
         {
@@ -29,34 +41,16 @@ namespace ReferenceArchiver.View
             set { SetValue(TitleProperty, value); }
         }
 
-        private List<Control> _items;
         public List<Control> Items
         {
-            get
-            {
-                return _items;
-            }
-            set
-            {
-                if (value == null)
-                    _items = new List<Control>();
-                else
-                    _items = value;
-            }
-        }
-
-        public object ParentDataContext
-        {
-            get;
-            set;
+            get { return (List<Control>)GetValue(ItemsProperty); }
+            set { SetValue(ItemsProperty, value); }
         }
 
         public StepDataControl()
         {
             InitializeComponent();
-            this.ParentDataContext = this.DataContext;
-            this.DataContext = this;
-            this.Items = null;
+            this.Items = new List<Control>();
         }
     }
 }

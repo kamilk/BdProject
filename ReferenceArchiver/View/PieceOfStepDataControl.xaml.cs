@@ -34,13 +34,9 @@ namespace ReferenceArchiver.View
             set { SetValue(ValueProperty, value); }
         }
 
-        public object ParentDataContext { get; set; }
-
         public PieceOfStepDataControl()
         {
             InitializeComponent();
-            this.ParentDataContext = this.DataContext;
-            this.DataContext = this;
         }
     }
 }
