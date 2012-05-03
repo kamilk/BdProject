@@ -41,10 +41,15 @@ namespace ReferenceArchiver.ViewModel
         {
             get
             {
-                if (_institutionView.IsDataLockedIn)
-                    return _institutionView.SelectedInstitution;
-                else
-                    return null;
+                return _institutionView.IsDataLockedIn ? _institutionView.SelectedInstitution : null;
+            }
+        }
+
+        public Publisher SelectedPublisher
+        {
+            get
+            {
+                return _institutionView.IsDataLockedIn ? _institutionView.SelectedPublisher : null;
             }
         }
 
@@ -85,9 +90,9 @@ namespace ReferenceArchiver.ViewModel
             _institutionView.DataLockedInChanged += new EventHandler(InstitutionView_DataLockedInChanged);
         }
 
-        void _referencePageManager_BeginningReached(object sender, EventArgs e)
+        public void NavigateToAddingReferenceArticle()
         {
-            PageManager = _mainPageManager;
+            PageManager = _referencePageManager;
         }
 
         protected void NotifyPropertyChanged(string parameterName)
@@ -96,14 +101,15 @@ namespace ReferenceArchiver.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(parameterName));
         }
 
-        internal void NavigateToAddingReferenceArticle()
+        private void _referencePageManager_BeginningReached(object sender, EventArgs e)
         {
-            PageManager = _referencePageManager;
+            PageManager = _mainPageManager;
         }
 
-        void InstitutionView_DataLockedInChanged(object sender, EventArgs e)
+        private void InstitutionView_DataLockedInChanged(object sender, EventArgs e)
         {
             NotifyPropertyChanged("SelectedInstitution");
+            NotifyPropertyChanged("SelectedPublisher");
         }
     }
 }

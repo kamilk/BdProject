@@ -18,6 +18,7 @@
             <my:StepDataControl x:Name="stepDataControl1" Title="1. Instytucja i wydawnictwo">
                 <my:StepDataControl.Items>
                     <my:PieceOfStepDataControl Property="Instytucja" Value="{Binding Path=SelectedInstitution}" />
+                    <my:PieceOfStepDataControl Property="Wydawnictwo" Value="{Binding Path=SelectedPublisher}" />
                 </my:StepDataControl.Items>
             </my:StepDataControl>
             <my:StepDataControl x:Name="stepDataControl2" Title="2. Seria" />

@@ -79,6 +79,14 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
+        public Publisher SelectedPublisher
+        {
+            get
+            {
+                return Publishers.CurrentItem as Publisher;
+            }
+        }
+
         public ChooseInstitiutionAndPublisherPageViewModel(WizardViewModel parent, List<Institution> institutions, List<Publisher> publishers)
             : base(parent)
         {
