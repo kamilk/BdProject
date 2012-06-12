@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Text;
 using Oracle.DataAccess.Client;
 
+//komentarz
 namespace BdProject
 {
     class LibraryDatabaseConnection : IDisposable
