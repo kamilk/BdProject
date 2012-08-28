@@ -20,22 +20,9 @@ namespace ReferenceArchiver.View
     /// </summary>
     public partial class AddArticleView : UserControl
     {
-        AddArticlePageViewModel _viewModel;
-
         public AddArticleView()
         {
             InitializeComponent();
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            _viewModel = this.DataContext as AddArticlePageViewModel;
-        }
-
-        private void button3_Click(object sender, RoutedEventArgs e)
-        {
-            if (_viewModel != null)
-                _viewModel.WizardViewModel.NavigateToAddingReferenceArticle();
         }
     }
 }

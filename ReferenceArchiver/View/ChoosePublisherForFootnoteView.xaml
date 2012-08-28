@@ -6,7 +6,7 @@
              xmlns:view="clr-namespace:ReferenceArchiver.View"
              xmlns:viewModel="clr-namespace:ReferenceArchiver.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded">
+             d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type viewModel:ChooseInstitiutionAndPublisherPageViewModel}">
             <view:ChooseInstitiutionView/>
@@ -19,8 +19,8 @@
     <Grid>
         <GroupBox Header="Rodzaj wydawnictwa" Height="48" HorizontalAlignment="Left" Name="groupBox1" VerticalAlignment="Top" Width="165">
             <Grid>
-                <RadioButton Content="standardowe" Height="16" HorizontalAlignment="Left" Margin="6,6,0,0" Name="radioButton1" VerticalAlignment="Top" IsChecked="True" Checked="radioButton1_Checked" />
-                <RadioButton Content="obce" Height="16" HorizontalAlignment="Left" IsChecked="False" Margin="96,6,0,0" Name="radioButton2" VerticalAlignment="Top" Checked="radioButton2_Checked" />
+                <RadioButton Content="standardowe" Height="16" HorizontalAlignment="Left" Margin="6,6,0,0" Name="radioButton1" VerticalAlignment="Top" IsChecked="True" Command="{Binding Path=SwitchToStandardPublisherCommand}" />
+                <RadioButton Content="obce" Height="16" HorizontalAlignment="Left" IsChecked="False" Margin="96,6,0,0" Name="radioButton2" VerticalAlignment="Top" Command="{Binding Path=SwitchToExternalPublisherCommand}" />
             </Grid>
         </GroupBox>
         <ContentControl Margin="0,54,0,0" Name="contentControl1" Content="{Binding Path=SelectedPublisherType}"/>

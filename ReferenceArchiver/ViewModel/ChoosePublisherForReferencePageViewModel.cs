@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ReferenceArchiver.Model;
+using System.Windows.Input;
 
 namespace ReferenceArchiver.ViewModel
 {
@@ -27,6 +28,28 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
+        DelegateCommand _switchToStandardPublisherCommand;
+        public ICommand SwitchToStandardPublisherCommand
+        {
+            get
+            {
+                if (_switchToStandardPublisherCommand == null)
+                    _switchToStandardPublisherCommand = new DelegateCommand(SwitchToStandardPublisher);
+                return _switchToStandardPublisherCommand;
+            }
+        }
+
+        DelegateCommand _switchToExternalPublisherCommand;
+        public ICommand SwitchToExternalPublisherCommand
+        {
+            get
+            {
+                if (_switchToExternalPublisherCommand == null)
+                    _switchToExternalPublisherCommand = new DelegateCommand(SwitchToStandardPublisher);
+                return _switchToExternalPublisherCommand;
+            }
+        }
+
         public ChoosePublisherForReferencePageViewModel(WizardViewModel parent, List<Institution> institutions, List<Publisher> publishers)
             : base(parent)
         {
@@ -35,12 +58,12 @@ namespace ReferenceArchiver.ViewModel
             SelectedPublisherType = _standardViewModel;
         }
 
-        public void SwitchToStandardPublisher()
+        private void SwitchToStandardPublisher()
         {
             SelectedPublisherType = _standardViewModel;
         }
 
-        public void SwitchToExternalPublisher()
+        private void SwitchToExternalPublisher()
         {
             SelectedPublisherType = _externalViewModel;
         }

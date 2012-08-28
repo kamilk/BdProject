@@ -90,17 +90,26 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
-        private DelegateCommand _deselectInstitution;
-        public DelegateCommand DeselectInstitution
+        private DelegateCommand _deselectInstitutionCommand;
+        public ICommand DeselectInstitutionCommand
         {
             get
             {
-                return _deselectInstitution;
-            }
-            private set
-            {
-                _deselectInstitution = value;
-                NotifyPropertyChanged("DeselectInstitution");
+                if (_deselectInstitutionCommand == null)
+                {
+                    _deselectInstitutionCommand = new DelegateCommand(
+                    (param) =>
+                    {
+                        Publishers.MoveCurrentTo(null);
+                        Institutions.MoveCurrentTo(null);
+                        _deselectInstitutionCommand.RaiseCanExecuteChanged();
+                    },
+                    (param) =>
+                    {
+                        return Institutions.CurrentItem != null;
+                    });
+                }
+                return _deselectInstitutionCommand;
             }
         }
 
@@ -117,18 +126,6 @@ namespace ReferenceArchiver.ViewModel
             Publishers.Filter = new Predicate<object>(FilterPublishers);
             Publishers.CurrentChanged += new EventHandler(Publishers_CurrentChanged);
             Publishers.MoveCurrentTo(null);
-
-            this.DeselectInstitution = new DelegateCommand(
-                (param) =>
-                {
-                    Publishers.MoveCurrentTo(null);
-                    Institutions.MoveCurrentTo(null);
-                    DeselectInstitution.RaiseCanExecuteChanged();
-                },
-                (param) =>
-                {
-                    return Institutions.CurrentItem != null;
-                });
         }
 
         public override bool IsDataComplete
@@ -146,7 +143,7 @@ namespace ReferenceArchiver.ViewModel
             _selectedInstitutionIsNull = SelectedInstitution == null;
             if (!_selectedInstitutionIsNull)
                 Publishers.MoveCurrentToFirst();
-            DeselectInstitution.RaiseCanExecuteChanged();
+            _deselectInstitutionCommand.RaiseCanExecuteChanged();
             NotifyIsDataCompleteChanged();
         }
 

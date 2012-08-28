@@ -20,29 +20,9 @@ namespace ReferenceArchiver.View
     /// </summary>
     public partial class ChoosePublisherForFootnoteView : UserControl
     {
-        private ChoosePublisherForReferencePageViewModel _viewModel;
-
         public ChoosePublisherForFootnoteView()
         {
-
             InitializeComponent();
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            _viewModel = DataContext as ChoosePublisherForReferencePageViewModel;
-        }
-
-        private void radioButton1_Checked(object sender, RoutedEventArgs e)
-        {
-            if (_viewModel != null)
-                _viewModel.SwitchToStandardPublisher();
-        }
-
-        private void radioButton2_Checked(object sender, RoutedEventArgs e)
-        {
-            if (_viewModel != null)
-                _viewModel.SwitchToExternalPublisher();
         }
     }
 }

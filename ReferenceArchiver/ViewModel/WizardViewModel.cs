@@ -76,6 +76,17 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
+        DelegateCommand _navigateToAddingReferenceArticleCommand;
+        public ICommand NavigateToAddingReferenceArticleCommand
+        {
+            get
+            {
+                if (_navigateToAddingReferenceArticleCommand == null)
+                    _navigateToAddingReferenceArticleCommand = new DelegateCommand(NavigateToAddingReferenceArticle);
+                return _navigateToAddingReferenceArticleCommand;
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public WizardViewModel()
@@ -114,7 +125,7 @@ namespace ReferenceArchiver.ViewModel
             _institutionView.IsDataCompleteChanged += new EventHandler(InstitutionView_IsDataCompleteChanged);
         }
 
-        public void NavigateToAddingReferenceArticle()
+        private void NavigateToAddingReferenceArticle()
         {
             PageManager = _referencePageManager;
         }

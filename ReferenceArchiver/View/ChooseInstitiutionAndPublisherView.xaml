@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" d:DesignHeight="509" d:DesignWidth="508" Loaded="UserControl_Loaded">
+             mc:Ignorable="d" d:DesignHeight="509" d:DesignWidth="508">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -15,7 +15,7 @@
                 <Button Content="Dodaj nową" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="button1" VerticalAlignment="Top" Width="75" />
                 <ListBox Margin="6,35" Name="institutionsListBox" ItemsSource="{Binding Path=Institutions}" IsSynchronizedWithCurrentItem="True" />
                 <Button Content="Otwórz okno zarządzania instytucjami" Height="23" HorizontalAlignment="Left" Margin="6,0,0,6" Name="button2" VerticalAlignment="Bottom" Width="248" />
-                <Button Content="Odznacz" Command="{Binding Path=DeselectInstitution}" Height="23" HorizontalAlignment="Right" Margin="0,0,6,6" Name="button5" VerticalAlignment="Bottom" Width="75" />
+                <Button Content="Odznacz" Command="{Binding Path=DeselectInstitutionCommand}" Height="23" HorizontalAlignment="Right" Margin="0,0,6,6" Name="button5" VerticalAlignment="Bottom" Width="75" />
             </Grid>
         </GroupBox>
         <GroupBox Header="Wydawnictwo" HorizontalAlignment="Stretch" Margin="0,6,0,0" Name="groupBox2" VerticalAlignment="Stretch" Grid.Row="1">

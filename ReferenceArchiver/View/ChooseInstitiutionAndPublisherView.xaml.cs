@@ -20,31 +20,18 @@ namespace ReferenceArchiver.View
     /// </summary>
     public partial class ChooseInstitiutionView : UserControl
     {
-        ChooseInstitiutionAndPublisherPageViewModel dataContext;
-
         public ChooseInstitiutionView()
         {
             InitializeComponent();
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            dataContext = DataContext as ChooseInstitiutionAndPublisherPageViewModel;
-        }
-
         private void institutionNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (dataContext == null)
-                return;
-
             institutionNameTextBox.UpdateTextBinding();
         }
 
         private void publisherNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (dataContext == null)
-                return;
-
             publisherNameTextBox.UpdateTextBinding();
         }
     }
