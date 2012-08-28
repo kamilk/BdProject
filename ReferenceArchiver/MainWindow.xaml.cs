@@ -20,28 +20,9 @@ namespace ReferenceArchiver
     /// </summary>
     public partial class MainWindow : Window
     {
-        private WizardViewModel _wizardViewModel;
-
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            _wizardViewModel = new WizardViewModel();
-            
-            this.DataContext = _wizardViewModel;
-        }
-
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            _wizardViewModel.PageManager.NavigateForward();
-        }
-
-        private void button2_Click(object sender, RoutedEventArgs e)
-        {
-            _wizardViewModel.PageManager.NavigateBackward();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using ReferenceArchiver.Model;
+using System.Windows.Input;
 
 namespace ReferenceArchiver.ViewModel
 {
@@ -50,6 +51,28 @@ namespace ReferenceArchiver.ViewModel
             get
             {
                 return _institutionView.IsDataLockedIn ? _institutionView.SelectedPublisher : null;
+            }
+        }
+
+        DelegateCommand _navigateForwardCommand;
+        public ICommand NavigateForwardCommand
+        {
+            get
+            {
+                if (_navigateForwardCommand == null)
+                    _navigateForwardCommand = new DelegateCommand(_pageManager.NavigateForward);
+                return _navigateForwardCommand;
+            }
+        }
+
+        DelegateCommand _navigateBackwardCommand;
+        public ICommand NavigateBackwardCommand
+        {
+            get
+            {
+                if (_navigateBackwardCommand == null)
+                    _navigateBackwardCommand = new DelegateCommand(_pageManager.NavigateBackward);
+                return _navigateBackwardCommand;
             }
         }
 

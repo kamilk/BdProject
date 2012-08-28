@@ -7,19 +7,20 @@ namespace ReferenceArchiver.ViewModel
     public class DelegateCommand : ICommand
     {
         private readonly Predicate<object> _canExecute;
-        private readonly Action<object> _execute;
+        private readonly Action<object> _executeWithParameters;
+        private readonly Action _executeNoParameters;
 
         public event EventHandler CanExecuteChanged;
 
-        public DelegateCommand(Action<object> execute)
-            : this(execute, null)
+        public DelegateCommand(Action<object> execute, Predicate<object> canExecute = null)
         {
+            _executeWithParameters = execute;
+            _canExecute = canExecute;
         }
 
-        public DelegateCommand(Action<object> execute,
-                       Predicate<object> canExecute)
+        public DelegateCommand(Action execute, Predicate<object> canExecute = null)
         {
-            _execute = execute;
+            _executeNoParameters = execute;
             _canExecute = canExecute;
         }
 
@@ -35,7 +36,10 @@ namespace ReferenceArchiver.ViewModel
 
         public void Execute(object parameter)
         {
-            _execute(parameter);
+            if (_executeWithParameters != null)
+                _executeWithParameters(parameter);
+            else
+                _executeNoParameters();
         }
 
         public void RaiseCanExecuteChanged()
