@@ -14,7 +14,7 @@
                         <DataGridTextColumn Header="ISSN" Binding="{Binding Path=Issn}" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <TextBox Height="23" Margin="6,6,6,0" Name="textBox3" VerticalAlignment="Top" />
+                <TextBox Height="23" Margin="6,6,6,0" Name="journalSearchString" VerticalAlignment="Top" Text="{Binding Path=JournalSearchString}" TextChanged="journalSearchString_TextChanged" />
                 <Button Content="Otwórz okno zarządzania seriami" Height="23" HorizontalAlignment="Left" Margin="6,0,0,6" Name="button2" VerticalAlignment="Bottom" Width="216" />
             </Grid>
         </GroupBox>

@@ -22,6 +22,17 @@ namespace ReferenceArchiver.ViewModel
             get { return _researchJournals.CollectionView; }
         }
 
+        public string JournalSearchString
+        {
+            get { return _researchJournals.SearchString; }
+            set
+            {
+                _researchJournals.SearchString = value;
+                NotifyPropertyChanged(JournalSearchString);
+                ResearchJournals.Refresh();
+            }
+        }
+
         public ChooseResearchJournalPageViewModel(WizardViewModel parent)
             : base(parent)
         {

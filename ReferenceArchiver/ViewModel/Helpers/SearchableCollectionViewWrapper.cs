@@ -15,7 +15,7 @@ namespace ReferenceArchiver.ViewModel.Helpers
 
         public ICollectionView CollectionView { get; private set; }
 
-        public string SearchedString { get; set; }
+        public string SearchString { get; set; }
 
         public SearchableCollectionViewWrapper(ICollectionView collectionView, Func<T, string> selector, Predicate<T> extraCondition = null)
         {
@@ -36,14 +36,14 @@ namespace ReferenceArchiver.ViewModel.Helpers
                 return false;
 
             bool stringMatch;
-            if (SearchedString == null || SearchedString.Length == 0)
+            if (SearchString == null || SearchString.Length == 0)
                 stringMatch = true;
             else
             {
                 string testedString = _selector(typedObject);
                 if (testedString == null || testedString.Length == 0)
                     return false;
-                stringMatch = testedString.StartsWith(SearchedString, StringComparison.CurrentCultureIgnoreCase);
+                stringMatch = testedString.IndexOf(SearchString, StringComparison.CurrentCultureIgnoreCase) >= 0;
             }
 
             bool customMatch = _extraCondition == null ? true : _extraCondition(typedObject);

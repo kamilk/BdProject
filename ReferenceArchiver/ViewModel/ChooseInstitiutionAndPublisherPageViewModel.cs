@@ -39,11 +39,11 @@ namespace ReferenceArchiver.ViewModel
         {
             get
             {
-                return _institutions.SearchedString;
+                return _institutions.SearchString;
             }
             set
             {
-                _institutions.SearchedString = value;
+                _institutions.SearchString = value;
                 NotifyPropertyChanged("InstitutionFilteringString");
                 Institutions.Refresh();
             }
@@ -53,11 +53,11 @@ namespace ReferenceArchiver.ViewModel
         {
             get
             {
-                return _publishers.SearchedString;
+                return _publishers.SearchString;
             }
             set
             {
-                _publishers.SearchedString = value;
+                _publishers.SearchString = value;
                 NotifyPropertyChanged("PublisherFilteringString");
                 Publishers.Refresh();
             }

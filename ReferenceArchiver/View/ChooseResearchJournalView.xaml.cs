@@ -23,5 +23,10 @@ namespace ReferenceArchiver.View
         {
             InitializeComponent();
         }
+
+        private void journalSearchString_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            journalSearchString.UpdateTextBinding();
+        }
     }
 }
