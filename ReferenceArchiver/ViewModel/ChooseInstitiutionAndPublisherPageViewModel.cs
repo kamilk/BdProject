@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using ReferenceArchiver.Model;
 using System.Windows.Input;
+using ReferenceArchiver.ViewModel.Helpers;
 
 namespace ReferenceArchiver.ViewModel
 {
@@ -16,59 +17,47 @@ namespace ReferenceArchiver.ViewModel
             get { return "Wybierz instytucję i wydawnictwo"; }
         }
 
-        private ICollectionView _institutions;
+        private SearchableCollectionViewWrapper<Institution> _institutions;
         public ICollectionView Institutions
         {
             get
             {
-                return _institutions;
-            }
-            set
-            {
-                _institutions = value;
-                NotifyPropertyChanged("Institutions");
+                return _institutions.CollectionView;
             }
         }
 
-        private ICollectionView _publishers;
+        private SearchableCollectionViewWrapper<Publisher> _publishers;
         public ICollectionView Publishers
         {
             get
             {
-                return _publishers;
-            }
-            set
-            {
-                _publishers = value;
-                NotifyPropertyChanged("Publishers");
+                return _publishers.CollectionView;
             }
         }
 
-        private string _institutionFilteringString;
         public string InstitutionFilteringString
         {
             get
             {
-                return _institutionFilteringString;
+                return _institutions.SearchedString;
             }
             set
             {
-                _institutionFilteringString = value;
+                _institutions.SearchedString = value;
                 NotifyPropertyChanged("InstitutionFilteringString");
                 Institutions.Refresh();
             }
         }
 
-        private string _publisherFilteringString;
         public string PublisherFilteringString
         {
             get
             {
-                return _publisherFilteringString;
+                return _publishers.SearchedString;
             }
             set
             {
-                _publisherFilteringString = value;
+                _publishers.SearchedString = value;
                 NotifyPropertyChanged("PublisherFilteringString");
                 Publishers.Refresh();
             }
@@ -116,14 +105,23 @@ namespace ReferenceArchiver.ViewModel
         public ChooseInstitiutionAndPublisherPageViewModel(WizardViewModel parent, List<Institution> institutions, List<Publisher> publishers)
             : base(parent)
         {
-            Institutions = new CollectionViewSource { Source = institutions }.View;
-            Institutions.Filter = new Predicate<object>(FilterInstitutions);
+            _institutions = new SearchableCollectionViewWrapper<Institution>(
+                new CollectionViewSource { Source = institutions }.View, 
+                institution => institution.Name);
             _selectedInstitutionIsNull = true;
             Institutions.MoveCurrentTo(null);
             Institutions.CurrentChanged += new EventHandler(Institutions_CurrentChanged);
 
-            Publishers = new CollectionViewSource { Source = publishers }.View;
-            Publishers.Filter = new Predicate<object>(FilterPublishers);
+            _publishers = new SearchableCollectionViewWrapper<Publisher>(
+                new CollectionViewSource { Source = publishers }.View,
+                publisher => publisher.Title,
+                publisher =>
+                {
+                    //filter out publishers not belonging to the currently selected institution.
+                    //If no institution is selected, show all publishers.
+                    var institution = Institutions.CurrentItem as Institution;
+                    return institution == null || publisher.InstitutionId == institution.Id;
+                });
             Publishers.CurrentChanged += new EventHandler(Publishers_CurrentChanged);
             Publishers.MoveCurrentTo(null);
         }
@@ -138,7 +136,7 @@ namespace ReferenceArchiver.ViewModel
 
         void Institutions_CurrentChanged(object sender, EventArgs e)
         {
-            if (!(_selectedInstitutionIsNull && SelectedInstitution == null))
+            if (!_selectedInstitutionIsNull || SelectedInstitution != null)
                 Publishers.Refresh();
             _selectedInstitutionIsNull = SelectedInstitution == null;
             if (!_selectedInstitutionIsNull)
@@ -183,31 +181,6 @@ namespace ReferenceArchiver.ViewModel
                     Institutions.MoveCurrentToNext();
                 }
             }
-        }
-
-
-        private bool FilterInstitutions(object obj)
-        {
-            if (_institutionFilteringString == null || _institutionFilteringString.Length == 0)
-                return true;
-
-            var institution = obj as Institution;
-            if (institution == null)
-                return false;
-            return institution.Name.StartsWith(_institutionFilteringString, StringComparison.CurrentCultureIgnoreCase);
-        }
-
-        private bool FilterPublishers(object obj)
-        {
-            var publisher = obj as Publisher;
-            if (publisher == null)
-                return false;
-
-            var institution = Institutions.CurrentItem as Institution;
-
-            bool nameMatch = PublisherFilteringString == null || PublisherFilteringString.Length == 0 || publisher.Title.StartsWith(PublisherFilteringString, StringComparison.CurrentCultureIgnoreCase);
-            bool institutionMatch = institution == null || publisher.InstitutionId == institution.Id;
-            return nameMatch && institutionMatch;
         }
     }
 }

@@ -77,6 +77,7 @@
     <Compile Include="ViewModel\ChoosePublisherForReferencePageViewModel.cs" />
     <Compile Include="ViewModel\ChooseResearchJournalPageViewModel.cs" />
     <Compile Include="ViewModel\DelegateCommand.cs" />
+    <Compile Include="ViewModel\Helpers\SearchableCollectionViewWrapper.cs" />
     <Compile Include="View\Helpers.cs" />
     <Compile Include="ViewModel\WizardControlViewModel.cs" />
     <Compile Include="ViewModel\WizardPageManager.cs" />
