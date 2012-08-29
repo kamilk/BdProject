@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Windows.Data;
 using ReferenceArchiver.Model;
+using ReferenceArchiver.ViewModel.Helpers;
 
 namespace ReferenceArchiver.ViewModel
 {
@@ -15,24 +16,23 @@ namespace ReferenceArchiver.ViewModel
             get { return "Wybierz serię"; }
         }
 
-        ICollectionView _researchJournals;
+        SearchableCollectionViewWrapper<ResearchJournal> _researchJournals;
         public ICollectionView ResearchJournals
         {
-            get { return _researchJournals; }
-            set
-            {
-                _researchJournals = value;
-                NotifyPropertyChanged("ResearchJournals");
-            }
+            get { return _researchJournals.CollectionView; }
         }
 
         public ChooseResearchJournalPageViewModel(WizardViewModel parent)
             : base(parent)
         {
-            ResearchJournals = new CollectionViewSource 
+            ICollectionView researchJournalsCollectionView = new CollectionViewSource 
             {
                 Source = CentralRepository.Instance.GetJournalsForPublisher(CentralRepository.Instance.GetPublishers().FirstOrDefault()).ToList() 
             }.View;
+
+            _researchJournals = new SearchableCollectionViewWrapper<ResearchJournal>(
+                researchJournalsCollectionView,
+                journal => journal.Title);
         }
     }
 }

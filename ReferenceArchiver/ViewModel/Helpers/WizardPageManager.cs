@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 
-namespace ReferenceArchiver.ViewModel
+namespace ReferenceArchiver.ViewModel.Helpers
 {
     class WizardPageManager : INotifyPropertyChanged
     {

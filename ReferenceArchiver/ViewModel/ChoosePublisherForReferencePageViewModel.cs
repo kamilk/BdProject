@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using ReferenceArchiver.Model;
 using System.Windows.Input;
+using ReferenceArchiver.Model;
+using ReferenceArchiver.ViewModel.Helpers;
 
 namespace ReferenceArchiver.ViewModel
 {

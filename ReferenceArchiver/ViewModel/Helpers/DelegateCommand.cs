@@ -2,7 +2,7 @@
 using System.Windows.Input;
 
 //from http://www.wpftutorial.net/delegatecommand.html
-namespace ReferenceArchiver.ViewModel
+namespace ReferenceArchiver.ViewModel.Helpers
 {
     public class DelegateCommand : ICommand
     {
