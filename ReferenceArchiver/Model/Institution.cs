@@ -5,6 +5,9 @@ using System.Text;
 
 namespace ReferenceArchiver.Model
 {
+    /// <summary>
+    /// Instytucja
+    /// </summary>
     class Institution
     {
         public int Id { get; set; }

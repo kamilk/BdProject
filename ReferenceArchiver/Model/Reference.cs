@@ -5,6 +5,9 @@ using System.Text;
 
 namespace ReferenceArchiver.Model
 {
+    /// <summary>
+    /// Przypis
+    /// </summary>
     class Reference
     {
     }

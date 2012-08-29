@@ -5,6 +5,9 @@ using System.Text;
 
 namespace ReferenceArchiver.Model
 {
+    /// <summary>
+    /// Autorstwo
+    /// </summary>
     class Authorship
     {
     }

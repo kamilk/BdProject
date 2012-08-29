@@ -5,6 +5,9 @@ using System.Text;
 
 namespace ReferenceArchiver.Model
 {
+    /// <summary>
+    /// Wydawnictwo (w rozumieniu firmy)
+    /// </summary>
     class Publisher
     {
         public int IdWithinInstitution { get; set; }

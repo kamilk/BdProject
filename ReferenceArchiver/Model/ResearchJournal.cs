@@ -5,6 +5,9 @@ using System.Text;
 
 namespace ReferenceArchiver.Model
 {
+    /// <summary>
+    /// Seria
+    /// </summary>
     class ResearchJournal
     {
         public string Title { get; set; }
