@@ -8,7 +8,12 @@
     <Grid>
         <GroupBox Header="Wybierz serię" Name="groupBox1" Margin="0,0,0,136">
             <Grid>
-                <DataGrid AutoGenerateColumns="False" Margin="6,35" Name="dataGrid1" />
+                <DataGrid AutoGenerateColumns="False" Margin="6,35" Name="dataGrid1" ItemsSource="{Binding Path=ResearchJournals}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Tytuł" Binding="{Binding Path=Title}" />
+                        <DataGridTextColumn Header="ISSN" Binding="{Binding Path=Issn}" />
+                    </DataGrid.Columns>
+                </DataGrid>
                 <TextBox Height="23" Margin="6,6,6,0" Name="textBox3" VerticalAlignment="Top" />
                 <Button Content="Otwórz okno zarządzania seriami" Height="23" HorizontalAlignment="Left" Margin="6,0,0,6" Name="button2" VerticalAlignment="Bottom" Width="216" />
             </Grid>

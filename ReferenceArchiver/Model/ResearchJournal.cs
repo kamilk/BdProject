@@ -10,6 +10,9 @@ namespace ReferenceArchiver.Model
     /// </summary>
     class ResearchJournal
     {
+        public int IdWithinPublisher { get; set; }
+        public int PublisherId { get; set; }
+        public int InstitutionId { get; set; }
         public string Title { get; set; }
         public string ISSN { get; set; }
     }
