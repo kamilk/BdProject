@@ -55,6 +55,9 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
+        public ResearchJournal SelectedJournal
+        { get { return _journalView.IsDataLockedIn ? _journalView.SelectedJournal : null; } }
+
         DelegateCommand _navigateForwardCommand;
         public ICommand NavigateForwardCommand
         {

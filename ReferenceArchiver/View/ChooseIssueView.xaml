@@ -8,24 +8,26 @@
     <Grid>
         <GroupBox Header="Nr zeszytu" Height="98" HorizontalAlignment="Left" Name="groupBox1" VerticalAlignment="Top" Width="339">
             <Grid>
-                <TextBox Height="23" Margin="126,8,6,0" Name="textBox1" VerticalAlignment="Top" />
-                <Label Content="Nr w wydawnictwie:" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label1" VerticalAlignment="Top" />
-                <Label Content="Nr w serii:" Height="28" HorizontalAlignment="Left" Margin="58,40,0,0" Name="label2" VerticalAlignment="Top" />
-                <TextBox Height="23" Margin="126,42,6,0" Name="textBox2" VerticalAlignment="Top" />
+                <TextBox Height="23" Margin="120,37,67,0" Name="textBox1" VerticalAlignment="Top" Text="{Binding Path=NumberWithinPublisher}" />
+                <Label Content="Nr w wydawnictwie:" Height="28" HorizontalAlignment="Left" Margin="0,35,0,0" Name="label1" VerticalAlignment="Top" />
+                <Label Content="Nr w serii:" Height="28" HorizontalAlignment="Left" Margin="52,6,0,0" Name="label2" VerticalAlignment="Top" />
+                <TextBox Height="23" Margin="120,8,67,0" Name="textBox2" VerticalAlignment="Top" Text="{Binding Path=NumberWithinJournal}" />
+                <Button Content="Szukaj" Height="23" HorizontalAlignment="Right" Margin="0,7,6,0" Name="button2" VerticalAlignment="Top" Width="55" Command="{Binding Path=SearchByNumberWithinJournalCommand}" />
+                <Button Content="Szukaj" Height="23" HorizontalAlignment="Right" Margin="0,36,6,0" Name="button4" VerticalAlignment="Top" Width="55" Command="{Binding Path=SearchByNumberWithinPublisherCommand}"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Dane zeszytu" Height="189" HorizontalAlignment="Left" Margin="0,104,0,0" Name="groupBox2" VerticalAlignment="Top" Width="339">
             <Grid>
                 <Label Content="Rok wydania:" Height="28" HorizontalAlignment="Left" Margin="6,35,0,0" Name="label3" VerticalAlignment="Top" />
-                <TextBox Height="23" HorizontalAlignment="Left" Margin="92,37,0,0" Name="textBox3" VerticalAlignment="Top" Width="120" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="92,37,0,0" Name="textBox3" VerticalAlignment="Top" Width="120" Text="{Binding Path=YearOfPublication}"/>
                 <Label Content="Tytuł:" Height="28" HorizontalAlignment="Left" Margin="47,69,0,0" Name="label4" VerticalAlignment="Top" />
-                <TextBox Height="23" Margin="92,71,6,0" Name="textBox4" VerticalAlignment="Top" />
+                <TextBox Height="23" Margin="92,71,6,0" Name="textBox4" VerticalAlignment="Top" Text="{Binding Path=IssueTitle}" />
                 <Label Content="Typ:" Height="28" HorizontalAlignment="Left" Margin="54,100,0,0" Name="label5" VerticalAlignment="Top" />
-                <ComboBox Height="23" HorizontalAlignment="Left" Margin="92,103,0,0" Name="comboBox1" VerticalAlignment="Top" Width="120" />
+                <ComboBox Height="23" Width="auto" MinWidth="100" HorizontalAlignment="Left" Margin="92,103,0,0" Name="comboBox1" VerticalAlignment="Top" ItemsSource="{Binding Path=IssueTypes}" DisplayMemberPath="DisplayName" IsSynchronizedWithCurrentItem="True" />
                 <Button Content="Wycofaj zmiany" Height="23" HorizontalAlignment="Left" Margin="92,6,0,0" Name="button3" VerticalAlignment="Top" Width="101" />
                 <Button Content="Edytuj zeszyt" Height="23" HorizontalAlignment="Left" Margin="11,6,0,0" Name="button1" VerticalAlignment="Top" Width="75" />
                 <Label Content="Nr typu:" Height="28" HorizontalAlignment="Left" Margin="33,129,0,0" Name="label6" VerticalAlignment="Top" />
-                <TextBox Height="23" HorizontalAlignment="Left" Margin="92,134,0,0" Name="textBox5" VerticalAlignment="Top" Width="120" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="92,134,0,0" Name="textBox5" VerticalAlignment="Top" Width="120" Text="{Binding Path=TypeNumber}" />
             </Grid>
         </GroupBox>
     </Grid>

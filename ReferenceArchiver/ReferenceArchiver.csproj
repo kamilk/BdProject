@@ -66,6 +66,7 @@
     <Compile Include="Model\CentralRepository.cs" />
     <Compile Include="Model\Institution.cs" />
     <Compile Include="Model\Issue.cs" />
+    <Compile Include="Model\IssueType.cs" />
     <Compile Include="Model\Publisher.cs" />
     <Compile Include="Model\Reference.cs" />
     <Compile Include="Model\ResearchJournal.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="ViewModel\ChoosePublisherForReferencePageViewModel.cs" />
     <Compile Include="ViewModel\ChooseResearchJournalPageViewModel.cs" />
     <Compile Include="ViewModel\Helpers\DelegateCommand.cs" />
+    <Compile Include="ViewModel\Helpers\IssueTypeWrapper.cs" />
     <Compile Include="ViewModel\Helpers\SearchableCollectionViewWrapper.cs" />
     <Compile Include="View\Helpers.cs" />
     <Compile Include="ViewModel\WizardControlViewModel.cs" />

@@ -16,6 +16,9 @@ namespace ReferenceArchiver.ViewModel
             get { return "Wybierz serię"; }
         }
 
+        public ResearchJournal SelectedJournal
+        { get { return ResearchJournals.CurrentItem as ResearchJournal; } }
+
         SearchableCollectionViewWrapper<ResearchJournal> _researchJournals;
         public ICollectionView ResearchJournals
         {

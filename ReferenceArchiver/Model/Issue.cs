@@ -19,16 +19,25 @@ namespace ReferenceArchiver.Model
         public int NumberWithinPublisher;
 
         public string Title;
-        public int YearOfPublishing;
+        public int? YearOfPublication;
         public bool WasVerified;
-        public string Type;
+        public IssueType Type = IssueType.Symposium;
         public string TypeNumber;
+
+        public Issue()
+        {
+            InstitutionId = -1;
+            PublisherId = -1;
+            JournalId = -1;
+            IdWithinJournal = -1;
+        }
 
         public Issue(ResearchJournal parentJournal)
         {
             InstitutionId = parentJournal.InstitutionId;
             PublisherId = parentJournal.PublisherId;
             JournalId = parentJournal.IdWithinPublisher;
+            IdWithinJournal = -1;
         }
     }
 }

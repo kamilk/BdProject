@@ -11,6 +11,9 @@ namespace ReferenceArchiver.Model
         public abstract IEnumerable<Publisher> GetPublishers();
         public abstract IEnumerable<Publisher> GetPublishersForInstitution(Institution institution);
         public abstract IEnumerable<ResearchJournal> GetJournalsForPublisher(Publisher publisher);
+        public abstract IEnumerable<Issue> GetIssuesForJournal(ResearchJournal journal);
+        public abstract Issue GetIssueByNumberWithinJournal(ResearchJournal journal, int number);
+        public abstract Issue GetIssueByNumberWithinPublisher(Publisher publisher, int number);
 
         private static CentralRepository _instance;
         public static CentralRepository Instance

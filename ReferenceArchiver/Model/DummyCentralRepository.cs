@@ -11,6 +11,7 @@ namespace ReferenceArchiver.Model
         private List<Institution> _institutions;
         private List<Publisher> _publishers;
         private List<ResearchJournal> _journals;
+        private List<Issue> _issues;
 
         public DummyCentralRepository()
         {
@@ -45,6 +46,23 @@ namespace ReferenceArchiver.Model
                     });
                 }
             }
+
+            _issues = new List<Issue>();
+            foreach (var journal in _journals)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    _issues.Add(new Issue(journal)
+                    {
+                        IdWithinJournal = i,
+                        NumberWithinJournal = i,
+                        NumberWithinPublisher = _issues.Where(issue => issue.InstitutionId == journal.InstitutionId 
+                            && issue.PublisherId == journal.PublisherId).Count() + 1,
+                        Title = string.Format("Numer {0}", i),
+                        YearOfPublication = 2000 + i,
+                    });
+                }
+            }
         }
 
         public override IEnumerable<Institution> GetInstitutions()
@@ -76,6 +94,30 @@ namespace ReferenceArchiver.Model
 
             return _journals.Where(journal => journal.PublisherId == publisher.IdWithinInstitution
                 && journal.InstitutionId == publisher.InstitutionId);
+        }
+
+        public override IEnumerable<Issue> GetIssuesForJournal(ResearchJournal journal)
+        {
+            if (journal == null || journal.IdWithinPublisher < 0)
+                return Enumerable.Empty<Issue>();
+
+            return _issues.Where(issue => issue.InstitutionId == journal.InstitutionId 
+                && issue.PublisherId == journal.PublisherId && issue.JournalId == journal.IdWithinPublisher);
+        }
+
+        public override Issue GetIssueByNumberWithinJournal(ResearchJournal journal, int number)
+        {
+            return _issues.Where(issue => issue.InstitutionId == journal.InstitutionId 
+                && issue.PublisherId == journal.PublisherId 
+                && issue.JournalId == journal.IdWithinPublisher 
+                && issue.NumberWithinJournal == number).FirstOrDefault();
+        }
+
+        public override Issue GetIssueByNumberWithinPublisher(Publisher publisher, int number)
+        {
+            return _issues.Where(issue => issue.InstitutionId == publisher.InstitutionId
+                && issue.PublisherId == publisher.IdWithinInstitution
+                && issue.NumberWithinPublisher == number).FirstOrDefault();
         }
     }
 }
