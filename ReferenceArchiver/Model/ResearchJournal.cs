@@ -16,6 +16,13 @@ namespace ReferenceArchiver.Model
         public string Title { get; set; }           // tytul
         public string ISSN { get; set; }            // issn
 
+        public ResearchJournal()
+        {
+            InstitutionId = -1;
+            PublisherId = -1;
+            IdWithinPublisher = -1;
+        }
+
         public ResearchJournal( int id_inst, int id_wyd, int id, string title, string issn )
         {
             this.IdWithinPublisher = id_inst;

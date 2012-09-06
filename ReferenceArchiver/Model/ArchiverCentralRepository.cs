@@ -15,7 +15,7 @@ namespace ReferenceArchiver.Model
         // Connection Methods
         public ArchiverCentralRepository()
         {
-            m_connection = new OracleConnection(Properties.Settings.Default.ConnectionString);
+            m_connection = new OracleConnection(Properties.Resources.ConnectionString);
             m_connection.Open();
         }
 
@@ -126,7 +126,7 @@ namespace ReferenceArchiver.Model
                 while (reader.Read())
                 {
                     result.Add(new Issue(reader.GetInt16(0), reader.GetInt16(1), reader.GetInt16(2), reader.GetInt16(3), 
-                                         reader.GetInt16(4), reader.GetInt16(5), reader.GetString(6), reader.GetInt16(7), 
+                                         reader.GetInt16(4), reader.GetInt16(5), reader.GetString(6), reader["rok_wydania"] as int?, 
                                          reader.GetBoolean(8), reader.GetString(9), reader.GetString(10)));
                 }
             }
@@ -149,8 +149,8 @@ namespace ReferenceArchiver.Model
             {
                 while (reader.Read())
                 {
-                    result = new Issue(reader.GetInt16(0), reader.GetInt16(1), reader.GetInt16(2), reader.GetInt16(3), 
-                                         reader.GetInt16(4), reader.GetInt16(5), reader.GetString(6), reader.GetInt16(7), 
+                    result = new Issue(reader.GetInt16(0), reader.GetInt16(1), reader.GetInt16(2), reader.GetInt16(3),
+                                         reader.GetInt16(4), reader.GetInt16(5), reader.GetString(6), reader["rok_wydania"] as int?, 
                                          reader.GetBoolean(8), reader.GetString(9), reader.GetString(10));
                 }
             }
@@ -173,7 +173,7 @@ namespace ReferenceArchiver.Model
                 while (reader.Read())
                 {
                     result = new Issue(reader.GetInt16(0), reader.GetInt16(1), reader.GetInt16(2), reader.GetInt16(3),
-                                         reader.GetInt16(4), reader.GetInt16(5), reader.GetString(6), reader.GetInt16(7),
+                                         reader.GetInt16(4), reader.GetInt16(5), reader.GetString(6), reader["rok_wydania"] as int?, 
                                          reader.GetBoolean(8), reader.GetString(9), reader.GetString(10));
                 }
             }

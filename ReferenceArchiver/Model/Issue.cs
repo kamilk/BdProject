@@ -18,7 +18,7 @@ namespace ReferenceArchiver.Model
         public int NumberWithinPublisher;               // nr_w_wydawnictwie
 
         public string Title;                            // tytul_pl
-        public int YearOfPublication;                   // rok_wydania
+        public int? YearOfPublication;                  // rok_wydania
         public bool WasVerified;                        // fl_zwer
         public IssueType Type = IssueType.Symposium;    // typ
         public string TypeNumber;                       // nr_typ
@@ -40,7 +40,7 @@ namespace ReferenceArchiver.Model
         }
 
         public Issue(int id_inst, int id_wyd, int id_serie, int id_w_serii, int nr_w_serii, int nr_w_wydawnictwie,
-                        string tytul_pl, int rok_wydania, bool fl_zwer, string typ, string nr_typ)
+                        string tytul_pl, int? rok_wydania, bool fl_zwer, string typ, string nr_typ)
         {
             this.InstitutionId = id_inst;
             this.PublisherId = id_wyd;

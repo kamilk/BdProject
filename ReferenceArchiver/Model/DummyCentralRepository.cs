@@ -16,18 +16,18 @@ namespace ReferenceArchiver.Model
         public DummyCentralRepository()
         {
             _institutions = new List<Institution>();
-            _institutions.Add(new Institution("Politechnika Śląska", 1));
-            _institutions.Add(new Institution("Politechnika Wrocławska", 2));
-            _institutions.Add(new Institution("Politechnika Warszawska", 3));
-            _institutions.Add(new Institution("Uniwersytet Warszawski", 4));
-            _institutions.Add(new Institution("Akademia Górniczo-Hutnicza", 5));
+            _institutions.Add(new Institution(1, "Politechnika Śląska"));
+            _institutions.Add(new Institution(2, "Politechnika Wrocławska"));
+            _institutions.Add(new Institution(3, "Politechnika Warszawska"));
+            _institutions.Add(new Institution(4, "Uniwersytet Warszawski"));
+            _institutions.Add(new Institution(5, "Akademia Górniczo-Hutnicza"));
 
             _publishers = new List<Publisher>();
-            _publishers.Add(new Publisher("Wydawnictwo Politechniki Śląskiej", 1, 1));
-            _publishers.Add(new Publisher("Wydawnictwo Politechniki Wrocławskiej", 2, 1));
-            _publishers.Add(new Publisher("Wydawnictwo Politechniki Warszawskiej", 3, 1));
-            _publishers.Add(new Publisher("Wydawnictwo Uniwersytetu Warszawskiego", 4, 1));
-            _publishers.Add(new Publisher("Wydawnictwo AGH", 5, 1));
+            _publishers.Add(new Publisher(1, 1, "Wydawnictwo Politechniki Śląskiej"));
+            _publishers.Add(new Publisher(2, 1, "Wydawnictwo Politechniki Wrocławskiej"));
+            _publishers.Add(new Publisher(3, 1, "Wydawnictwo Politechniki Warszawskiej"));
+            _publishers.Add(new Publisher(4, 1, "Wydawnictwo Uniwersytetu Warszawskiego"));
+            _publishers.Add(new Publisher(5, 1, "Wydawnictwo AGH"));
 
             _journals = new List<ResearchJournal>();
             int issn = 2000;
