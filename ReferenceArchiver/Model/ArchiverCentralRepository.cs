@@ -44,7 +44,7 @@ namespace ReferenceArchiver.Model
             {
                 while (reader.Read())
                 {
-                    result.Add( new Institution(reader.GetInt16(0), reader.GetString(1)));
+                    result.Add( new Institution(int.Parse(reader.GetString(0)), reader.GetString(1)));
                 }
             }
 
@@ -62,7 +62,7 @@ namespace ReferenceArchiver.Model
             {
                 while (reader.Read())
                 {
-                    result.Add( new Publisher(reader.GetInt16(0), reader.GetInt16(1), reader.GetString(2)));
+                    result.Add( new Publisher(int.Parse(reader.GetString(0)), int.Parse(reader.GetString(1)), reader.GetString(2)));
                 }  
             }
 
@@ -75,7 +75,7 @@ namespace ReferenceArchiver.Model
 
             // TODO FIX WARN: Nie jestem pewny czy tu ma byc id czy id_inst
             command.CommandText = "SELECT * FROM FILO.Wydawnictwa WHERE id_inst = :pId";
-            command.Parameters.Add(institution.Id);
+            command.Parameters.Add(new OracleParameter("pId", institution.Id));
 
             List<Publisher> result = new List<Publisher>();
 
@@ -94,8 +94,8 @@ namespace ReferenceArchiver.Model
         {
             var command = m_connection.CreateCommand();
             command.CommandText = "SELECT * FROM FILO.Serie WHERE id_inst = :pId_Inst AND id_wyd = :pId_Wyd";
-            command.Parameters.Add(publisher.InstitutionId);
-            command.Parameters.Add(publisher.IdWithinInstitution);
+            command.Parameters.Add(new OracleParameter("pId", publisher.InstitutionId));
+            command.Parameters.Add(new OracleParameter("pId_Wyd", publisher.IdWithinInstitution));
 
             List<ResearchJournal> result = new List<ResearchJournal>();
 
@@ -103,7 +103,7 @@ namespace ReferenceArchiver.Model
             {
                 while (reader.Read())
                 {
-                    result.Add(new ResearchJournal(reader.GetInt16(0), reader.GetInt16(1), reader.GetInt16(2), 
+                    result.Add(new ResearchJournal(int.Parse(reader.GetString(0)), int.Parse(reader.GetString(1)), int.Parse(reader.GetString(2)), 
                                                    reader.GetString(3), reader.GetString(4)));
                 }
             }

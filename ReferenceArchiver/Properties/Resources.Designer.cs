@@ -61,7 +61,7 @@ namespace ReferenceArchiver.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DATA SOURCE=//localhost/;PASSWORD=pass;USER ID=kamil.
+        ///   Looks up a localized string similar to DATA SOURCE=//localhost/;PASSWORD=pass;USER ID=filo.
         /// </summary>
         internal static string ConnectionString {
             get {

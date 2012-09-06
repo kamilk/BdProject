@@ -21,7 +21,7 @@ namespace ReferenceArchiver.Model
             get
             {
                 if (_instance == null)
-                    _instance = new DummyCentralRepository();
+                    _instance = new ArchiverCentralRepository();
                 return _instance;
             }
         }
