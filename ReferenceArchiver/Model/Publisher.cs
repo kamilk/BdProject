@@ -10,9 +10,9 @@ namespace ReferenceArchiver.Model
     /// </summary>
     class Publisher
     {
-        public int IdWithinInstitution { get; set; }
-        public int InstitutionId { get; set; }
-        public string Title { get; set; }
+        public int InstitutionId { get; set; }          // id_inst
+        public int IdWithinInstitution { get; set; }    // id
+        public string Title { get; set; }               // tytul
 
         public Publisher()
         {
@@ -20,11 +20,11 @@ namespace ReferenceArchiver.Model
             this.IdWithinInstitution = -1;
         }
 
-        public Publisher(string title, int institutionId, int id)
+        public Publisher(int id_inst, int id, string title)
         {
+            this.IdWithinInstitution = id_inst;
+            this.InstitutionId = id;
             this.Title = title;
-            this.InstitutionId = institutionId;
-            this.IdWithinInstitution = id;
         }
 
         public override string ToString()

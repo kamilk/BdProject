@@ -10,18 +10,18 @@ namespace ReferenceArchiver.Model
     /// </summary>
     class Institution
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int Id { get; set; }         // id
+        public string Name { get; set; }    // nazwa
 
         public Institution()
         {
             this.Id = -1;
         }
 
-        public Institution(string name, int id)
+        public Institution(int id, string name)
         {
-            this.Name = name;
             this.Id = id;
+            this.Name = name;
         }
 
         public override string ToString()
