@@ -10,15 +10,15 @@ namespace ReferenceArchiver.Model
     /// </summary>
     class Institution
     {
-        public int Id { get; set; }         // id
+        public string Id { get; set; }      // id
         public string Name { get; set; }    // nazwa
 
         public Institution()
         {
-            this.Id = -1;
+
         }
 
-        public Institution(int id, string name)
+        public Institution(string id, string name)
         {
             this.Id = id;
             this.Name = name;

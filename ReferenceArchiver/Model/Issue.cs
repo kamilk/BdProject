@@ -10,9 +10,9 @@ namespace ReferenceArchiver.Model
     /// </summary>
     class Issue
     {
-        public int InstitutionId;                       // id_inst
-        public int PublisherId;                         // id_wyd
-        public int JournalId;                           // id_serie
+        public string InstitutionId;                    // id_inst
+        public string PublisherId;                      // id_wyd
+        public string JournalId;                        // id_serie
         public int IdWithinJournal;                     // id_w_serii
         public int NumberWithinJournal;                 // nr_w_serii
         public int NumberWithinPublisher;               // nr_w_wydawnictwie
@@ -25,9 +25,6 @@ namespace ReferenceArchiver.Model
 
         public Issue()
         {
-            InstitutionId = -1;
-            PublisherId = -1;
-            JournalId = -1;
             IdWithinJournal = -1;
         }
 
@@ -39,7 +36,7 @@ namespace ReferenceArchiver.Model
             IdWithinJournal = -1;
         }
 
-        public Issue(int id_inst, int id_wyd, int id_serie, int id_w_serii, int nr_w_serii, int nr_w_wydawnictwie,
+        public Issue(string id_inst, string id_wyd, string id_serie, int id_w_serii, int nr_w_serii, int nr_w_wydawnictwie,
                         string tytul_pl, int? rok_wydania, bool fl_zwer, string typ, string nr_typ)
         {
             this.InstitutionId = id_inst;

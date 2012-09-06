@@ -16,18 +16,18 @@ namespace ReferenceArchiver.Model
         public DummyCentralRepository()
         {
             _institutions = new List<Institution>();
-            _institutions.Add(new Institution(1, "Politechnika Śląska"));
-            _institutions.Add(new Institution(2, "Politechnika Wrocławska"));
-            _institutions.Add(new Institution(3, "Politechnika Warszawska"));
-            _institutions.Add(new Institution(4, "Uniwersytet Warszawski"));
-            _institutions.Add(new Institution(5, "Akademia Górniczo-Hutnicza"));
+            _institutions.Add(new Institution("1", "Politechnika Śląska"));
+            _institutions.Add(new Institution("2", "Politechnika Wrocławska"));
+            _institutions.Add(new Institution("3", "Politechnika Warszawska"));
+            _institutions.Add(new Institution("4", "Uniwersytet Warszawski"));
+            _institutions.Add(new Institution("5", "Akademia Górniczo-Hutnicza"));
 
             _publishers = new List<Publisher>();
-            _publishers.Add(new Publisher(1, 1, "Wydawnictwo Politechniki Śląskiej"));
-            _publishers.Add(new Publisher(2, 1, "Wydawnictwo Politechniki Wrocławskiej"));
-            _publishers.Add(new Publisher(3, 1, "Wydawnictwo Politechniki Warszawskiej"));
-            _publishers.Add(new Publisher(4, 1, "Wydawnictwo Uniwersytetu Warszawskiego"));
-            _publishers.Add(new Publisher(5, 1, "Wydawnictwo AGH"));
+            _publishers.Add(new Publisher("1", "1", "Wydawnictwo Politechniki Śląskiej"));
+            _publishers.Add(new Publisher("2", "1", "Wydawnictwo Politechniki Wrocławskiej"));
+            _publishers.Add(new Publisher("3", "1", "Wydawnictwo Politechniki Warszawskiej"));
+            _publishers.Add(new Publisher("4", "1", "Wydawnictwo Uniwersytetu Warszawskiego"));
+            _publishers.Add(new Publisher("5", "1", "Wydawnictwo AGH"));
 
             _journals = new List<ResearchJournal>();
             int issn = 2000;
@@ -40,7 +40,7 @@ namespace ReferenceArchiver.Model
                     {
                         InstitutionId = publisher.InstitutionId,
                         PublisherId = publisher.IdWithinInstitution,
-                        IdWithinPublisher = idWithingPublisher++,
+                        IdWithinPublisher = (idWithingPublisher++).ToString(),
                         ISSN = string.Format("2000-{0}", issn++),
                         Title = string.Format("{0} - {1}", publisher.Title, title)
                     });
@@ -77,7 +77,7 @@ namespace ReferenceArchiver.Model
 
         public override IEnumerable<Publisher> GetPublishersForInstitution(Institution institution)
         {
-            if (institution.Id < 0)
+            if (institution.Id == null)
                 yield break;
 
             foreach (var publisher in _publishers)
@@ -89,7 +89,7 @@ namespace ReferenceArchiver.Model
 
         public override IEnumerable<ResearchJournal> GetJournalsForPublisher(Publisher publisher)
         {
-            if (publisher == null || publisher.IdWithinInstitution < 0)
+            if (publisher == null || publisher.IdWithinInstitution == null)
                 return Enumerable.Empty<ResearchJournal>();
 
             return _journals.Where(journal => journal.PublisherId == publisher.IdWithinInstitution
@@ -98,7 +98,7 @@ namespace ReferenceArchiver.Model
 
         public override IEnumerable<Issue> GetIssuesForJournal(ResearchJournal journal)
         {
-            if (journal == null || journal.IdWithinPublisher < 0)
+            if (journal == null || journal.IdWithinPublisher == null)
                 return Enumerable.Empty<Issue>();
 
             return _issues.Where(issue => issue.InstitutionId == journal.InstitutionId 
@@ -118,6 +118,36 @@ namespace ReferenceArchiver.Model
             return _issues.Where(issue => issue.InstitutionId == publisher.InstitutionId
                 && issue.PublisherId == publisher.IdWithinInstitution
                 && issue.NumberWithinPublisher == number).FirstOrDefault();
+        }
+
+        public override IEnumerable<Article> GetArticlesFromIssue(Issue issue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool SaveInstitution(Institution institution)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool SavePublisher(Publisher publisher)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool SaveResearchJournal(ResearchJournal journal)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool SaveIssue(Issue issue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool SaveArticle(Article article)
+        {
+            throw new NotImplementedException();
         }
     }
 }

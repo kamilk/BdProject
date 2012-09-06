@@ -10,20 +10,16 @@ namespace ReferenceArchiver.Model
     /// </summary>
     class ResearchJournal
     {
-        public int InstitutionId { get; set; }      // id_inst
-        public int PublisherId { get; set; }        // id_wyd
-        public int IdWithinPublisher { get; set; }  // id
-        public string Title { get; set; }           // tytul
-        public string ISSN { get; set; }            // issn
+        public string InstitutionId { get; set; }      // id_inst
+        public string PublisherId { get; set; }        // id_wyd
+        public string IdWithinPublisher { get; set; }  // id
+        public string Title { get; set; }              // tytul
+        public string ISSN { get; set; }               // issn
 
         public ResearchJournal()
-        {
-            InstitutionId = -1;
-            PublisherId = -1;
-            IdWithinPublisher = -1;
-        }
+        { }
 
-        public ResearchJournal( int id_inst, int id_wyd, int id, string title, string issn )
+        public ResearchJournal(string id_inst, string id_wyd, string id, string title, string issn)
         {
             this.IdWithinPublisher = id_inst;
             this.InstitutionId = id_wyd;

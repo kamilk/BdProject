@@ -7,6 +7,7 @@ namespace ReferenceArchiver.Model
 {
     abstract class CentralRepository
     {
+        // Get
         public abstract IEnumerable<Institution> GetInstitutions();
         public abstract IEnumerable<Publisher> GetPublishers();
         public abstract IEnumerable<Publisher> GetPublishersForInstitution(Institution institution);
@@ -14,6 +15,14 @@ namespace ReferenceArchiver.Model
         public abstract IEnumerable<Issue> GetIssuesForJournal(ResearchJournal journal);
         public abstract Issue GetIssueByNumberWithinJournal(ResearchJournal journal, int number);
         public abstract Issue GetIssueByNumberWithinPublisher(Publisher publisher, int number);
+        public abstract IEnumerable<Article> GetArticlesFromIssue(Issue issue);
+
+        // Save
+        public abstract bool SaveInstitution(Institution institution);
+        public abstract bool SavePublisher(Publisher publisher);
+        public abstract bool SaveResearchJournal(ResearchJournal journal);
+        public abstract bool SaveIssue(Issue issue);
+        public abstract bool SaveArticle(Article article);
 
         private static CentralRepository _instance;
         public static CentralRepository Instance
