@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace ReferenceArchiver.ViewModel.Helpers
 {
-    class WizardPageManager : INotifyPropertyChanged
+    internal class WizardPageManager : INotifyPropertyChanged
     {
         List<WizardPageViewModelBase> _pages = new List<WizardPageViewModelBase>();
 
@@ -65,7 +65,7 @@ namespace ReferenceArchiver.ViewModel.Helpers
                 EndReached(this, new EventArgs());
 
             oldPage.OnNavigatedFromForward();
-            CurrentPage.OnNavigatedTo();
+            CurrentPage.OnNavigatedTo(NavigationDirection.Forward);
 
             NotfiyNavigateForwardBackwardMightHaveChanged();
         }
@@ -80,7 +80,7 @@ namespace ReferenceArchiver.ViewModel.Helpers
                 BeginningReached(this, new EventArgs());
 
             oldPage.OnNavigatedFromBackward();
-            CurrentPage.OnNavigatedTo();
+            CurrentPage.OnNavigatedTo(NavigationDirection.Backward);
 
             NotfiyNavigateForwardBackwardMightHaveChanged();
         }

@@ -81,6 +81,7 @@
     <Compile Include="ViewModel\ChooseResearchJournalPageViewModel.cs" />
     <Compile Include="ViewModel\Helpers\DelegateCommand.cs" />
     <Compile Include="ViewModel\Helpers\IssueTypeWrapper.cs" />
+    <Compile Include="ViewModel\Helpers\NavigationDirection.cs" />
     <Compile Include="ViewModel\Helpers\SearchableCollectionViewWrapper.cs" />
     <Compile Include="View\Helpers.cs" />
     <Compile Include="ViewModel\WizardControlViewModel.cs" />

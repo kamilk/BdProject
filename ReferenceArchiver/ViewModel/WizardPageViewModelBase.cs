@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using ReferenceArchiver.ViewModel.Helpers;
 
 namespace ReferenceArchiver.ViewModel
 {
@@ -38,7 +39,7 @@ namespace ReferenceArchiver.ViewModel
             IsDataLockedIn = false;
         }
 
-        public void OnNavigatedTo()
+        public virtual void OnNavigatedTo(NavigationDirection direction)
         {
             IsDataLockedIn = false;
         }

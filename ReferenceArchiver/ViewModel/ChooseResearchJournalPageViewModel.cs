@@ -38,15 +38,23 @@ namespace ReferenceArchiver.ViewModel
 
         public ChooseResearchJournalPageViewModel(WizardViewModel parent)
             : base(parent)
-        {
-            ICollectionView researchJournalsCollectionView = new CollectionViewSource 
-            {
-                Source = CentralRepository.Instance.GetJournalsForPublisher(CentralRepository.Instance.GetPublishers().FirstOrDefault()).ToList() 
-            }.View;
+        { }
 
-            _researchJournals = new SearchableCollectionViewWrapper<ResearchJournal>(
-                researchJournalsCollectionView,
-                journal => journal.Title);
+        public override void OnNavigatedTo(NavigationDirection direction)
+        {
+            base.OnNavigatedTo(direction);
+
+            if (direction == NavigationDirection.Forward)
+            {
+                ICollectionView researchJournalsCollectionView = new CollectionViewSource
+                {
+                    Source = CentralRepository.Instance.GetJournalsForPublisher(CentralRepository.Instance.GetPublishers().FirstOrDefault()).ToList()
+                }.View;
+
+                _researchJournals = new SearchableCollectionViewWrapper<ResearchJournal>(
+                    researchJournalsCollectionView,
+                    journal => journal.Title);
+            }
         }
     }
 }

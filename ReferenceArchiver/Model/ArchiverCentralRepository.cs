@@ -10,11 +10,14 @@ namespace ReferenceArchiver.Model
 {
     class ArchiverCentralRepository : CentralRepository
     {
+        #region Fields
+
         private DbConnection m_connection;
 
-        //------------------------------------------------------------------------------------------------------------------------
-        // Connection Methods
-        //------------------------------------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Connection methods
+
         public ArchiverCentralRepository()
         {
             m_connection = new OracleConnection(Properties.Resources.ConnectionString);
@@ -34,9 +37,10 @@ namespace ReferenceArchiver.Model
             m_connection.Close();
         }
 
-        //------------------------------------------------------------------------------------------------------------------------
-        // Get Methods
-        //------------------------------------------------------------------------------------------------------------------------
+        #endregion
+
+        #region Get methods
+
         public override IEnumerable<Institution> GetInstitutions()
         {
             var command = m_connection.CreateCommand();
@@ -226,10 +230,10 @@ namespace ReferenceArchiver.Model
             return result;
         }
 
+        #endregion
 
-        //------------------------------------------------------------------------------------------------------------------------
-        // Save Methods
-        //------------------------------------------------------------------------------------------------------------------------
+        #region Save methods
+
         public override bool SaveInstitution(Institution institution)
         {
             var command = m_connection.CreateCommand();
@@ -325,5 +329,7 @@ namespace ReferenceArchiver.Model
 
             return true;
         }
+
+        #endregion
     }
 }
