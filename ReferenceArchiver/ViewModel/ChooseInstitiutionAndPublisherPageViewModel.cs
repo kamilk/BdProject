@@ -10,14 +10,22 @@ namespace ReferenceArchiver.ViewModel
 {
     class ChooseInstitiutionAndPublisherPageViewModel : WizardPageViewModelBase
     {
+        #region Fields
+
         private bool _selectedInstitutionIsNull;
+        private SearchableCollectionViewWrapper<Institution> _institutions;
+        private SearchableCollectionViewWrapper<Publisher> _publishers;
+        private DelegateCommand _deselectInstitutionCommand;
+
+        #endregion
+
+        #region Bound properties
 
         public override string Title
         {
             get { return "Wybierz instytucję i wydawnictwo"; }
         }
 
-        private SearchableCollectionViewWrapper<Institution> _institutions;
         public ICollectionView Institutions
         {
             get
@@ -26,7 +34,6 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
-        private SearchableCollectionViewWrapper<Publisher> _publishers;
         public ICollectionView Publishers
         {
             get
@@ -79,7 +86,6 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
-        private DelegateCommand _deselectInstitutionCommand;
         public ICommand DeselectInstitutionCommand
         {
             get
@@ -101,6 +107,10 @@ namespace ReferenceArchiver.ViewModel
                 return _deselectInstitutionCommand;
             }
         }
+
+        #endregion
+
+        #region Constructors
 
         public ChooseInstitiutionAndPublisherPageViewModel(WizardViewModel parent, List<Institution> institutions, List<Publisher> publishers)
             : base(parent)
@@ -125,6 +135,10 @@ namespace ReferenceArchiver.ViewModel
             Publishers.CurrentChanged += new EventHandler(Publishers_CurrentChanged);
             Publishers.MoveCurrentTo(null);
         }
+
+        #endregion
+
+        #region Methods
 
         public override bool IsDataComplete
         {
@@ -182,5 +196,7 @@ namespace ReferenceArchiver.ViewModel
                 }
             }
         }
+
+        #endregion
     }
 }

@@ -11,6 +11,14 @@ namespace ReferenceArchiver.ViewModel
 {
     class ChooseResearchJournalPageViewModel : WizardPageViewModelBase
     {
+        #region Fields
+
+        SearchableCollectionViewWrapper<ResearchJournal> _researchJournals;
+
+        #endregion
+
+        #region Bound properties
+
         public override string Title
         {
             get { return "Wybierz serię"; }
@@ -19,7 +27,6 @@ namespace ReferenceArchiver.ViewModel
         public ResearchJournal SelectedJournal
         { get { return ResearchJournals.CurrentItem as ResearchJournal; } }
 
-        SearchableCollectionViewWrapper<ResearchJournal> _researchJournals;
         public ICollectionView ResearchJournals
         {
             get { return _researchJournals.CollectionView; }
@@ -36,9 +43,17 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
+        #endregion
+
+        #region Constructors
+
         public ChooseResearchJournalPageViewModel(WizardViewModel parent)
             : base(parent)
         { }
+
+        #endregion
+
+        #region Methods
 
         public override void OnNavigatedTo(NavigationDirection direction)
         {
@@ -56,5 +71,7 @@ namespace ReferenceArchiver.ViewModel
                     journal => journal.Title);
             }
         }
+
+        #endregion
     }
 }

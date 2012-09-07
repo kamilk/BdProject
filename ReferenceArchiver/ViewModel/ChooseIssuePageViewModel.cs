@@ -11,14 +11,24 @@ namespace ReferenceArchiver.ViewModel
 {
     class ChooseIssuePageViewModel : WizardPageViewModelBase
     {
+        #region Fields
+
         private static readonly ICollection<IssueTypeWrapper> _issueTypeWrappers = IssueTypeWrapper.GetAllIssueTypes();
+        private Issue _selectedIssue;
+        private int? _numberWithinJournal;
+        private int? _numberWithinPublisher;
+        private ICollectionView _issueTypes;
+        private DelegateCommand _searchByNumberWithinJournalCommand;
+
+        #endregion
+
+        #region Bound properties
 
         public override string Title
         {
             get { return "Wybierz zeszyt"; }
         }
 
-        private Issue _selectedIssue;
         public Issue SelectedIssue 
         {
             get { return _selectedIssue; }
@@ -29,7 +39,6 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
-        private int? _numberWithinJournal;
         public int? NumberWithinJournal
         {
             get { return _numberWithinJournal; }
@@ -40,7 +49,6 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
-        private int? _numberWithinPublisher;
         public int? NumberWithinPublisher
         {
             get { return _numberWithinPublisher; }
@@ -83,7 +91,6 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
-        private ICollectionView _issueTypes;
         public ICollectionView IssueTypes
         {
             get
@@ -109,7 +116,6 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
-        private DelegateCommand _searchByNumberWithinJournalCommand;
         public ICommand SearchByNumberWithinJournalCommand
         {
             get
@@ -133,9 +139,17 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
+        #endregion
+
+        #region Constructors
+
         public ChooseIssuePageViewModel(WizardViewModel parent)
             : base(parent)
         { }
+
+        #endregion
+
+        #region Methods
 
         private void FillIssueData(Issue issue)
         {
@@ -174,5 +188,7 @@ namespace ReferenceArchiver.ViewModel
                 _selectedIssue.Type = issueTypeWrapper.Value;
             }
         }
+
+        #endregion
     }
 }
