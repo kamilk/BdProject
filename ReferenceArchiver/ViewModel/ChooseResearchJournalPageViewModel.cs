@@ -63,12 +63,13 @@ namespace ReferenceArchiver.ViewModel
             {
                 ICollectionView researchJournalsCollectionView = new CollectionViewSource
                 {
-                    Source = CentralRepository.Instance.GetJournalsForPublisher(CentralRepository.Instance.GetPublishers().FirstOrDefault()).ToList()
+                    Source = CentralRepository.Instance.GetJournalsForPublisher(WizardViewModel.SelectedPublisher).ToList()
                 }.View;
 
                 _researchJournals = new SearchableCollectionViewWrapper<ResearchJournal>(
                     researchJournalsCollectionView,
                     journal => journal.Title);
+                NotifyPropertyChanged("ResearchJournals");
             }
         }
 
