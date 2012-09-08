@@ -46,7 +46,7 @@ namespace ReferenceArchiver.ViewModel
             get
             {
                 if (_switchToExternalPublisherCommand == null)
-                    _switchToExternalPublisherCommand = new DelegateCommand(SwitchToStandardPublisher);
+                    _switchToExternalPublisherCommand = new DelegateCommand(SwitchToExternalPublisher);
                 return _switchToExternalPublisherCommand;
             }
         }

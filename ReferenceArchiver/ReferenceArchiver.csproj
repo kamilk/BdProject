@@ -103,8 +103,8 @@
     <Compile Include="View\ChooseIssueView.xaml.cs">
       <DependentUpon>ChooseIssueView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ChoosePublisherForFootnoteView.xaml.cs">
-      <DependentUpon>ChoosePublisherForFootnoteView.xaml</DependentUpon>
+    <Compile Include="View\ChoosePublisherForReferenceView.xaml.cs">
+      <DependentUpon>ChoosePublisherForReferenceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ChooseResearchJournalView.xaml.cs">
       <DependentUpon>ChooseResearchJournalView.xaml</DependentUpon>
@@ -150,7 +150,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ChoosePublisherForFootnoteView.xaml">
+    <Page Include="View\ChoosePublisherForReferenceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
