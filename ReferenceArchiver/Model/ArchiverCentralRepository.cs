@@ -152,7 +152,7 @@ namespace ReferenceArchiver.Model
             var command = m_connection.CreateCommand();
             command.CommandText = 
                 "SELECT ID_INST, ID_WYD, ID_SERIE, ID_W_SERII, NR_W_SERII, NR_W_WYDAWNICTWIE, TYTUL_PL, ROK_WYDANIA, FL_ZWER, TYP, NR_TYP " +
-                "FROM FROM filo.ZESZYTY " +
+                "FROM filo.ZESZYTY " +
                 "WHERE ID_INST = :pId_Inst AND ID_WYD = :pId_Wyd AND ID_SERIE = :pId_Serie AND NR_W_SERII = :pNr_W_Serii";
             
             command.Parameters.Add(new OracleParameter("Id_Inst", journal.InstitutionId));
@@ -180,7 +180,7 @@ namespace ReferenceArchiver.Model
             var command = m_connection.CreateCommand();
             command.CommandText = 
                 "SELECT ID_INST, ID_WYD, ID_SERIE, ID_W_SERII, NR_W_SERII, NR_W_WYDAWNICTWIE, TYTUL_PL, ROK_WYDANIA, FL_ZWER, TYP, NR_TYP " +
-                "FROM FROM filo.ZESZYTY " +
+                "FROM filo.ZESZYTY " +
                 "WHERE ID_INST = :pId_Inst AND ID_WYD = :pId_Wyd AND NR_W_WYDAWNICTWIE = :pNr_W_Wyd";
             
             command.Parameters.Add(new OracleParameter("Id_Inst", publisher.InstitutionId));
