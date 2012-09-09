@@ -149,5 +149,180 @@ namespace ReferenceArchiver.Model
         {
             throw new NotImplementedException();
         }
+
+        public override IEnumerable<Category> GetArticleCategories(Article article)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Article> GetArticlesByCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override AlienPublisher GetAlienPublisherForArticle(Article article)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Category GetAboveCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Author> GetArticleAuthors(Article article)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Article> GetArticlesByKeyword(Keyword keyword)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<Article> GetAnnotationsForArticle(Article article, int number = -1)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool SaveAlienPublisher(AlienPublisher alien_publisher)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool SaveCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool SaveAuthor(Author author)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool SaveKeyword(Keyword keyword)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool AddCategoryToArticle(Article article, Category category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool AddAnnotationToArticle(Article article, Article annotation, int annotation_number)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool AddAuthorshipToArticle(Article article, Author author, int authorship_number)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeleteInstitution(Institution institution)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeletePublisher(Publisher publisher)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeleteResearchJournal(ResearchJournal journal)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeleteIssue(Issue issue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeleteArticle(Article article)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeleteAlienPublisher(AlienPublisher alien_publisher)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeleteCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeleteAuthor(Author author)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeleteKeyword(Keyword keyword)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeleteAuthorshipFromArticle(Article article, Author author, int authorship_number)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeleteAnnotationFromArticle(Article article, Article annotation, int annotation_number)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeleteCategoryFromArticle(Article article, Category category, bool delete_all = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool UpdateInstitution(Institution institution)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool UpdatePublisher(Publisher publisher)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool UpdateResearchJournal(ResearchJournal journal)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool UpdateIssue(Issue issue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool UpdateArticle(Article article)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool UpdateAlienPublisher(AlienPublisher alien_publisher)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool UpdateCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool UpdateAuthor(Author author)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool UpdateKeyword(Keyword keyword)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

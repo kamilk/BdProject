@@ -307,7 +307,7 @@ namespace ReferenceArchiver.Model
         }
 
         // RETURNS NULL WHEN ABOVECATEGORY IS NULL
-        public abstract Category GetAboveCategory(Category category)
+        public override Category GetAboveCategory(Category category)
         {
             if (!category.AboveCategory.HasValue)
                 return null;
@@ -333,7 +333,7 @@ namespace ReferenceArchiver.Model
             return result;
         }
 
-        public abstract IEnumerable<Author> GetArticleAuthors(Article article)
+        public override IEnumerable<Author> GetArticleAuthors(Article article)
         {
             var command = m_connection.CreateCommand();
             command.CommandText =
@@ -383,7 +383,7 @@ namespace ReferenceArchiver.Model
             return result;
         }
 
-        public abstract IEnumerable<Article> GetAnnotationsForArticle(Article article, int number = -1)
+        public override IEnumerable<Article> GetAnnotationsForArticle(Article article, int number = -1)
         {
             var command = m_connection.CreateCommand();
 
@@ -839,7 +839,7 @@ namespace ReferenceArchiver.Model
                 "SET NAZWA = :pNazwa " +
                 "WHERE ID = :pId";
 
-            command.Parameters.Add(new OracleParameter("Nazwa", institution.Nazwa));
+            command.Parameters.Add(new OracleParameter("Nazwa", institution.Name));
             command.Parameters.Add(new OracleParameter("Id", institution.Id));
 
             if (command.ExecuteNonQuery() < 1)
