@@ -10,5 +10,19 @@ namespace ReferenceArchiver.Model
     /// </summary>
     class Author
     {
+        public int Id;
+        public string LastName;
+        public string Name;
+        public string Name2;
+        public string Nationality;
+
+        public Author(int id, string nazwisko, string imie, string imie2, string narodowosc)
+        {
+            this.Id = id;
+            this.LastName = nazwisko;
+            this.Name = imie;
+            this.Name2 = imie2;
+            this.Nationality = narodowosc;
+        }
     }
 }
