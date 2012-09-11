@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using ReferenceArchiver.Model;
 using ReferenceArchiver.ViewModel.Helpers;
+using System.Collections.ObjectModel;
 
 namespace ReferenceArchiver.ViewModel
 {
@@ -14,6 +15,7 @@ namespace ReferenceArchiver.ViewModel
         #region Fields
 
         SearchableCollectionViewWrapper<ResearchJournal> _researchJournals;
+        ObservableCollection<ResearchJournal> _journalsCollection;
 
         #endregion
 
@@ -61,9 +63,12 @@ namespace ReferenceArchiver.ViewModel
 
             if (direction == NavigationDirection.Forward)
             {
+                _journalsCollection = new ObservableCollection<ResearchJournal>(
+                    CentralRepository.Instance.GetJournalsForPublisher(WizardViewModel.SelectedPublisher));
+
                 ICollectionView researchJournalsCollectionView = new CollectionViewSource
                 {
-                    Source = CentralRepository.Instance.GetJournalsForPublisher(WizardViewModel.SelectedPublisher).ToList()
+                    Source = _journalsCollection
                 }.View;
 
                 _researchJournals = new SearchableCollectionViewWrapper<ResearchJournal>(
@@ -71,6 +76,12 @@ namespace ReferenceArchiver.ViewModel
                     journal => journal.Title);
                 NotifyPropertyChanged("ResearchJournals");
             }
+        }
+
+        public void AddAndSelectJournal(ResearchJournal journal)
+        {
+            _journalsCollection.Add(journal);
+            _researchJournals.CollectionView.MoveCurrentTo(journal);
         }
 
         #endregion

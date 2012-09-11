@@ -38,8 +38,9 @@ namespace ReferenceArchiver.View
             Publisher publisher = viewModel.WizardViewModel.SelectedPublisher;
             if (titleBox.Text != "")
             {
-                ResearchJournal reasearchJournal = new ResearchJournal(publisher.InstitutionId, publisher.IdWithinInstitution, null, titleBox.Text, issnBox.Text);
-                ArchiverCentralRepository.Instance.SaveResearchJournal(reasearchJournal);
+                ResearchJournal researchJournal = new ResearchJournal(publisher.InstitutionId, publisher.IdWithinInstitution, null, titleBox.Text, issnBox.Text);
+                ArchiverCentralRepository.Instance.SaveResearchJournal(researchJournal);
+                viewModel.AddAndSelectJournal(researchJournal);
             }
             else
             {
