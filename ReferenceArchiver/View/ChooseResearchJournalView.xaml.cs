@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ReferenceArchiver.ViewModel;
+using ReferenceArchiver.Model;
 
 namespace ReferenceArchiver.View
 {
@@ -19,6 +21,8 @@ namespace ReferenceArchiver.View
     /// </summary>
     public partial class ChooseResearchJournalView : UserControl
     {
+        private ChooseResearchJournalPageViewModel viewModel;
+
         public ChooseResearchJournalView()
         {
             InitializeComponent();
@@ -27,6 +31,25 @@ namespace ReferenceArchiver.View
         private void journalSearchString_TextChanged(object sender, TextChangedEventArgs e)
         {
             journalSearchString.UpdateTextBinding();
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            Publisher publisher = viewModel.WizardViewModel.SelectedPublisher;
+            if (titleBox.Text != "")
+            {
+                ResearchJournal reasearchJournal = new ResearchJournal(publisher.InstitutionId, publisher.IdWithinInstitution, null, titleBox.Text, issnBox.Text);
+                ArchiverCentralRepository.Instance.SaveResearchJournal(reasearchJournal);
+            }
+            else
+            {
+                MessageBox.Show("Nie podano tytułu!");
+            }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            viewModel = (ChooseResearchJournalPageViewModel)DataContext;
         }
     }
 }

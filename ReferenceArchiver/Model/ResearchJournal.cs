@@ -21,9 +21,9 @@ namespace ReferenceArchiver.Model
 
         public ResearchJournal(string id_inst, string id_wyd, string id, string title, string issn)
         {
-            this.IdWithinPublisher = id_inst;
-            this.InstitutionId = id_wyd;
-            this.PublisherId = id;
+            this.IdWithinPublisher = id;
+            this.InstitutionId = id_inst;
+            this.PublisherId = id_wyd;
             this.Title = title;
             this.ISSN = issn;
         }

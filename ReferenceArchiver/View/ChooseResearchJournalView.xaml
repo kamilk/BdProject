@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded">
     <Grid>
         <GroupBox Header="Wybierz serię" Name="groupBox1" Margin="0,0,0,136">
             <Grid>
@@ -22,9 +22,9 @@
             <Grid>
                 <Label Content="Tytuł" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label1" VerticalAlignment="Top" />
                 <Label Content="ISSN" Height="28" HorizontalAlignment="Left" Margin="6,40,0,0" Name="label2" VerticalAlignment="Top" />
-                <TextBox Height="23" Margin="48,8,6,0" Name="textBox1" VerticalAlignment="Top" />
-                <TextBox Height="23" Margin="48,42,6,0" Name="textBox2" VerticalAlignment="Top" />
-                <Button Content="Dodaj" Height="23" HorizontalAlignment="Left" Margin="6,74,0,0" Name="button1" VerticalAlignment="Top" Width="75" />
+                <TextBox Height="23" Margin="48,8,6,0" Name="titleBox" VerticalAlignment="Top" />
+                <TextBox Margin="48,42,6,0" Name="issnBox" Height="23" VerticalAlignment="Top" />
+                <Button Content="Dodaj" Height="23" HorizontalAlignment="Left" Margin="6,74,0,0" Name="addButton" VerticalAlignment="Top" Width="75" Click="button1_Click" />
             </Grid>
         </GroupBox>
     </Grid>
