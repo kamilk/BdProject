@@ -138,8 +138,8 @@ namespace ReferenceArchiver.Model
             {
                 while (reader.Read())
                 {
-                    result.Add(new Issue(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt16(3), 
-                                         reader.GetInt16(4), reader.GetInt16(5), reader.GetString(6), reader.GetInt16(7), 
+                    result.Add(new Issue(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt16(3),
+                                         reader.GetInt16(4), reader.GetInt16(5), reader.GetString(6), reader["ROK_WYDANIA"] as int?, 
                                          reader.GetBoolean(8), reader.GetString(9), reader.GetString(10)));
                 }
             }
@@ -166,8 +166,8 @@ namespace ReferenceArchiver.Model
             {
                 while (reader.Read())
                 {
-                    result = new Issue(reader.GetString(0), reader.GetString(1), reader.GetString(2), (int)reader["ID_W_SERII"], 
-                                         (int)reader["NR_W_SERII"], (int)reader["NR_W_WYDAWNICTWIE"], reader.GetString(6), reader["ROK_WYDANIA"] as int?, 
+                    result = new Issue(reader.GetString(0), reader.GetString(1), reader.GetString(2), (int)reader["ID_W_SERII"],
+                                         (int)reader["NR_W_SERII"], (int)reader["NR_W_WYDAWNICTWIE"], reader.GetString(6), reader["ROK_WYDANIA"] as short?, 
                                          ((string)reader["FL_ZWER"]).Equals("T"), reader.GetString(9), reader["NR_TYP"] as string);
                 }
             }

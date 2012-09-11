@@ -29,65 +29,13 @@ namespace ReferenceArchiver.ViewModel
             get { return "Wybierz zeszyt"; }
         }
 
-        public Issue SelectedIssue 
+        public Issue SelectedIssue
         {
             get { return _selectedIssue; }
-            private set
+            set
             {
                 _selectedIssue = value;
                 OnIssueChanged();
-            }
-        }
-
-        public int? NumberWithinJournal
-        {
-            get { return _numberWithinJournal; }
-            set
-            {
-                _numberWithinJournal = value;
-                NotifyPropertyChanged("NumberWithinJournal");
-            }
-        }
-
-        public int? NumberWithinPublisher
-        {
-            get { return _numberWithinPublisher; }
-            set
-            {
-                _numberWithinPublisher = value;
-                NotifyPropertyChanged("NumberWithinPublisher");
-            }
-        }
-
-        public string IssueTitle
-        {
-            get { return _selectedIssue == null ? string.Empty : _selectedIssue.Title; }
-            set
-            {
-                if (_selectedIssue != null || value != null)
-                {
-                    if (_selectedIssue == null)
-                        _selectedIssue = new Issue(WizardViewModel.SelectedJournal);
-                    _selectedIssue.Title = value;
-                }
-
-                NotifyPropertyChanged("IssueTitle");
-            }
-        }
-
-        public int? YearOfPublication 
-        {
-            get { return _selectedIssue == null ? null : _selectedIssue.YearOfPublication; }
-            set
-            {
-                if (_selectedIssue != null || value != null)
-                {
-                    if (_selectedIssue == null)
-                        _selectedIssue = new Issue(WizardViewModel.SelectedJournal);
-                    _selectedIssue.YearOfPublication = value;
-                }
-
-                NotifyPropertyChanged("YearOfPublication");
             }
         }
 
@@ -116,29 +64,6 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
-        public ICommand SearchByNumberWithinJournalCommand
-        {
-            get
-            {
-                if (_searchByNumberWithinJournalCommand == null)
-                {
-                    _searchByNumberWithinJournalCommand = new DelegateCommand(() =>
-                    {
-                        Issue issue = null;
-                        if (NumberWithinJournal != null)
-                        {
-                            issue = CentralRepository.Instance.GetIssueByNumberWithinJournal(
-                                 WizardViewModel.SelectedJournal, (int)NumberWithinJournal);
-                        }
-                        SelectedIssue = issue;
-                        FillIssueData(issue);
-                    });
-                }
-
-                return _searchByNumberWithinJournalCommand;
-            }
-        }
-
         #endregion
 
         #region Constructors
@@ -151,29 +76,13 @@ namespace ReferenceArchiver.ViewModel
 
         #region Methods
 
-        private void FillIssueData(Issue issue)
-        {
-            if (issue == null)
-            {
-                NumberWithinJournal = null;
-                NumberWithinPublisher = null;
-            }
-            else
-            {
-                NumberWithinJournal = issue.NumberWithinJournal;
-                NumberWithinPublisher = issue.NumberWithinPublisher;
-            }
-
-            OnIssueChanged();
-        }
-
         private void OnIssueChanged()
         {
             NotifyPropertyChanged("IssueTitle");
             NotifyPropertyChanged("YearOfPublication");
             NotifyPropertyChanged("TypeNumber");
 
-            IssueTypeWrapper issueTypeToSelect = SelectedIssue == null ? null 
+            IssueTypeWrapper issueTypeToSelect = SelectedIssue == null ? null
                 : _issueTypeWrappers.Where(i => i.Value == SelectedIssue.Type).FirstOrDefault();
             IssueTypes.MoveCurrentTo(issueTypeToSelect);
         }
