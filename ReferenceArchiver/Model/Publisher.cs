@@ -21,8 +21,8 @@ namespace ReferenceArchiver.Model
 
         public Publisher(string id_inst, string id, string title)
         {
-            this.IdWithinInstitution = id_inst;
-            this.InstitutionId = id;
+            this.InstitutionId = id_inst;
+            this.IdWithinInstitution = id;
             this.Title = title;
         }
 
