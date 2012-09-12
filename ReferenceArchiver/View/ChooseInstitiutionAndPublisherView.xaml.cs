@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ReferenceArchiver.ViewModel;
+using ReferenceArchiver.Model;
 
 namespace ReferenceArchiver.View
 {
@@ -33,6 +34,18 @@ namespace ReferenceArchiver.View
         private void publisherNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             publisherNameTextBox.UpdateTextBinding();
+        }
+
+        private void buttonAddInstitution_Click(object sender, RoutedEventArgs e)
+        {
+            if (institutionNameTextBox.Text.Length != 0)
+            {
+                CentralRepository.Instance.SaveInstitution(new Institution("",institutionNameTextBox.Text));
+            }
+            else
+            {
+                MessageBox.Show("Aby dodać nową instytucję, należy podać jej nazwę!");
+            }
         }
     }
 }
