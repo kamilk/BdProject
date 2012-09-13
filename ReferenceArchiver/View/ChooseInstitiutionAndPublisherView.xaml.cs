@@ -40,7 +40,14 @@ namespace ReferenceArchiver.View
         {
             if (institutionNameTextBox.Text.Length != 0)
             {
-                CentralRepository.Instance.SaveInstitution(new Institution("",institutionNameTextBox.Text));
+                if (CentralRepository.Instance.SaveInstitution(new Institution("", institutionNameTextBox.Text)))
+                {
+
+                }
+                else
+                {
+                    MessageBox.Show("Przy dodawaniu nowej instytucji do bazy wystąpił błąd!");
+                }
             }
             else
             {
