@@ -23,6 +23,12 @@ namespace ReferenceArchiver.View
     {
         ChooseIssuePageViewModel _viewModel;
 
+        String _year = "";
+        String _title = "";
+        String _typeNumber = "";
+        
+        //TYPE??
+
         public ChooseIssueView()
         {
             InitializeComponent();
@@ -71,9 +77,33 @@ namespace ReferenceArchiver.View
                 _viewModel.IssueTypes.MoveCurrentTo(issue.Type);
                 typeNumberBox.Text = issue.TypeNumber != null ? issue.TypeNumber.ToString() : "";
 
+                _title = titleBox.Text;
+                //TYPE??
+                _typeNumber = typeNumberBox.Text;
+                _year = yearBox.Text;
+
                 editButton.IsEnabled = true;
                 cancelButton.IsEnabled = true;
             }
+        }
+
+        private void editButton_Click(object sender, RoutedEventArgs e)
+        {
+            numberWithinJournalBox.IsEnabled = false;
+            numberWithinPublisherBox.IsEnabled = false;
+
+            yearBox.IsEnabled = true;
+            titleBox.IsEnabled = true;
+            typeCombo.IsEnabled = true;
+            typeNumberBox.IsEnabled = true;
+        }
+
+        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            yearBox.Text = _year;
+            titleBox.Text = _title;
+            //TYPE??
+            typeNumberBox.Text = _typeNumber;
         }
     }
 }
