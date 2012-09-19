@@ -57,8 +57,8 @@ namespace ReferenceArchiver.View
         {
             if (issue == null)
             {
-                numberWithinJournalBox.Text = "";
-                numberWithinPublisherBox.Text = "";
+                numberWithinJournalBox.IsEnabled = false;
+                numberWithinPublisherBox.IsEnabled = false;
 
                 editButton.IsEnabled = true;
                 cancelButton.IsEnabled = true;
@@ -67,6 +67,18 @@ namespace ReferenceArchiver.View
                 titleBox.IsEnabled = true;
                 typeCombo.IsEnabled = true;
                 typeNumberBox.IsEnabled = true;
+
+                numberWithinJournalBox.Text = "";
+                numberWithinPublisherBox.Text = "";
+
+                yearBox.Text = "";
+                titleBox.Text = "";
+                typeNumberBox.Text = "";
+
+                _title = "";
+                _type = default(IssueType);
+                _typeNumber = "";
+                _year = "";
 
             }
             else
@@ -127,6 +139,13 @@ namespace ReferenceArchiver.View
                     break; 
             }
             typeNumberBox.Text = _typeNumber;
+            numberWithinJournalBox.IsEnabled = true;
+            numberWithinPublisherBox.IsEnabled = true;
+
+            yearBox.IsEnabled = false;
+            titleBox.IsEnabled = false;
+            typeCombo.IsEnabled = false;
+            typeNumberBox.IsEnabled = false;
         }
     }
 }
