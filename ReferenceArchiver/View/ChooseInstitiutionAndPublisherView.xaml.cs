@@ -29,6 +29,7 @@ namespace ReferenceArchiver.View
         private void institutionNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             institutionNameTextBox.UpdateTextBinding();
+            selectFirstInstitution();
         }
 
         private void publisherNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -41,6 +42,30 @@ namespace ReferenceArchiver.View
             if (institutionNameTextBox.Text.Length != 0)
             {
                 if (CentralRepository.Instance.SaveInstitution(new Institution("", institutionNameTextBox.Text)))
+                {
+
+                }
+                else
+                {
+                    MessageBox.Show("Przy dodawaniu nowej instytucji do bazy wystąpił błąd!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Aby dodać nową instytucję, należy podać jej nazwę!");
+            }
+        }
+
+        private void selectFirstInstitution()
+        {
+            institutionsListBox.SelectedIndex = 0;
+        }
+
+        private void buttonAddPublisher_Click(object sender, RoutedEventArgs e)
+        {
+            if (institutionNameTextBox.Text.Length != 0)
+            {
+                if (CentralRepository.Instance.SavePublisher(new Publisher(institutionsListBox.SelectedItem.,"", institutionNameTextBox.Text)))
                 {
 
                 }

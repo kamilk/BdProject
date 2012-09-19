@@ -1,0 +1,35 @@
+[1mdiff --git a/ReferenceArchiver/View/ChooseInstitiutionAndPublisherView.xaml.cs b/ReferenceArchiver/View/ChooseInstitiutionAndPublisherView.xaml.cs[m
+[1mindex 2c0fdae..e50fd6d 100644[m
+[1m--- a/ReferenceArchiver/View/ChooseInstitiutionAndPublisherView.xaml.cs[m
+[1m+++ b/ReferenceArchiver/View/ChooseInstitiutionAndPublisherView.xaml.cs[m
+[36m@@ -29,6 +29,7 @@[m [mnamespace ReferenceArchiver.View[m
+         private void institutionNameTextBox_TextChanged(object sender, TextChangedEventArgs e)[m
+         {[m
+             institutionNameTextBox.UpdateTextBinding();[m
+[32m+[m[32m            selectFirstInstitution();[m[41m[m
+         }[m
+ [m
+         private void publisherNameTextBox_TextChanged(object sender, TextChangedEventArgs e)[m
+[36m@@ -54,5 +55,10 @@[m [mnamespace ReferenceArchiver.View[m
+                 MessageBox.Show("Aby dodać nową instytucję, należy podać jej nazwę!");[m
+             }[m
+         }[m
+[32m+[m[41m[m
+[32m+[m[32m        private void selectFirstInstitution()[m[41m[m
+[32m+[m[32m        {[m[41m[m
+[32m+[m[32m            institutionsListBox.SelectedIndex = 1;[m[41m[m
+[32m+[m[32m        }[m[41m[m
+     }[m
+ }[m
+[1mdiff --git a/ReferenceArchiver/ViewModel/ChooseInstitiutionAndPublisherPageViewModel.cs b/ReferenceArchiver/ViewModel/ChooseInstitiutionAndPublisherPageViewModel.cs[m
+[1mindex 9e21539..9b36536 100644[m
+[1m--- a/ReferenceArchiver/ViewModel/ChooseInstitiutionAndPublisherPageViewModel.cs[m
+[1m+++ b/ReferenceArchiver/ViewModel/ChooseInstitiutionAndPublisherPageViewModel.cs[m
+[36m@@ -53,6 +53,7 @@[m [mnamespace ReferenceArchiver.ViewModel[m
+                 _institutions.SearchString = value;[m
+                 NotifyPropertyChanged("InstitutionFilteringString");[m
+                 Institutions.Refresh();[m
+[32m+[m[41m               [m
+             }[m
+         }[m
+ [m
