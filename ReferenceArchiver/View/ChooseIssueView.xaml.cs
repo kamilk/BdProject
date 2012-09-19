@@ -26,8 +26,9 @@ namespace ReferenceArchiver.View
         String _year = "";
         String _title = "";
         String _typeNumber = "";
-        
-        //TYPE??
+        //TYPE
+        IssueType _type;
+
 
         public ChooseIssueView()
         {
@@ -56,8 +57,8 @@ namespace ReferenceArchiver.View
         {
             if (issue == null)
             {
-                numberWithinJournalBox.Text = "";
-                numberWithinPublisherBox.Text = "";
+                numberWithinJournalBox.IsEnabled = false;
+                numberWithinPublisherBox.IsEnabled = false;
 
                 editButton.IsEnabled = true;
                 cancelButton.IsEnabled = true;
@@ -66,6 +67,18 @@ namespace ReferenceArchiver.View
                 titleBox.IsEnabled = true;
                 typeCombo.IsEnabled = true;
                 typeNumberBox.IsEnabled = true;
+
+                numberWithinJournalBox.Text = "";
+                numberWithinPublisherBox.Text = "";
+
+                yearBox.Text = "";
+                titleBox.Text = "";
+                typeNumberBox.Text = "";
+
+                _title = "";
+                _type = default(IssueType);
+                _typeNumber = "";
+                _year = "";
 
             }
             else
@@ -79,6 +92,7 @@ namespace ReferenceArchiver.View
 
                 _title = titleBox.Text;
                 //TYPE??
+                _type = issue.Type;
                 _typeNumber = typeNumberBox.Text;
                 _year = yearBox.Text;
 
@@ -103,7 +117,35 @@ namespace ReferenceArchiver.View
             yearBox.Text = _year;
             titleBox.Text = _title;
             //TYPE??
+            switch (_type)
+            {
+                case IssueType.Normal:
+                    typeCombo.SelectedIndex = 0;
+                    break;
+                case IssueType.Conference:
+                    typeCombo.SelectedIndex = 1;
+                    break;
+                case IssueType.Habilitation:
+                    typeCombo.SelectedIndex = 2;
+                    break;
+                case IssueType.Monograph:
+                    typeCombo.SelectedIndex = 3;
+                    break;
+                case IssueType.Session:
+                    typeCombo.SelectedIndex = 4;
+                    break;
+                case IssueType.Symposium:
+                    typeCombo.SelectedIndex = 5;
+                    break; 
+            }
             typeNumberBox.Text = _typeNumber;
+            numberWithinJournalBox.IsEnabled = true;
+            numberWithinPublisherBox.IsEnabled = true;
+
+            yearBox.IsEnabled = false;
+            titleBox.IsEnabled = false;
+            typeCombo.IsEnabled = false;
+            typeNumberBox.IsEnabled = false;
         }
     }
 }
