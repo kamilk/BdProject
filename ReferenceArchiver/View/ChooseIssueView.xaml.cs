@@ -26,8 +26,9 @@ namespace ReferenceArchiver.View
         String _year = "";
         String _title = "";
         String _typeNumber = "";
-        
-        //TYPE??
+        //TYPE
+        IssueType _type;
+
 
         public ChooseIssueView()
         {
@@ -79,6 +80,7 @@ namespace ReferenceArchiver.View
 
                 _title = titleBox.Text;
                 //TYPE??
+                _type = issue.Type;
                 _typeNumber = typeNumberBox.Text;
                 _year = yearBox.Text;
 
@@ -103,6 +105,27 @@ namespace ReferenceArchiver.View
             yearBox.Text = _year;
             titleBox.Text = _title;
             //TYPE??
+            switch (_type)
+            {
+                case IssueType.Normal:
+                    typeCombo.SelectedIndex = 0;
+                    break;
+                case IssueType.Conference:
+                    typeCombo.SelectedIndex = 0;
+                    break;
+                case IssueType.Session:
+                    typeCombo.SelectedIndex = 0;
+                    break;
+                case IssueType.Symposium:
+                    typeCombo.SelectedIndex = 0;
+                    break;
+                case IssueType.Habilitation:
+                    typeCombo.SelectedIndex = 0;
+                    break;
+                case IssueType.Monograph:
+                    typeCombo.SelectedIndex = 0;
+                    break;
+            }
             typeNumberBox.Text = _typeNumber;
         }
     }
