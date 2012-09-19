@@ -111,20 +111,20 @@ namespace ReferenceArchiver.View
                     typeCombo.SelectedIndex = 0;
                     break;
                 case IssueType.Conference:
-                    typeCombo.SelectedIndex = 0;
-                    break;
-                case IssueType.Session:
-                    typeCombo.SelectedIndex = 0;
-                    break;
-                case IssueType.Symposium:
-                    typeCombo.SelectedIndex = 0;
+                    typeCombo.SelectedIndex = 1;
                     break;
                 case IssueType.Habilitation:
-                    typeCombo.SelectedIndex = 0;
+                    typeCombo.SelectedIndex = 2;
                     break;
                 case IssueType.Monograph:
-                    typeCombo.SelectedIndex = 0;
+                    typeCombo.SelectedIndex = 3;
                     break;
+                case IssueType.Session:
+                    typeCombo.SelectedIndex = 4;
+                    break;
+                case IssueType.Symposium:
+                    typeCombo.SelectedIndex = 5;
+                    break; 
             }
             typeNumberBox.Text = _typeNumber;
         }
