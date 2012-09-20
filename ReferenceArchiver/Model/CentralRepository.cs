@@ -9,7 +9,9 @@ namespace ReferenceArchiver.Model
     {
         // Get
         public abstract IEnumerable<Institution> GetInstitutions();
+        public abstract Institution GetInstitutionByName(string name);
         public abstract IEnumerable<Publisher> GetPublishers();
+        public abstract Publisher GetPublisherByName(string name);
         public abstract IEnumerable<Publisher> GetPublishersForInstitution(Institution institution);
         public abstract IEnumerable<ResearchJournal> GetJournalsForPublisher(Publisher publisher);
         public abstract IEnumerable<Issue> GetIssuesForJournal(ResearchJournal journal);

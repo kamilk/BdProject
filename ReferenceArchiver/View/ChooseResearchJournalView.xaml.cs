@@ -36,10 +36,16 @@ namespace ReferenceArchiver.View
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             Publisher publisher = viewModel.WizardViewModel.SelectedPublisher;
+
             if (titleBox.Text != "")
             {
                 ResearchJournal researchJournal = new ResearchJournal(publisher.InstitutionId, publisher.IdWithinInstitution, null, titleBox.Text, issnBox.Text);
-                ArchiverCentralRepository.Instance.SaveResearchJournal(researchJournal);
+
+                if ( !ArchiverCentralRepository.Instance.SaveResearchJournal(researchJournal))
+                {
+                    MessageBox.Show("Przy dodawaniu nowej serii do bazy wystąpił błąd!");
+                }
+
                 viewModel.AddAndSelectJournal(researchJournal);
             }
             else

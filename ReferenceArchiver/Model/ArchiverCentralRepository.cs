@@ -59,6 +59,25 @@ namespace ReferenceArchiver.Model
             return result;
         }
 
+        public override Institution GetInstitutionByName(string name)
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText = "SELECT ID, NAZWA FROM filo.INSTYTUCJE WHERE NAZWA = :pNazwa";
+            command.Parameters.Add(new OracleParameter("Nazwa", name));
+
+            Institution result = null;
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    result = new Institution(reader.GetString(0), reader.GetString(1));
+                }
+            }
+
+            return result;
+        }
+
         public override IEnumerable<Publisher> GetPublishers()
         {
             var command = m_connection.CreateCommand();
@@ -72,6 +91,25 @@ namespace ReferenceArchiver.Model
                 {
                     result.Add(new Publisher(reader.GetString(0), reader.GetString(1), reader.GetString(2)));
                 }  
+            }
+
+            return result;
+        }
+
+        public override Publisher GetPublisherByName(string name)
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText = "SELECT ID_INST, ID, TYTUL FROM filo.WYDAWNICTWA WHERE TYTUL = :pNazwa";
+            command.Parameters.Add(new OracleParameter("Nazwa", name));
+
+            Publisher result = null;
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    result = new Publisher(reader.GetString(0), reader.GetString(1), reader.GetString(2));
+                }
             }
 
             return result;
@@ -465,7 +503,7 @@ namespace ReferenceArchiver.Model
             var command = m_connection.CreateCommand();
             command.CommandText = "INSERT INTO filo.WYDAWNICTWA ( ID_INST, TYTUL ) VALUES ( :pId_Inst, :pTytul )";
             command.Parameters.Add(new OracleParameter("Id_Inst", publisher.InstitutionId));
-            command.Parameters.Add(new OracleParameter("Nazwa", publisher.Title));
+            command.Parameters.Add(new OracleParameter("Tytul", publisher.Title));
 
             if (command.ExecuteNonQuery() < 1)
                 return false;

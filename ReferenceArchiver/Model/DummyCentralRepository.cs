@@ -329,5 +329,15 @@ namespace ReferenceArchiver.Model
         {
             throw new NotImplementedException();
         }
+
+        public override Institution GetInstitutionByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Publisher GetPublisherByName(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
