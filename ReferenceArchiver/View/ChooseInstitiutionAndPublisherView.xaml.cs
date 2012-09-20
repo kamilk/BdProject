@@ -34,6 +34,7 @@ namespace ReferenceArchiver.View
         public ChooseInstitiutionView()
         {
             InitializeComponent();
+            buttonAddPublisher.IsEnabled = false;
         }
 
         #endregion
@@ -57,20 +58,7 @@ namespace ReferenceArchiver.View
 
         private void buttonAddPublisher_Click(object sender, RoutedEventArgs e)
         {
-            if (publisherNameTextBox.Text.Length != 0)
-            {
-                //if (CentralRepository.Instance.SavePublisher(new Publisher(institutionsListBox.SelectedItem.,"", institutionNameTextBox.Text)))
-                //{
-                //}
-                //else
-                //{
-                //    MessageBox.Show("Przy dodawaniu nowej instytucji do bazy wystąpił błąd!");
-                //}
-            }
-            else
-            {
-                MessageBox.Show("Aby dodać nową instytucję, należy podać jej nazwę!");
-            }
+            savePublisher();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -94,6 +82,19 @@ namespace ReferenceArchiver.View
             }
         }
 
+        private void institutionsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (institutionsListBox.SelectedItem != null)
+            {
+                onSelectInstitution();
+            }
+            else
+            {
+                choosenInstitution = null;
+                buttonAddPublisher.IsEnabled = false;
+            }
+        }
+
         #endregion
 
         #region Other Methods
@@ -108,8 +109,10 @@ namespace ReferenceArchiver.View
             bool result = false;
             if (institutionNameTextBox.Text.Length != 0)
             {
-                if (CentralRepository.Instance.SaveInstitution(new Institution("", institutionNameTextBox.Text)))
+                Institution inst = new Institution("", institutionNameTextBox.Text);
+                if (CentralRepository.Instance.SaveInstitution(inst))
                 {
+                    viewModel.AddAndSelectInstitution(inst);
                     result = true;
                 }
                 else
@@ -127,6 +130,21 @@ namespace ReferenceArchiver.View
         private bool savePublisher()
         {
             bool result = false;
+            if (publisherNameTextBox.Text.Length != 0 && choosenInstitution != null)
+            {
+                if (CentralRepository.Instance.SavePublisher(new Publisher(choosenInstitution.Id.ToString(),"", publisherNameTextBox.Text)))
+                {
+                    result = true;
+                }
+                else
+                {
+                    MessageBox.Show("Przy dodawaniu nowego wydawnictwa do bazy wystąpił błąd!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Aby dodać nowe wydawnictwo, należy podać jej nazwę!");
+            }
             return result;
         }
 
@@ -135,17 +153,11 @@ namespace ReferenceArchiver.View
             institutionNameTextBox.Text = institutionsListBox.SelectedItem.ToString();
             choosenInstitution = (Institution)viewModel.Institutions.CurrentItem;
             publisherNameTextBox.Focus();
+            buttonAddPublisher.IsEnabled = true;
         }
 
         #endregion
 
-        private void institutionsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (institutionsListBox.SelectedItem != null)
-            {
-                onSelectInstitution();
-            }
-        }
 
     }
 }

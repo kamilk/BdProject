@@ -96,8 +96,9 @@ namespace ReferenceArchiver.ViewModel
         public WizardViewModel()
         {
             _institutions = new List<Institution>(CentralRepository.Instance.GetInstitutions());
+            _institutions.Sort((x, y) => x.Name.CompareTo(y.Name));
             _publishers = new List<Publisher>(CentralRepository.Instance.GetPublishers());
-
+            _publishers.Sort((x, y) => x.Title.CompareTo(y.Title));
             _institutionView = new ChooseInstitiutionAndPublisherPageViewModel(this, _institutions, _publishers);
             _journalView = new ChooseResearchJournalPageViewModel(this);
             _issueView = new ChooseIssuePageViewModel(this);
