@@ -80,6 +80,7 @@ namespace ReferenceArchiver.View
                 _typeNumber = "";
                 _year = "";
 
+                editButton.Content = "Dodaj zeszyt";
             }
             else
             {
@@ -98,18 +99,48 @@ namespace ReferenceArchiver.View
 
                 editButton.IsEnabled = true;
                 cancelButton.IsEnabled = true;
+
+                editButton.Content = "Edytuj zeszyt";
             }
         }
 
         private void editButton_Click(object sender, RoutedEventArgs e)
         {
-            numberWithinJournalBox.IsEnabled = false;
-            numberWithinPublisherBox.IsEnabled = false;
+            if (editButton.Content.Equals("Dodaj zeszyt"))
+            {
+                //dodajemy zeszyt
+                /*Issue issue = new Issue(_viewModel.WizardViewModel.SelectedJournal.InstitutionId,       //id_inst
+                                        _viewModel.WizardViewModel.SelectedJournal.PublisherId,         //id_wyd
+                                        _viewModel.WizardViewModel.SelectedJournal.IdWithinPublisher,   //id_serie
+                                        _viewModel.WizardViewModel.SelectedJournal.,                    //id_w_serii
+                                        _viewModel.WizardViewModel.SelectedJournal.,                    //nr_w_serii
+                                        _viewModel.WizardViewModel.SelectedPublisher.IdWithinInstitution,   //nr_w_wydawnictwie
+                                        titleBox.Text,
+                                        yearBox.Text,
+                                        false,
+                                        typeCombo.Text,
+                                        typeNumberBox.Text);
+                // * */
+                //ResearchJournal researchJournal = new ResearchJournal(publisher.InstitutionId, publisher.IdWithinInstitution, null, titleBox.Text, issnBox.Text);
+                //ArchiverCentralRepository.Instance.SaveResearchJournal(researchJournal);
+                //viewModel.AddAndSelectJournal(researchJournal);
+                //Issue(string id_inst, string id_wyd, string id_serie, int id_w_serii, int nr_w_serii, int nr_w_wydawnictwie,
+                //        string tytul_pl, int? rok_wydania, bool fl_zwer, string typ, string nr_typ)
+                //_viewModel.WizardViewModel.SelectedInstitution.Id
+            }
+            else
+            {
+                //edytujemy wybrany zeszyt
+                numberWithinJournalBox.IsEnabled = false;
+                numberWithinPublisherBox.IsEnabled = false;
 
-            yearBox.IsEnabled = true;
-            titleBox.IsEnabled = true;
-            typeCombo.IsEnabled = true;
-            typeNumberBox.IsEnabled = true;
+                yearBox.IsEnabled = true;
+                titleBox.IsEnabled = true;
+                typeCombo.IsEnabled = true;
+                typeNumberBox.IsEnabled = true;
+
+                editButton.Content = "Dodaj zeszyt";
+            }
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -146,6 +177,8 @@ namespace ReferenceArchiver.View
             titleBox.IsEnabled = false;
             typeCombo.IsEnabled = false;
             typeNumberBox.IsEnabled = false;
+
+            editButton.Content = "Edytuj zeszyt";
         }
     }
 }

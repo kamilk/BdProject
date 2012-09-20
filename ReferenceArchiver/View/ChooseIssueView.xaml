@@ -24,7 +24,7 @@
                 <TextBox Height="23" Margin="92,71,6,0" Name="titleBox" VerticalAlignment="Top" IsEnabled="False" />
                 <Label Content="Typ:" Height="28" HorizontalAlignment="Left" Margin="54,100,0,0" Name="label5" VerticalAlignment="Top" />
                 <ComboBox Height="23" Width="auto" MinWidth="100" HorizontalAlignment="Left" Margin="92,103,0,0" Name="typeCombo" VerticalAlignment="Top" ItemsSource="{Binding Path=IssueTypes}" DisplayMemberPath="DisplayName" IsSynchronizedWithCurrentItem="True" IsEnabled="False" DataContext="{Binding}" />
-                <Button Content="Wycofaj zmiany" Height="23" HorizontalAlignment="Left" Margin="92,6,0,0" Name="cancelButton" VerticalAlignment="Top" Width="101" IsEnabled="False" Click="cancelButton_Click" />
+                <Button Content="Wycofaj zmiany" Height="23" HorizontalAlignment="Right" Margin="0,6,134,0" Name="cancelButton" VerticalAlignment="Top" Width="101" IsEnabled="False" Click="cancelButton_Click" />
                 <Button Content="Edytuj zeszyt" Height="23" HorizontalAlignment="Left" Margin="11,6,0,0" Name="editButton" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="editButton_Click" />
                 <Label Content="Nr typu:" Height="28" HorizontalAlignment="Left" Margin="33,129,0,0" Name="label6" VerticalAlignment="Top" />
                 <TextBox Height="23" HorizontalAlignment="Left" Margin="92,134,0,0" Name="typeNumberBox" VerticalAlignment="Top" Width="120" IsEnabled="False" />
