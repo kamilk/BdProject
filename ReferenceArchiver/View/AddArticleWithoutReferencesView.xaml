@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:my="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="378" d:DesignWidth="489">
+             d:DesignHeight="378" d:DesignWidth="489" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="166" />
@@ -41,14 +41,19 @@
                         <ColumnDefinition Width="192*" />
                         <ColumnDefinition Width="70" />
                     </Grid.ColumnDefinitions>
-                    <my:AutoCompleteBox Margin="6,30,8,0" Name="autoCompleteBox3" VerticalAlignment="Top" />
-                    <Button Content="Dodaj" Height="23" Margin="4,31,5,0" Name="button1" VerticalAlignment="Top" Grid.Column="2" />
-                    <my:AutoCompleteBox Margin="0,30,0,0" Name="autoCompleteBox4" VerticalAlignment="Top" Grid.Column="1" />
+                    <my:AutoCompleteBox Margin="6,30,8,0" Name="authorAutoCompleteBox" VerticalAlignment="Top" />
+                    <my:AutoCompleteBox Margin="0,30,0,0" Name="affiliationAutoCompleteBox" VerticalAlignment="Top" Grid.Column="1" />
+                    <Button Content="Dodaj" Height="23" Margin="4,31,5,0" Name="button1" VerticalAlignment="Top" Grid.Column="2" Click="button1_Click" />
                     <Label Content="Nazwisko i imię" Height="28" HorizontalAlignment="Left" Margin="6,0,0,0" Name="label6" VerticalAlignment="Top" />
                     <Label Content="Afiliacja" Grid.Column="1" Height="28" HorizontalAlignment="Left" Name="label7" VerticalAlignment="Top" />
                     <Button Content="Dodaj nowego..." Height="23" HorizontalAlignment="Right" Margin="0,1,8,0" Name="button2" VerticalAlignment="Top" Width="92" />
                 </Grid>
-                <DataGrid AutoGenerateColumns="False" Grid.Row="1" Name="dataGrid1" Margin="0,0,70,0" />
+                <DataGrid AutoGenerateColumns="False" Grid.Row="1" Name="authorshipDataGrid" Margin="0,0,70,0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Autor" Binding="{Binding Path=Author}" />
+                        <DataGridTextColumn Header="Afiliacja" Binding="{Binding Path=Affiliation}" />
+                    </DataGrid.Columns>
+                </DataGrid>
                 <Button Content="Usuń" Grid.Row="1" Height="23" HorizontalAlignment="Right" Margin="0,0,5,0" Name="button4" VerticalAlignment="Top" Width="61" />
             </Grid>
         </GroupBox>

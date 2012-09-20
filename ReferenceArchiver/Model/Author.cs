@@ -24,5 +24,13 @@ namespace ReferenceArchiver.Model
             this.Name2 = imie2;
             this.Nationality = narodowosc;
         }
+
+        public override string ToString()
+        {
+            if (Name2 != null)
+                return string.Format("{0} {1} {2}", Name, Name2, LastName);
+            else
+                return string.Format("{0} {1}", Name, LastName);
+        }
     }
 }

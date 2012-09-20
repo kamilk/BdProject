@@ -333,6 +333,28 @@ namespace ReferenceArchiver.Model
             return result;
         }
 
+        public override IEnumerable<Author> GetAuthors()
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText =
+                "SELECT ID, NAZWISKO, IMIE, IMIE2, NARODOWOSC " +
+                "FROM filo.AUTORZY";
+
+            List<Author> result = new List<Author>();
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    result.Add(new Author((int)reader["ID"], reader.GetString(1), reader.GetString(2), reader["IMIE2"] as string,
+                                          reader.GetString(4)));
+                }
+            }
+
+            return result;
+        }
+
+
         public override IEnumerable<Author> GetArticleAuthors(Article article)
         {
             var command = m_connection.CreateCommand();

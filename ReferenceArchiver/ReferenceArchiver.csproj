@@ -64,6 +64,7 @@
     <Compile Include="Model\Article.cs" />
     <Compile Include="Model\Author.cs" />
     <Compile Include="Model\ArchiverCentralRepository.cs" />
+    <Compile Include="Model\Authorship.cs" />
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\DummyCentralRepository.cs" />
     <Compile Include="Model\CentralRepository.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="ViewModel\Helpers\IssueTypeWrapper.cs" />
     <Compile Include="ViewModel\Helpers\NavigationDirection.cs" />
     <Compile Include="ViewModel\Helpers\SearchableCollectionViewWrapper.cs" />
+    <Compile Include="View\AuthorshipData.cs" />
     <Compile Include="View\Helpers.cs" />
     <Compile Include="ViewModel\WizardControlViewModel.cs" />
     <Compile Include="ViewModel\Helpers\WizardPageManager.cs" />

@@ -324,5 +324,10 @@ namespace ReferenceArchiver.Model
         {
             throw new NotImplementedException();
         }
+
+        public override IEnumerable<Author> GetAuthors()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

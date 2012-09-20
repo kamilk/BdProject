@@ -28,6 +28,7 @@ namespace ReferenceArchiver.Model
         // When number is >= 0 returns only 1 annotation - for given number, if it exists
         // Otherwise the list is empty
         public abstract IEnumerable<Article> GetAnnotationsForArticle(Article article, int number = -1);
+        public abstract IEnumerable<Author> GetAuthors();
 
 
         // Save

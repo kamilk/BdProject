@@ -11,6 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ReferenceArchiver.Model;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace ReferenceArchiver.View
 {
@@ -19,9 +22,27 @@ namespace ReferenceArchiver.View
     /// </summary>
     public partial class AddArticleWithoutReferencesView : UserControl
     {
+        private ObservableCollection<AuthorshipData> _authorships = new ObservableCollection<AuthorshipData>();
+
         public AddArticleWithoutReferencesView()
         {
             InitializeComponent();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            authorshipDataGrid.ItemsSource = _authorships;
+
+            authorAutoCompleteBox.ItemsSource = CentralRepository.Instance.GetAuthors();
+            affiliationAutoCompleteBox.ItemsSource = CentralRepository.Instance.GetInstitutions();
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            Author author = authorAutoCompleteBox.SelectedItem as Author;
+            Institution affiliation = affiliationAutoCompleteBox.SelectedItem as Institution;
+            if (author != null && affiliation != null)
+                _authorships.Add(new AuthorshipData() { Author = author, Affiliation = affiliation });
         }
     }
 }
