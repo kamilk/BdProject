@@ -37,12 +37,35 @@ namespace ReferenceArchiver.View
             affiliationAutoCompleteBox.ItemsSource = CentralRepository.Instance.GetInstitutions();
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void addAuthorshipButton_Click(object sender, RoutedEventArgs e)
         {
             Author author = authorAutoCompleteBox.SelectedItem as Author;
             Institution affiliation = affiliationAutoCompleteBox.SelectedItem as Institution;
             if (author != null && affiliation != null)
                 _authorships.Add(new AuthorshipData() { Author = author, Affiliation = affiliation });
+        }
+
+        private void removeAuthorshipButton_Click(object sender, RoutedEventArgs e)
+        {
+            var authorship = authorshipDataGrid.SelectedItem as AuthorshipData;
+            if (authorship != null)
+                _authorships.Remove(authorship);
+        }
+
+        private void moveAuthorshipUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedIndex = authorshipDataGrid.SelectedIndex;
+            if (selectedIndex <= 0)
+                return;
+            _authorships.Move(selectedIndex, selectedIndex - 1);
+        }
+
+        private void moveAuthorshipDownButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedIndex = authorshipDataGrid.SelectedIndex;
+            if (selectedIndex < 0 || selectedIndex >= _authorships.Count - 1)
+                return;
+            _authorships.Move(selectedIndex, selectedIndex + 1);
         }
     }
 }
