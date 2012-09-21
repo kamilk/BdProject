@@ -16,7 +16,6 @@ namespace ReferenceArchiver.ViewModel
         private SearchableCollectionViewWrapper<Institution> _institutions;
         private SearchableCollectionViewWrapper<Publisher> _publishers;
         private DelegateCommand _deselectInstitutionCommand;
-        private IList<Institution> institutionsList;
 
         #endregion
 
@@ -116,7 +115,6 @@ namespace ReferenceArchiver.ViewModel
         public ChooseInstitiutionAndPublisherPageViewModel(WizardViewModel parent, List<Institution> institutions, List<Publisher> publishers)
             : base(parent)
         {
-            institutionsList = new List<Institution>(institutions);
             _institutions = new SearchableCollectionViewWrapper<Institution>(
                 new CollectionViewSource { Source = institutions }.View, 
                 institution => institution.Name);
@@ -201,11 +199,16 @@ namespace ReferenceArchiver.ViewModel
 
         public void AddAndSelectInstitution(Institution inst)
         {
-            institutionsList.Add(inst);
-            _institutions = new SearchableCollectionViewWrapper<Institution>(
-                new CollectionViewSource { Source = institutionsList }.View,
-                institution => institution.Name);
-            _institutions.CollectionView.MoveCurrentTo(inst);
+            ((List<Institution>)_institutions.CollectionView.SourceCollection).Add(inst);
+            ((List<Institution>)_institutions.CollectionView.SourceCollection).Sort((x, y) => x.Name.CompareTo(y.Name));
+            _institutions.CollectionView.Refresh();
+            //_institutions.CollectionView.MoveCurrentTo(inst);
+        }
+
+        public bool IsInstitutionNameUnique(string name)
+        {
+            bool result = false;
+            return result;
         }
 
         #endregion

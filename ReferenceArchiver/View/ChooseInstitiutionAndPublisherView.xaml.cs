@@ -24,6 +24,7 @@ namespace ReferenceArchiver.View
         #region Fields
 
         private ChooseInstitiutionAndPublisherPageViewModel viewModel;
+        private WizardViewModel wizardViewModel;
         private Institution choosenInstitution;
         private Publisher choosenPublisher;
 
@@ -112,6 +113,7 @@ namespace ReferenceArchiver.View
                 Institution inst = new Institution("", institutionNameTextBox.Text);
                 if (CentralRepository.Instance.SaveInstitution(inst))
                 {
+                    inst = CentralRepository.Instance.GetInstitutionByName(inst.Name);
                     viewModel.AddAndSelectInstitution(inst);
                     result = true;
                 }
