@@ -128,11 +128,12 @@ namespace ReferenceArchiver.View
                                         _publisherNumber,                                               //nr_w_wydawnictwie
                                         titleBox.Text,
                                         int.Parse(yearBox.Text),
-                                        false,
+                                        true,
                                         typeCombo.Text,
                                         typeNumberBox.Text);
 
                 ArchiverCentralRepository.Instance.SaveIssue(issue);
+                
                 //_viewModel.
 
                 //ArchiverCentralRepository.Instance.SaveResearchJournal(researchJournal);
