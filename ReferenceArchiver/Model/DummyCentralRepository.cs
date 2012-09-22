@@ -380,11 +380,6 @@ namespace ReferenceArchiver.Model
             throw new NotImplementedException();
         }
 
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
         public override string GetLanguageForCountry(Country country)
         {
             throw new NotImplementedException();
