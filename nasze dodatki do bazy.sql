@@ -27,3 +27,18 @@ BEGIN
     SELECT filo.SERIE_ID_SEQ.NEXTVAL INTO :NEW.ID FROM DUAL; 
 END;
 /
+
+-- Dodatek 3: Tabela języki
+CREATE TABLE filo.KRAJE_JEZYKI 
+    ( 
+     KOD CHAR (2)  NOT NULL , 
+     JEZYK VARCHAR2 (20)  NOT NULL 
+    ) 
+;
+
+ALTER TABLE filo.KRAJE_JEZYKI 
+    ADD CONSTRAINT JEZYKI_KRAJE_KOD_KRAJE_PK PRIMARY KEY 
+    ( 
+     KOD
+    ) 
+;

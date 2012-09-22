@@ -74,6 +74,7 @@
     <Compile Include="Model\Issue.cs" />
     <Compile Include="Model\IssueType.cs" />
     <Compile Include="Model\Keyword.cs" />
+    <Compile Include="Model\Language.cs" />
     <Compile Include="Model\Publisher.cs" />
     <Compile Include="Model\ResearchJournal.cs" />
     <Compile Include="ViewModel\AddArticlePageViewModel.cs" />

@@ -394,5 +394,10 @@ namespace ReferenceArchiver.Model
         {
             throw new NotImplementedException();
         }
+
+        public override IEnumerable<Language> GetLanguages()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -626,6 +626,26 @@ namespace ReferenceArchiver.Model
             return result;
         }
 
+        public override IEnumerable<Language> GetLanguages()
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText = "SELECT KOD, JEZYK FROM filo.KRAJE_JEZYKI ORDER BY JEZYK";
+
+            var result = new List<Language>();
+
+            DbDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                result.Add(new Language()
+                {
+                    CountryCode = reader["KOD"] as string,
+                    Name = reader["JEZYK"] as string
+                });
+            }
+
+            return result;
+        }
+
         #endregion
 
         #region Save methods

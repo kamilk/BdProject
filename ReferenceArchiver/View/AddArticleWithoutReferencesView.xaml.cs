@@ -35,6 +35,9 @@ namespace ReferenceArchiver.View
 
             authorAutoCompleteBox.ItemsSource = CentralRepository.Instance.GetAuthors();
             affiliationAutoCompleteBox.ItemsSource = CentralRepository.Instance.GetInstitutions();
+
+            langaugesComboBox.ItemsSource = CentralRepository.Instance.GetLanguages();
+            langaugesComboBox.SelectedIndex = 0;
         }
 
         private void addAuthorshipButton_Click(object sender, RoutedEventArgs e)

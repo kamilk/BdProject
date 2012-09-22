@@ -26,7 +26,7 @@
             </Grid>
         </GroupBox>
         <Label Content="Język:" Height="28" HorizontalAlignment="Left" Margin="-1,66,0,0" Name="label4" VerticalAlignment="Top" />
-        <ComboBox Height="23" HorizontalAlignment="Left" Margin="38,68,0,0" Name="comboBox1" VerticalAlignment="Top" Width="120" />
+        <ComboBox DisplayMemberPath="Name"  Height="23" HorizontalAlignment="Left" Margin="38,68,0,0" Name="langaugesComboBox" VerticalAlignment="Top" Width="120" />
         <Label Content="Tytuł polski:" Height="28" HorizontalAlignment="Left" Margin="0,34,0,0" Name="label5" VerticalAlignment="Top" />
         <my:AutoCompleteBox Margin="79,36,5,0" Name="autoCompleteBox2" VerticalAlignment="Top" />
         <GroupBox Header="Autorzy" Name="groupBox2" Grid.Row="1">
