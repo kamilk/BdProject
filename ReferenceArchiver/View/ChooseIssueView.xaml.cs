@@ -128,7 +128,7 @@ namespace ReferenceArchiver.View
                                         _publisherNumber,                                               //nr_w_wydawnictwie
                                         titleBox.Text,
                                         int.Parse(yearBox.Text),
-                                        true,
+                                        'T',
                                         typeCombo.Text,
                                         typeNumberBox.Text);
 
