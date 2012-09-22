@@ -29,8 +29,24 @@ namespace ReferenceArchiver.Model
         public abstract IEnumerable<Article> GetArticlesByKeyword(Keyword keyword);
         // When number is >= 0 returns only 1 annotation - for given number, if it exists
         // Otherwise the list is empty
-        public abstract IEnumerable<Article> GetAnnotationsForArticle(Article article, int number = -1);
+        public abstract IEnumerable<Annotation> GetAnnotationsForArticle(Article article, int number = -1);
         public abstract IEnumerable<Author> GetAuthors();
+        // Returns null on id < 0
+        public abstract Article GetArticleById(int id);
+        // Assuming author is an actual author of the article AND that author is in the AUTORSTWO table only once for the article.
+        // Having one author twice for the same article is a mistake.
+        // Returns 0 when Author is not the article author in the database.
+        // Returns -1 on error (when author is twice recorded for the same article, or when 2 articles have the same ID)
+        public abstract int GetAuthorAfiliationForArticle(Article article, Author author);
+        // Gives the country code for language (from Article table)
+        public abstract Country GetCountryForLanguage(string lang);
+        // Returns null when no country of given code, or FIRST AND ONLY FIRST occurence in database for the code. 
+        // Make sure it's not doubled
+        public abstract Country GetCountryByCode(string code);
+        // The exact same comment as for GetCountryByCode above.
+        public abstract Country GetCountryByName(string name);
+        // Null on errors. Takes the first matching language for country, assuming 1 country has 1 language only.
+        public abstract string GetLanguageForCountry(Country country);
 
 
         // Save
@@ -43,12 +59,13 @@ namespace ReferenceArchiver.Model
         public abstract bool SaveCategory(Category category);
         public abstract bool SaveAuthor(Author author);
         public abstract bool SaveKeyword(Keyword keyword);
+        public abstract bool SaveCountry(Country country);
         // Add, basically the same as Save, but you can Add many categories/authorships/annotations to the same article
         // So to point this out I used different word
         public abstract bool AddCategoryToArticle(Article article, Category category);
         public abstract bool AddAnnotationToArticle(Article article, Article annotation, int annotation_number);
         public abstract bool AddAuthorshipToArticle(Article article, Author author, int authorship_number);
-
+        public abstract bool AddLanguageToCountry(Country country, string lang);
 
         // Delete
         // REQUIRES ID FIELDS TO BE FILLED CORRECTLY, USE GET METHOD BEFORE UPDATE TO RECEIVE ID'S
@@ -60,6 +77,7 @@ namespace ReferenceArchiver.Model
         public abstract bool DeleteAlienPublisher(AlienPublisher alien_publisher);
         public abstract bool DeleteCategory(Category category);
         public abstract bool DeleteAuthor(Author author);
+        public abstract bool DeleteCountry(Country country);
         // THIS ONE REQUIRES THE KEY FIELD TO BE FILLED
         // WSZYSTKIE SLOWA KLUCZE PISZEMY MALYMI
         public abstract bool DeleteKeyword(Keyword keyword);
@@ -67,7 +85,7 @@ namespace ReferenceArchiver.Model
         public abstract bool DeleteAuthorshipFromArticle(Article article, Author author, int authorship_number);
         public abstract bool DeleteAnnotationFromArticle(Article article, Article annotation, int annotation_number);
         public abstract bool DeleteCategoryFromArticle(Article article, Category category, bool delete_all = false);
-
+        public abstract bool DeleteLanguageFromCountry(Country country);
 
         // Update
         // REQUIRES ID FIELDS TO BE FILLED CORRECTLY, USE GET METHOD BEFORE UPDATE TO RECEIVE ID'S
@@ -82,6 +100,7 @@ namespace ReferenceArchiver.Model
         public abstract bool UpdateCategory(Category category);
         public abstract bool UpdateAuthor(Author author);
         public abstract bool UpdateKeyword(Keyword keyword);
+        public abstract bool UpdateCountry(Country country);
 
         private static CentralRepository _instance;
         public static CentralRepository Instance

@@ -180,7 +180,7 @@ namespace ReferenceArchiver.Model
             throw new NotImplementedException();
         }
 
-        public override IEnumerable<Article> GetAnnotationsForArticle(Article article, int number = -1)
+        public override IEnumerable<Annotation> GetAnnotationsForArticle(Article article, int number = -1)
         {
             throw new NotImplementedException();
         }
@@ -336,6 +336,66 @@ namespace ReferenceArchiver.Model
         }
 
         public override Publisher GetPublisherByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Article GetArticleById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetAuthorAfiliationForArticle(Article article, Author author)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Country GetCountryByCode(string code)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Country GetCountryByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Country GetCountryForLanguage(string lang)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool AddLanguageToCountry(Country country, string lang)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeleteCountry(Country country)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DeleteLanguageFromCountry(Country country)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override string GetLanguageForCountry(Country country)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool SaveCountry(Country country)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool UpdateCountry(Country country)
         {
             throw new NotImplementedException();
         }

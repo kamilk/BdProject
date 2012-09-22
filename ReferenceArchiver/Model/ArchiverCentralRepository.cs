@@ -178,7 +178,7 @@ namespace ReferenceArchiver.Model
                 {
                     result.Add(new Issue(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt16(3),
                                          reader.GetInt16(4), reader.GetInt16(5), reader.GetString(6), reader["ROK_WYDANIA"] as int?, 
-                                         reader.GetBoolean(8), reader.GetString(9), reader.GetString(10)));
+                                         reader.GetChar(8), reader.GetString(9), reader.GetString(10)));
                 }
             }
 
@@ -206,7 +206,7 @@ namespace ReferenceArchiver.Model
                 {
                     result = new Issue(reader.GetString(0), reader.GetString(1), reader.GetString(2), (int)reader["ID_W_SERII"],
                                          (int)reader["NR_W_SERII"], (int)reader["NR_W_WYDAWNICTWIE"], reader.GetString(6), reader["ROK_WYDANIA"] as short?, 
-                                         ((string)reader["FL_ZWER"]).Equals("T"), reader.GetString(9), reader["NR_TYP"] as string);
+                                         reader.GetChar(8), reader.GetString(9), reader["NR_TYP"] as string);
                 }
             }
 
@@ -233,7 +233,7 @@ namespace ReferenceArchiver.Model
                 {
                     result = new Issue(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt16(3),
                                          reader.GetInt16(4), reader.GetInt16(5), reader.GetString(6), reader["ROK_WYDANIA"] as int?,
-                                         reader.GetBoolean(8), reader.GetString(9), reader.GetString(10));
+                                         reader.GetChar(8), reader.GetString(9), reader.GetString(10));
                 }
             }
 
@@ -443,26 +443,27 @@ namespace ReferenceArchiver.Model
             return result;
         }
 
-        public override IEnumerable<Article> GetAnnotationsForArticle(Article article, int number = -1)
+        public override IEnumerable<Annotation> GetAnnotationsForArticle(Article article, int number = -1)
         {
             var command = m_connection.CreateCommand();
 
-            List<Article> result = new List<Article>();
+            List<Annotation> result = new List<Annotation>();
             if (number < 0)
             {
                 command.CommandText =
-                    "SELECT ID, ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK, CZAS_WPR " +
-                    "FROM filo.ARTYKULY " +
-                    "WHERE ID IN (SELECT DISTINCT BIB_ART FROM filo.BIBLIOGRAFIA WHERE ID_ART = :pId)";
+                    "SELECT ID_ART, NR_KOLEJNY, BIB_ART " +
+                    "FROM filo.BIBLIOGRAFIA " +
+                    "WHERE ID_ART = :pId_Art " +
+                    "ORDER BY NR_KOLEJNY";
 
                 command.Parameters.Add(new OracleParameter("Id", article.Id));  
             }
             else
             {
                 command.CommandText =
-                    "SELECT ID, ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK, CZAS_WPR " +
-                    "FROM filo.ARTYKULY " +
-                    "WHERE ID IN (SELECT DISTINCT BIB_ART FROM filo.BIBLIOGRAFIA WHERE ID_ART = :pId AND NR_KOLEJNY = :pNr)";
+                    "SELECT ID_ART, NR_KOLEJNY, BIB_ART " +
+                    "FROM filo.BIBLIOGRAFIA " +
+                    "WHERE ID_ART = :pId_Art AND NR_KOLEJNY = :pNr";
 
                 command.Parameters.Add(new OracleParameter("Id", article.Id));
                 command.Parameters.Add(new OracleParameter("Nr", number));
@@ -472,15 +473,158 @@ namespace ReferenceArchiver.Model
             {
                 while (reader.Read())
                 {
-                    result.Add(new Article(reader.GetInt16(0), reader.GetString(1), reader.GetString(2), reader.GetString(3),
-                                         reader["ID_ZESZYTY"] as int?, reader.GetString(5), reader.GetString(6), reader["STR_OD"] as int?,
-                                         reader["STR_DO"] as int?, reader["ID_WYD_OBCE"] as int?, reader.GetString(10), reader.GetString(11)));
+                    result.Add(new Annotation(reader.GetInt16(0), reader.GetInt16(1), reader.GetInt16(2)));
                 }
             }
 
             return result;
         }
 
+        // RETURNS NULL ON id < 0
+        public override Article GetArticleById(int id)
+        {
+            if (id < 0)
+                return null;
+
+            var command = m_connection.CreateCommand();
+            command.CommandText =
+                "SELECT ID, ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK, CZAS_WPR " +
+                "FROM filo.ARTYKULY " +
+                "WHERE ID = :pId";
+
+            command.Parameters.Add(new OracleParameter("Id", id));
+
+            Article result = null;
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    result = new Article(reader.GetInt16(0), reader.GetString(1), reader.GetString(2), reader.GetString(3),
+                                         reader["ID_ZESZYTY"] as int?, reader.GetString(5), reader.GetString(6), reader["STR_OD"] as int?,
+                                         reader["STR_DO"] as int?, reader["ID_WYD_OBCE"] as int?, reader.GetString(10), reader.GetString(11));
+                }
+            }
+
+            return result;
+        }
+
+        public override int GetAuthorAfiliationForArticle(Article article, Author author)
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText =
+                "SELECT ID_INST " +
+                "FROM filo.AUTORSTWO " +
+                "WHERE ID_ART = :pId_Art AND ID_AUT = :pIdAut";
+
+            command.Parameters.Add(new OracleParameter("Id_Art", article.Id));
+            command.Parameters.Add(new OracleParameter("Id_Aut", author.Id));
+
+            int result = 0;
+            int num = 0;
+
+            // There should be only 1 result
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    result = reader.GetInt16(0);
+                    ++num;
+                }
+
+                if (num > 1)
+                    return -1;
+            }
+
+            return result;
+        }
+
+        public override Country GetCountryForLanguage(string lang)
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText =
+                "SELECT KOD, NAZWA, FL_AKT " +
+                "FROM filo.KRAJE " +
+                "WHERE KOD = (SELECT KOD FROM filo.KRAJE_JEZYKI WHERE JEZYK = :pLang";
+
+            command.Parameters.Add(new OracleParameter("Lang", lang));
+
+            Country result = null;
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    result = new Country(reader.GetString(0), reader.GetString(1), reader.GetString(2));
+                    return result;
+                }
+            }
+
+            return result;
+        }
+
+        public override Country GetCountryByCode(string code)
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText = "SELECT KOD, NAZWA, FL_AKT FROM filo.KRAJE WHERE KOD = :pKod";
+
+            command.Parameters.Add(new OracleParameter("Kod", code));
+
+            Country result = null;
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    result = new Country(reader.GetString(0), reader.GetString(1), reader.GetString(2));
+                    return result;
+                }
+            }
+
+            return result;
+        }
+
+        public override Country GetCountryByName(string name)
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText = "SELECT KOD, NAZWA, FL_AKT FROM filo.KRAJE WHERE NAZWA = :pName";
+
+            command.Parameters.Add(new OracleParameter("Name", name));
+
+            Country result = null;
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    result = new Country(reader.GetString(0), reader.GetString(1), reader.GetString(2));
+                    return result;
+                }
+            }
+
+            return result;
+        }
+
+        public override string GetLanguageForCountry(Country country)
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText = "SELECT JEZYK FROM filo.KRAJE_JEZYKI WHERE KOD = :pKod";
+
+            command.Parameters.Add(new OracleParameter("Kod", country.Code));
+
+            string result = null;
+
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    result = reader.GetString(0);
+                    return result;
+                }
+            }
+
+            return result;
+        }
 
         #endregion
 
@@ -533,22 +677,48 @@ namespace ReferenceArchiver.Model
         {
             var command = m_connection.CreateCommand();
             command.CommandText = 
-                "INSERT INTO filo.ZESZYTY ( ID_INST, ID_WYD, ID_SERIE, NR_W_SERII, NR_W_WYDAWNICTWIE, TYTUL_PL, ROK_WYDANIA, FL_ZWER, TYP, NR_TYP ) " +
-                "VALUES ( :pId_Inst, :pId_Wyd :pId_Serie, :pNr_W_Serii, :pNr_W_Wyd, :pTytul_Pl, :pRok_Wyd, :pFl_Zwer, :pTyp, :pNr_Typ )";
+                "INSERT INTO filo.ZESZYTY ( ID_INST, ID_WYD, ID_SERIE, NR_W_SERII, NR_W_WYDAWNICTWIE, FL_ZWER, TYP ) " +
+                "VALUES ( :pId_Inst, :pId_Wyd :pId_Serie, :pNr_W_Serii, :pNr_W_Wyd, :pFl_Zwer, :pTyp )";
            
             command.Parameters.Add(new OracleParameter("Id_Inst", issue.InstitutionId));
             command.Parameters.Add(new OracleParameter("Id_Wyd", issue.PublisherId));
             command.Parameters.Add(new OracleParameter("Id_Serie", issue.JournalId));
-            command.Parameters.Add(new OracleParameter("Nr_W_Serii", issue.NumberWithinJournal));
-            command.Parameters.Add(new OracleParameter("Nr_W_Wyd", issue.NumberWithinPublisher));
-            command.Parameters.Add(new OracleParameter("Tytul_Pl", issue.Title));
-            command.Parameters.Add(new OracleParameter("Rok_Wyd", issue.YearOfPublication));
-            command.Parameters.Add(new OracleParameter("Fl_Zwer", issue.WasVerified));
-            command.Parameters.Add(new OracleParameter("Typ", issue.Type));
-            command.Parameters.Add(new OracleParameter("Nr_Typ", issue.TypeNumber));
+            command.Parameters.Add(new OracleParameter("Nr_W_Serii", OracleDbType.Long, issue.NumberWithinJournal, ParameterDirection.InputOutput));
+            command.Parameters.Add(new OracleParameter("Nr_W_Wyd", OracleDbType.Long, issue.NumberWithinPublisher, ParameterDirection.InputOutput));
+            command.Parameters.Add(new OracleParameter("Fl_Zwer", OracleDbType.Char, issue.WasVerified, ParameterDirection.InputOutput));
+            command.Parameters.Add(new OracleParameter("Typ", issue.TypeSave));
+
+
 
             if (command.ExecuteNonQuery() < 1)
                 return false;
+
+            //string id = null;
+
+            //using (var reader = command.ExecuteNonQuery())
+            //{
+            //    while (reader.Read())
+            //    {
+            //        id = reader["ID_W_SERII"].ToString();
+            //    }
+            //}
+
+            //if (id == null)
+            //    return false;
+
+            //var command2 = m_connection.CreateCommand();
+            //command2.CommandText = 
+            //    "UPDATE filo.ZESZYTY " +
+            //    "SET TYTUL_PL = :pTytul_Pl , ROK_WYDANIA = :pRok_Wyd , NR_TYP = :pNr_Typ " +
+            //    "WHERE ID = :pId";
+
+            //command2.Parameters.Add(new OracleParameter("Tytul_Pl", issue.Title));
+            //command2.Parameters.Add(new OracleParameter("Rok_Wyd", issue.YearOfPublication));
+            //command2.Parameters.Add(new OracleParameter("Nr_Typ", issue.TypeNumber));
+            //command2.Parameters.Add(new OracleParameter("Id", id));
+
+            //if (command.ExecuteNonQuery() < 1)
+            //    return false;
 
             return true;
         }
@@ -584,6 +754,10 @@ namespace ReferenceArchiver.Model
                 "INSERT INTO filo.WYDAWNICTWA_OBCE ( TYP, TYTUL, ROK_WYDANIA, NUMER, KRAJ ) " +
                 "VALUES ( :pTyp, :pTytul, :pRok_Wyd, :pNr, :pKraj )";
 
+            //command.CommandText =
+            //    "INSERT INTO filo.WYDAWNICTWA_OBCE ( TYP, TYTUL, ROK_WYDANIA, NUMER ) " +
+            //    "VALUES ( :pTyp, :pTytul, :pRok_Wyd, :pNr )";
+
             command.Parameters.Add(new OracleParameter("Typ", alien_publisher.Type));
             command.Parameters.Add(new OracleParameter("Tytul", alien_publisher.Title));
             command.Parameters.Add(new OracleParameter("Rok_Wyd", alien_publisher.YearOfPublication));
@@ -616,8 +790,8 @@ namespace ReferenceArchiver.Model
         {
             var command = m_connection.CreateCommand();
             command.CommandText =
-                "INSERT INTO filo.AUTORZY ( NAZWISKO, IMIE, IMIE2, NARODOWOSC ) " +
-                "VALUES ( :pNazw, :pImie, :pImie2, :pNar )";
+                "INSERT INTO filo.AUTORZY ( NAZWISKO , IMIE , IMIE2 , NARODOWOSC ) " +
+                "VALUES ( :pNazw , :pImie , :pImie2 , :pNar )";
 
             command.Parameters.Add(new OracleParameter("Nazw", author.LastName));
             command.Parameters.Add(new OracleParameter("Imie", author.Name));
@@ -648,6 +822,22 @@ namespace ReferenceArchiver.Model
             return true;
         }
 
+        public override bool SaveCountry(Country country)
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText =
+                "INSERT INTO filo.KRAJE ( KOD, NAZWA, FL_AKT ) " +
+                "VALUES ( :pKod, :pNazwa, :pFl )";
+
+            command.Parameters.Add(new OracleParameter("Kod", country.Code));
+            command.Parameters.Add(new OracleParameter("Nazwa", country.Name));
+            command.Parameters.Add(new OracleParameter("Fl", country.Flag));
+
+            if (command.ExecuteNonQuery() < 1)
+                return false;
+
+            return true;
+        }
 
         #endregion
 
@@ -690,6 +880,21 @@ namespace ReferenceArchiver.Model
             command.Parameters.Add(new OracleParameter("Nr", authorship_number));
             command.Parameters.Add(new OracleParameter("Id_Aut", author.Id));
             command.Parameters.Add(new OracleParameter("Id_Inst", article.InstitutionId));
+
+            if (command.ExecuteNonQuery() < 1)
+                return false;
+
+            return true;
+        }
+
+        public override bool AddLanguageToCountry(Country country, string lang)
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText =
+                "INSERT INTO filo.KRAJE_JEZYKI ( KOD, JEZYK ) VALUES ( :pKod, :pJezyk )";
+
+            command.Parameters.Add(new OracleParameter("Kod", country.Code));
+            command.Parameters.Add(new OracleParameter("Jezyk", lang));
 
             if (command.ExecuteNonQuery() < 1)
                 return false;
@@ -887,6 +1092,32 @@ namespace ReferenceArchiver.Model
             return true;
         }
 
+        public override bool DeleteCountry(Country country)
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText = "DELETE FROM filo.KRAJE WHERE KOD = :pKod";
+
+            command.Parameters.Add(new OracleParameter("Kod", country.Code));
+
+            if (command.ExecuteNonQuery() < 1)
+                return false;
+
+            return true;
+        }
+
+        public override bool DeleteLanguageFromCountry(Country country)
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText = "DELETE FROM filo.KRAJE_JEZYKI WHERE KOD = :pKod";
+
+            command.Parameters.Add(new OracleParameter("Kod", country.Code));
+
+            if (command.ExecuteNonQuery() < 1)
+                return false;
+
+            return true;
+        }
+
         #endregion
 
         #region Update methods
@@ -1061,6 +1292,24 @@ namespace ReferenceArchiver.Model
             command.Parameters.Add(new OracleParameter("Art_Id", keyword.ArticleId));
             command.Parameters.Add(new OracleParameter("Kraj", keyword.Country));
             command.Parameters.Add(new OracleParameter("Klucz", keyword.Key));
+
+            if (command.ExecuteNonQuery() < 1)
+                return false;
+
+            return true;
+        }
+
+        public override bool UpdateCountry(Country country)
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText =
+                "Update filo.KRAJE " +
+                "SET NAZWA = :pNazwa , FL_AKT = :pFl " +
+                "WHERE KOD = :pKod";
+
+            command.Parameters.Add(new OracleParameter("Nazwa", country.Name));
+            command.Parameters.Add(new OracleParameter("Fl", country.Flag));
+            command.Parameters.Add(new OracleParameter("Kod", country.Code));
 
             if (command.ExecuteNonQuery() < 1)
                 return false;

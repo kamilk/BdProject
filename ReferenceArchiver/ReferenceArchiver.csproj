@@ -61,11 +61,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\AlienPublisher.cs" />
+    <Compile Include="Model\Annotation.cs" />
     <Compile Include="Model\Article.cs" />
     <Compile Include="Model\Author.cs" />
     <Compile Include="Model\ArchiverCentralRepository.cs" />
     <Compile Include="Model\Authorship.cs" />
     <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\Country.cs" />
     <Compile Include="Model\DummyCentralRepository.cs" />
     <Compile Include="Model\CentralRepository.cs" />
     <Compile Include="Model\Institution.cs" />
