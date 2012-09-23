@@ -77,8 +77,8 @@
     <Compile Include="Model\Language.cs" />
     <Compile Include="Model\Publisher.cs" />
     <Compile Include="Model\ResearchJournal.cs" />
-    <Compile Include="ViewModel\AddArticlePageViewModel.cs" />
-    <Compile Include="ViewModel\AddArticleWithoutReferencesViewModel.cs" />
+    <Compile Include="ViewModel\AddArticleWithReferencesPageViewModel.cs" />
+    <Compile Include="ViewModel\AddArticleViewModel.cs" />
     <Compile Include="ViewModel\ChooseExternalPublisherViewModel.cs" />
     <Compile Include="ViewModel\ChooseInstitiutionAndPublisherPageViewModel.cs" />
     <Compile Include="ViewModel\ChooseIssuePageViewModel.cs" />
