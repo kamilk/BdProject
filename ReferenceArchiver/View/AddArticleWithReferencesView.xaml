@@ -16,15 +16,15 @@
                 <my:AutoCompleteBox ItemsSource="{Binding Path=ArticlesToChooseFrom}" Margin="51,6,279,0" Name="articlesAutoCompleteBox" VerticalAlignment="Top" />
                 <Button Content="Dodaj" Height="23" HorizontalAlignment="Right" Margin="0,7,198,0" Name="addReferenceButton" VerticalAlignment="Top" Width="75" Click="addReferenceButton_Click" />
                 <Label Content="Tytuł:" Height="28" HorizontalAlignment="Left" Margin="6,4,0,0" Name="label8" VerticalAlignment="Top" />
-                <DataGrid ItemsSource="{Binding Path=SelectedArticles}"  AutoGenerateColumns="False" Name="dataGrid2" Margin="0,35,91,0">
+                <DataGrid ItemsSource="{Binding Path=SelectedArticles}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Name="dataGrid2" Margin="0,35,91,0">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Tytuł" Binding="{Binding Path=Title}" />
                         <DataGridTextColumn Header="Tytuł polski" Binding="{Binding Path=TitlePl}" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button Content="W górę" Height="23" HorizontalAlignment="Right" Margin="0,35,5,0" Name="button6" VerticalAlignment="Top" Width="75" />
-                <Button Content="W dół" Height="23" HorizontalAlignment="Right" Margin="0,64,5,0" Name="button7" VerticalAlignment="Top" Width="75" />
-                <Button Content="Usuń" Height="23" HorizontalAlignment="Right" Margin="0,93,5,0" Name="button8" VerticalAlignment="Top" Width="75" />
+                <Button Content="W górę" Command="{Binding Path=MoveReferenceUpCommand}" Height="23" HorizontalAlignment="Right" Margin="0,35,5,0" Name="button6" VerticalAlignment="Top" Width="75" />
+                <Button Content="W dół" Command="{Binding Path=MoveReferenceDownCommand}" Height="23" HorizontalAlignment="Right" Margin="0,64,5,0" Name="button7" VerticalAlignment="Top" Width="75" />
+                <Button Content="Usuń" Command="{Binding Path=RemoveReferenceCommand}" Height="23" HorizontalAlignment="Right" Margin="0,93,5,0" Name="button8" VerticalAlignment="Top" Width="75" />
                 <Button Content="Szukaj..." Height="23" HorizontalAlignment="Right" Margin="0,7,117,0" Name="button9" VerticalAlignment="Top" Width="75" />
                 <Button Content="Wprowadź nowy" Height="23" HorizontalAlignment="Right" Margin="0,7,4,0" Name="button3" VerticalAlignment="Top" Width="107" Command="{Binding Path=WizardViewModel.NavigateToAddingReferenceArticleCommand}" />
             </Grid>
