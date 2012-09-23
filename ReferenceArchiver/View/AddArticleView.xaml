@@ -26,37 +26,33 @@
             </Grid>
         </GroupBox>
         <Label Content="Język:" Height="28" HorizontalAlignment="Left" Margin="-1,66,0,0" Name="label4" VerticalAlignment="Top" />
-        <ComboBox DisplayMemberPath="Name"  Height="23" HorizontalAlignment="Left" Margin="38,68,0,0" Name="langaugesComboBox" VerticalAlignment="Top" Width="120" />
+        <ComboBox ItemsSource="{Binding Path=Languages}" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name"  Height="23" HorizontalAlignment="Left" Margin="38,68,0,0" Name="langaugesComboBox" VerticalAlignment="Top" Width="120" />
         <Label Content="Tytuł polski:" Height="28" HorizontalAlignment="Left" Margin="0,34,0,0" Name="label5" VerticalAlignment="Top" />
         <my:AutoCompleteBox Margin="79,36,5,0" Name="autoCompleteBox2" VerticalAlignment="Top" />
         <GroupBox Header="Autorzy" Name="groupBox2" Grid.Row="1">
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="57" />
-                    <RowDefinition Height="74*" />
-                </Grid.RowDefinitions>
-                <Grid>
+                <Grid Margin="0,0,0,132">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="204*" />
                         <ColumnDefinition Width="192*" />
                         <ColumnDefinition Width="70" />
                     </Grid.ColumnDefinitions>
-                    <my:AutoCompleteBox Margin="6,30,8,0" Name="authorAutoCompleteBox" VerticalAlignment="Top" />
-                    <my:AutoCompleteBox Margin="0,30,0,0" Name="affiliationAutoCompleteBox" VerticalAlignment="Top" Grid.Column="1" />
+                    <my:AutoCompleteBox ItemsSource="{Binding Path=AuthorsToChooseFrom}" Margin="6,30,8,0" Name="authorAutoCompleteBox" VerticalAlignment="Top" />
+                    <my:AutoCompleteBox ItemsSource="{Binding Path=InstitutionsToChooseFrom}" Margin="0,30,0,0" Name="affiliationAutoCompleteBox" VerticalAlignment="Top" Grid.Column="1" />
                     <Button Content="Dodaj" Height="23" Margin="4,31,5,0" Name="addAuthorshipButton" VerticalAlignment="Top" Grid.Column="2" Click="addAuthorshipButton_Click" />
                     <Label Content="Nazwisko i imię" Height="28" HorizontalAlignment="Left" Margin="6,0,0,0" Name="label6" VerticalAlignment="Top" />
                     <Label Content="Afiliacja" Grid.Column="1" Height="28" HorizontalAlignment="Left" Name="label7" VerticalAlignment="Top" />
                     <Button Content="Dodaj nowego..." Height="23" HorizontalAlignment="Right" Margin="0,1,8,0" Name="button2" VerticalAlignment="Top" Width="92" />
                 </Grid>
-                <DataGrid AutoGenerateColumns="False" Grid.Row="1" Name="authorshipDataGrid" Margin="0,0,70,0">
+                <DataGrid ItemsSource="{Binding Path=Authorships}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Name="authorshipDataGrid" Margin="0,57,70,0">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Autor" Binding="{Binding Path=Author}" />
                         <DataGridTextColumn Header="Afiliacja" Binding="{Binding Path=Affiliation}" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button Content="Usuń" Grid.Row="1" Height="23" HorizontalAlignment="Right" Margin="0,0,5,0" Name="removeAuthorshipButton" VerticalAlignment="Top" Width="61" Click="removeAuthorshipButton_Click" />
-                <Button Content="W górę" Grid.Row="1" HorizontalAlignment="Right" Margin="0,29,6,0" Name="moveAuthorshipUpButton" Width="60" Click="moveAuthorshipUpButton_Click" Height="23" VerticalAlignment="Top" />
-                <Button Content="W dół" Grid.Row="1" Height="23" HorizontalAlignment="Right" Margin="0,58,5,0" Name="moveAuthorshipDownButton" VerticalAlignment="Top" Width="60" Click="moveAuthorshipDownButton_Click" />
+                <Button Content="Usuń" Command="{Binding Path=RemoveAuthorshipCommand}" Height="23" HorizontalAlignment="Right" Margin="0,57,5,0" Name="removeAuthorshipButton" VerticalAlignment="Top" Width="61" />
+                <Button Content="W górę" Command="{Binding Path=MoveAuthorshipUpCommand}" HorizontalAlignment="Right" Margin="0,86,6,0" Name="moveAuthorshipUpButton" Width="60" Height="23" VerticalAlignment="Top" />
+                <Button Content="W dół" Command="{Binding Path=MoveAuthorshipDownCommand}" Height="23" HorizontalAlignment="Right" Margin="0,115,5,0" Name="moveAuthorshipDownButton" VerticalAlignment="Top" Width="60" />
             </Grid>
         </GroupBox>
     </Grid>

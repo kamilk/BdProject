@@ -21,6 +21,7 @@ namespace ReferenceArchiver.ViewModel
 
         #region Properties
 
+        public AddArticleViewModel AddArticleDataContext { get; private set; }
         public ICollectionView ArticlesToChooseFrom { get; private set; }
         public ICollectionView SelectedArticles { get; private set; }
         public ICommand MoveReferenceUpCommand { get; private set; }
@@ -34,6 +35,8 @@ namespace ReferenceArchiver.ViewModel
         public AddArticleWithReferencesPageViewModel(WizardViewModel parent)
             : base(parent)
         {
+            AddArticleDataContext = new AddArticleViewModel(parent);
+
             IEnumerable<Article> articles = CentralRepository.Instance.GetArticles();
             ArticlesToChooseFrom = CollectionViewSource.GetDefaultView(articles);
 

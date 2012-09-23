@@ -10,7 +10,7 @@
             <RowDefinition Height="329*" />
             <RowDefinition Height="151*" />
         </Grid.RowDefinitions>
-        <my1:AddArticleView x:Name="addArticleWithoutReferencesView1" />
+        <my1:AddArticleView x:Name="addArticleWithoutReferencesView1" DataContext="{Binding Path=AddArticleDataContext}" />
         <GroupBox Grid.Row="1" Header="Bibliografia" Name="groupBox3">
             <Grid>
                 <my:AutoCompleteBox ItemsSource="{Binding Path=ArticlesToChooseFrom}" Margin="51,6,279,0" Name="articlesAutoCompleteBox" VerticalAlignment="Top" />
