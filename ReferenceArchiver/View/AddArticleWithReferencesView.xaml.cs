@@ -21,6 +21,8 @@ namespace ReferenceArchiver.View
     /// </summary>
     public partial class AddArticleWithReferencesView : UserControl
     {
+        private AddArticleWithReferencesPageViewModel _viewModel;
+
         public AddArticleWithReferencesView()
         {
             InitializeComponent();
@@ -28,7 +30,12 @@ namespace ReferenceArchiver.View
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            articlesAutoCompleteBox.ItemsSource = CentralRepository.Instance.GetArticles();
+            _viewModel = (AddArticleWithReferencesPageViewModel)DataContext;
+        }
+
+        private void addReferenceButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.AddReference(articlesAutoCompleteBox.SelectedItem as Article);
         }
     }
 }

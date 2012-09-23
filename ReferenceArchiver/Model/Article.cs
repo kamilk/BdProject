@@ -11,19 +11,19 @@ namespace ReferenceArchiver.Model
     /// </summary>
     class Article
     {
-        public long Id;                                  // id
-        public string InstitutionId;                    // id_inst
-        public string PublisherId;                      // id_wyd
-        public string JournalId;                        // id_serie
-        public int? IssueId;                            // id_zeszyty
+        public long Id { get; set; }                                  // id
+        public string InstitutionId { get; set; }                    // id_inst
+        public string PublisherId { get; set; }                      // id_wyd
+        public string JournalId { get; set; }                        // id_serie
+        public int? IssueId { get; set; }                            // id_zeszyty
 
-        public string Title;                            // tytul
-        public string TitlePl;                          // tytul_pl
-        public int? PageBegin;                          // str_od
-        public int? PageEnd;                            // str_do
-        public int? AlienId;                            // id_wyd_obce
-        public string Lang;                             // jezyk
-        public DateTime Time;                             // czas_wpr
+        public string Title { get; set; }                            // tytul
+        public string TitlePl { get; set; }                          // tytul_pl
+        public int? PageBegin { get; set; }                          // str_od
+        public int? PageEnd { get; set; }                            // str_do
+        public int? AlienId { get; set; }                            // id_wyd_obce
+        public string Lang { get; set; }                             // jezyk
+        public DateTime Time { get; set; }                           // czas_wpr
 
         public Article()
         {
