@@ -17,6 +17,7 @@ namespace ReferenceArchiver.Model
         public abstract IEnumerable<Issue> GetIssuesForJournal(ResearchJournal journal);
         public abstract Issue GetIssueByNumberWithinJournal(ResearchJournal journal, int number);
         public abstract Issue GetIssueByNumberWithinPublisher(Publisher publisher, int number);
+        public abstract IEnumerable<Article> GetArticles();
         public abstract IEnumerable<Article> GetArticlesFromIssue(Issue issue);
         public abstract IEnumerable<Category> GetArticleCategories(Article article);
         public abstract IEnumerable<Article> GetArticlesByCategory(Category category);

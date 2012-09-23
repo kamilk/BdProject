@@ -240,6 +240,21 @@ namespace ReferenceArchiver.Model
             return result;
         }
 
+        public override IEnumerable<Article> GetArticles()
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText =
+                "SELECT ID, ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK, CZAS_WPR " +
+                "FROM filo.ARTYKULY";
+
+            List<Article> result = new List<Article>();
+
+            using (var reader = command.ExecuteReader())
+            {
+                return ReadArticles(reader);
+            }
+        }
+
         public override IEnumerable<Article> GetArticlesFromIssue(Issue issue)
         {// FIX TODO, nie jestem pewny co do ID_ZESZYTY czemu odpowiada.
             var command = m_connection.CreateCommand();
@@ -253,19 +268,10 @@ namespace ReferenceArchiver.Model
             command.Parameters.Add(new OracleParameter("Id_Serie", issue.JournalId));
             command.Parameters.Add(new OracleParameter("Id_Zesz", issue.IdWithinJournal));
 
-            List<Article> result = new List<Article>();
-
             using (var reader = command.ExecuteReader())
             {
-                while (reader.Read())
-                {
-                    result.Add(new Article(reader.GetInt16(0), reader.GetString(1), reader.GetString(2), reader.GetString(3),
-                                         reader["ID_ZESZYTY"] as int?, reader.GetString(5), reader.GetString(6), reader["STR_OD"] as int?,
-                                         reader["STR_DO"] as int?, reader["ID_WYD_OBCE"] as int?, reader.GetString(10), reader.GetString(11)));
-                }
+                return ReadArticles(reader);
             }
-
-            return result;
         }
 
         public override IEnumerable<Category> GetArticleCategories(Article article)
@@ -305,15 +311,8 @@ namespace ReferenceArchiver.Model
 
             using (var reader = command.ExecuteReader())
             {
-                while (reader.Read())
-                {
-                    result.Add(new Article(reader.GetInt16(0), reader.GetString(1), reader.GetString(2), reader.GetString(3),
-                                         reader["ID_ZESZYTY"] as int?, reader.GetString(5), reader.GetString(6), reader["STR_OD"] as int?,
-                                         reader["STR_DO"] as int?, reader["ID_WYD_OBCE"] as int?, reader.GetString(10), reader.GetString(11)));
-                }
+                return ReadArticles(reader);
             }
-
-            return result;
         }
 
         // RETURNS NULL WHEN ALIENID IS NULL
@@ -432,15 +431,8 @@ namespace ReferenceArchiver.Model
 
             using (var reader = command.ExecuteReader())
             {
-                while (reader.Read())
-                {
-                    result.Add(new Article(reader.GetInt16(0), reader.GetString(1), reader.GetString(2), reader.GetString(3),
-                                         reader["ID_ZESZYTY"] as int?, reader.GetString(5), reader.GetString(6), reader["STR_OD"] as int?,
-                                         reader["STR_DO"] as int?, reader["ID_WYD_OBCE"] as int?, reader.GetString(10), reader.GetString(11)));
-                }
+                return ReadArticles(reader);
             }
-
-            return result;
         }
 
         public override IEnumerable<Annotation> GetAnnotationsForArticle(Article article, int number = -1)
@@ -498,15 +490,8 @@ namespace ReferenceArchiver.Model
 
             using (var reader = command.ExecuteReader())
             {
-                while (reader.Read())
-                {
-                    result = new Article(reader.GetInt16(0), reader.GetString(1), reader.GetString(2), reader.GetString(3),
-                                         reader["ID_ZESZYTY"] as int?, reader.GetString(5), reader.GetString(6), reader["STR_OD"] as int?,
-                                         reader["STR_DO"] as int?, reader["ID_WYD_OBCE"] as int?, reader.GetString(10), reader.GetString(11));
-                }
+                return ReadArticles(reader).FirstOrDefault();
             }
-
-            return result;
         }
 
         public override int GetAuthorAfiliationForArticle(Article article, Author author)
@@ -1335,6 +1320,22 @@ namespace ReferenceArchiver.Model
                 return false;
 
             return true;
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private static List<Article> ReadArticles(DbDataReader reader)
+        {
+            List<Article> result = new List<Article>();
+            while (reader.Read())
+            {
+                result.Add(new Article((long)reader["ID"], reader.GetString(1), reader.GetString(2), reader.GetString(3),
+                                     reader["ID_ZESZYTY"] as int?, reader.GetString(5), reader["TYTUL_PL"] as string, reader["STR_OD"] as int?,
+                                     reader["STR_DO"] as int?, reader["ID_WYD_OBCE"] as int?, reader.GetString(10), (DateTime)reader["CZAS_WPR"]));
+            }
+            return result;
         }
 
         #endregion

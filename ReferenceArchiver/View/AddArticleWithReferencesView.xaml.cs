@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ReferenceArchiver.ViewModel;
+using ReferenceArchiver.Model;
 
 namespace ReferenceArchiver.View
 {
@@ -23,6 +24,11 @@ namespace ReferenceArchiver.View
         public AddArticleWithReferencesView()
         {
             InitializeComponent();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            articlesAutoCompleteBox.ItemsSource = CentralRepository.Instance.GetArticles();
         }
     }
 }

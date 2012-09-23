@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="479" d:DesignWidth="472" xmlns:my="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" MinHeight="480" MinWidth="470" xmlns:my1="clr-namespace:ReferenceArchiver.View">
+             d:DesignHeight="479" d:DesignWidth="472" xmlns:my="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" MinHeight="480" MinWidth="470" xmlns:my1="clr-namespace:ReferenceArchiver.View" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="329*" />
@@ -13,17 +13,13 @@
         <my1:AddArticleView x:Name="addArticleWithoutReferencesView1" />
         <GroupBox Grid.Row="1" Header="Bibliografia" Name="groupBox3">
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="96*" />
-                </Grid.RowDefinitions>
-                <my:AutoCompleteBox Margin="51,6,279,0" Name="autoCompleteBox5" VerticalAlignment="Top" />
+                <my:AutoCompleteBox Margin="51,6,279,0" Name="articlesAutoCompleteBox" VerticalAlignment="Top" />
                 <Button Content="Dodaj" Height="23" HorizontalAlignment="Right" Margin="0,7,198,0" Name="button5" VerticalAlignment="Top" Width="75" />
-                <Label Content="Tytuł:" Height="28" HorizontalAlignment="Left" Margin="6,4,0,0" Name="label8" VerticalAlignment="Top" Grid.RowSpan="2" />
-                <DataGrid AutoGenerateColumns="False" Grid.Row="1" Name="dataGrid2" Margin="0,5,91,0" />
-                <Button Content="W górę" Grid.Row="1" Height="23" HorizontalAlignment="Right" Margin="0,5,5,0" Name="button6" VerticalAlignment="Top" Width="75" />
-                <Button Content="W dół" Grid.Row="1" Height="23" HorizontalAlignment="Right" Margin="0,34,5,0" Name="button7" VerticalAlignment="Top" Width="75" />
-                <Button Content="Usuń" Grid.Row="1" Height="23" HorizontalAlignment="Right" Margin="0,63,5,0" Name="button8" VerticalAlignment="Top" Width="75" />
+                <Label Content="Tytuł:" Height="28" HorizontalAlignment="Left" Margin="6,4,0,0" Name="label8" VerticalAlignment="Top" />
+                <DataGrid AutoGenerateColumns="False" Name="dataGrid2" Margin="0,35,91,0" />
+                <Button Content="W górę" Height="23" HorizontalAlignment="Right" Margin="0,35,5,0" Name="button6" VerticalAlignment="Top" Width="75" />
+                <Button Content="W dół" Height="23" HorizontalAlignment="Right" Margin="0,64,5,0" Name="button7" VerticalAlignment="Top" Width="75" />
+                <Button Content="Usuń" Height="23" HorizontalAlignment="Right" Margin="0,93,5,0" Name="button8" VerticalAlignment="Top" Width="75" />
                 <Button Content="Szukaj..." Height="23" HorizontalAlignment="Right" Margin="0,7,117,0" Name="button9" VerticalAlignment="Top" Width="75" />
                 <Button Content="Wprowadź nowy" Height="23" HorizontalAlignment="Right" Margin="0,7,4,0" Name="button3" VerticalAlignment="Top" Width="107" Command="{Binding Path=WizardViewModel.NavigateToAddingReferenceArticleCommand}" />
             </Grid>

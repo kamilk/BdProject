@@ -399,5 +399,10 @@ namespace ReferenceArchiver.Model
         {
             throw new NotImplementedException();
         }
+
+        public override IEnumerable<Article> GetArticles()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
