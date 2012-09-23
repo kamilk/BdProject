@@ -242,36 +242,18 @@ namespace ReferenceArchiver.Model
 
         public override IEnumerable<Article> GetArticles()
         {
-            var command = m_connection.CreateCommand();
-            command.CommandText =
-                "SELECT ID, ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK, CZAS_WPR " +
-                "FROM filo.ARTYKULY";
-
-            List<Article> result = new List<Article>();
-
-            using (var reader = command.ExecuteReader())
-            {
-                return ReadArticles(reader);
-            }
+            return GetArticles(null, null);
         }
 
         public override IEnumerable<Article> GetArticlesFromIssue(Issue issue)
         {// FIX TODO, nie jestem pewny co do ID_ZESZYTY czemu odpowiada.
-            var command = m_connection.CreateCommand();
-            command.CommandText = 
-                "SELECT ID, ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK, CZAS_WPR " +
-                "FROM filo.ARTYKULY " +
-                "WHERE ID_INST = :pId_Inst AND ID_WYD = :pId_Wyd AND ID_SERIE = :pId_Serie AND ID_ZESZYTY = :pId_Zesz";
-            
-            command.Parameters.Add(new OracleParameter("Id_Inst", issue.InstitutionId));
-            command.Parameters.Add(new OracleParameter("Id_Wyd", issue.PublisherId));
-            command.Parameters.Add(new OracleParameter("Id_Serie", issue.JournalId));
-            command.Parameters.Add(new OracleParameter("Id_Zesz", issue.IdWithinJournal));
+            var parameters = new List<OracleParameter>();
+            parameters.Add(new OracleParameter("Id_Inst", issue.InstitutionId));
+            parameters.Add(new OracleParameter("Id_Wyd", issue.PublisherId));
+            parameters.Add(new OracleParameter("Id_Serie", issue.JournalId));
+            parameters.Add(new OracleParameter("Id_Zesz", issue.IdWithinJournal));
 
-            using (var reader = command.ExecuteReader())
-            {
-                return ReadArticles(reader);
-            }
+            return GetArticles("ID_INST = :pId_Inst AND ID_WYD = :pId_Wyd AND ID_SERIE = :pId_Serie AND ID_ZESZYTY = :pId_Zesz", parameters);
         }
 
         public override IEnumerable<Category> GetArticleCategories(Article article)
@@ -299,20 +281,9 @@ namespace ReferenceArchiver.Model
 
         public override IEnumerable<Article> GetArticlesByCategory(Category category)
         {
-            var command = m_connection.CreateCommand();
-            command.CommandText =
-                "SELECT ID, ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK, CZAS_WPR " +
-                "FROM filo.ARTYKULY " +
-                "WHERE ID IN (SELECT DISTINCT ARTYKULY_ID FROM filo.ARTYKULY_KAT WHERE KATEGORIE_ID = :pId_Kat)";
-
-            command.Parameters.Add(new OracleParameter("Id_Kat", category.Id));
-
-            List<Article> result = new List<Article>();
-
-            using (var reader = command.ExecuteReader())
-            {
-                return ReadArticles(reader);
-            }
+            var parameters = new List<OracleParameter>();
+            parameters.Add(new OracleParameter("Id_Kat", category.Id));
+            return GetArticles("ID IN (SELECT DISTINCT ARTYKULY_ID FROM filo.ARTYKULY_KAT WHERE KATEGORIE_ID = :pId_Kat)", parameters);
         }
 
         // RETURNS NULL WHEN ALIENID IS NULL
@@ -419,20 +390,9 @@ namespace ReferenceArchiver.Model
         // Only Key field required to be filled in the keyword variable
         public override IEnumerable<Article> GetArticlesByKeyword(Keyword keyword)
         {
-            var command = m_connection.CreateCommand();
-            command.CommandText =
-                "SELECT ID, ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK, CZAS_WPR " +
-                "FROM filo.ARTYKULY " +
-                "WHERE ID IN (SELECT DISTINCT ARTYKULY_ID FROM filo.SLOWA_KLUCZE WHERE KLUCZ = :pKey)";
-
-            command.Parameters.Add(new OracleParameter("Key", keyword.Key));
-
-            List<Article> result = new List<Article>();
-
-            using (var reader = command.ExecuteReader())
-            {
-                return ReadArticles(reader);
-            }
+            var parameters = new List<OracleParameter>();
+            parameters.Add(new OracleParameter("Key", keyword.Key));
+            return GetArticles("ID IN (SELECT DISTINCT ARTYKULY_ID FROM filo.SLOWA_KLUCZE WHERE KLUCZ = :pKey)", parameters);
         }
 
         public override IEnumerable<Annotation> GetAnnotationsForArticle(Article article, int number = -1)
@@ -477,21 +437,11 @@ namespace ReferenceArchiver.Model
         {
             if (id < 0)
                 return null;
+            
+            var parameters = new List<OracleParameter>();
+            parameters.Add(new OracleParameter("Id", id));
 
-            var command = m_connection.CreateCommand();
-            command.CommandText =
-                "SELECT ID, ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK, CZAS_WPR " +
-                "FROM filo.ARTYKULY " +
-                "WHERE ID = :pId";
-
-            command.Parameters.Add(new OracleParameter("Id", id));
-
-            Article result = null;
-
-            using (var reader = command.ExecuteReader())
-            {
-                return ReadArticles(reader).FirstOrDefault();
-            }
+            return GetArticles("ID = :pId", parameters).FirstOrDefault();
         }
 
         public override int GetAuthorAfiliationForArticle(Article article, Author author)
@@ -1326,16 +1276,34 @@ namespace ReferenceArchiver.Model
 
         #region Private methods
 
-        private static List<Article> ReadArticles(DbDataReader reader)
+        private IEnumerable<Article> GetArticles(string where, IEnumerable<OracleParameter> parameters)
         {
-            List<Article> result = new List<Article>();
-            while (reader.Read())
+            var queryBuilder = new StringBuilder();
+            queryBuilder.Append("SELECT ID, ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK, CZAS_WPR " +
+                            "FROM filo.ARTYKULY ");
+            if (where != null && where.Length > 0)
+                queryBuilder.AppendFormat("WHERE {0}", where);
+
+            var command = m_connection.CreateCommand();
+            command.CommandText = queryBuilder.ToString();
+
+            if (parameters != null)
             {
-                result.Add(new Article((long)reader["ID"], reader.GetString(1), reader.GetString(2), reader.GetString(3),
-                                     reader["ID_ZESZYTY"] as int?, reader.GetString(5), reader["TYTUL_PL"] as string, reader["STR_OD"] as int?,
-                                     reader["STR_DO"] as int?, reader["ID_WYD_OBCE"] as int?, reader.GetString(10), (DateTime)reader["CZAS_WPR"]));
+                foreach (OracleParameter parameter in parameters)
+                    command.Parameters.Add(parameter);
             }
-            return result;
+
+            using (var reader = command.ExecuteReader())
+            {
+                List<Article> result = new List<Article>();
+                while (reader.Read())
+                {
+                    result.Add(new Article((long)reader["ID"], reader.GetString(1), reader.GetString(2), reader.GetString(3),
+                                         reader["ID_ZESZYTY"] as int?, reader.GetString(5), reader["TYTUL_PL"] as string, reader["STR_OD"] as int?,
+                                         reader["STR_DO"] as int?, reader["ID_WYD_OBCE"] as int?, reader.GetString(10), (DateTime)reader["CZAS_WPR"]));
+                }
+                return result;
+            }
         }
 
         #endregion
