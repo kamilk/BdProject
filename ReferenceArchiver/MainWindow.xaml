@@ -14,14 +14,14 @@
         <DataTemplate DataType="{x:Type viewModel:ChooseIssuePageViewModel}">
             <view:ChooseIssueView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:AddArticlePageViewModel}">
-            <view:AddArticleView/>
+        <DataTemplate DataType="{x:Type viewModel:AddArticleWithReferencesPageViewModel}">
+            <view:AddArticleWithReferencesView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:ChoosePublisherForReferencePageViewModel}">
             <view:ChoosePublisherForFootnoteView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:AddArticleWithoutReferencesViewModel}">
-            <view:AddArticleWithoutReferencesView/>
+        <DataTemplate DataType="{x:Type viewModel:AddArticleViewModel}">
+            <view:AddArticleView/>
         </DataTemplate>
     </Window.Resources>
 

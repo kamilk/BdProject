@@ -94,11 +94,11 @@
     <Compile Include="ViewModel\Helpers\WizardPageManager.cs" />
     <Compile Include="ViewModel\WizardPageViewModelBase.cs" />
     <Compile Include="ViewModel\WizardViewModel.cs" />
+    <Compile Include="View\AddArticleWithReferencesView.xaml.cs">
+      <DependentUpon>AddArticleWithReferencesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AddArticleView.xaml.cs">
       <DependentUpon>AddArticleView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\AddArticleWithoutReferencesView.xaml.cs">
-      <DependentUpon>AddArticleWithoutReferencesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ChooseExternalPublisherView.xaml.cs">
       <DependentUpon>ChooseExternalPublisherView.xaml</DependentUpon>
@@ -136,11 +136,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\AddArticleView.xaml">
+    <Page Include="View\AddArticleWithReferencesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\AddArticleWithoutReferencesView.xaml">
+    <Page Include="View\AddArticleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

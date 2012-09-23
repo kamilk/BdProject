@@ -12,12 +12,12 @@ namespace ReferenceArchiver.ViewModel
         ChooseInstitiutionAndPublisherPageViewModel _institutionView;
         ChooseResearchJournalPageViewModel _journalView;
         ChooseIssuePageViewModel _issueView;
-        AddArticlePageViewModel _articleView;
+        AddArticleWithReferencesPageViewModel _articleView;
 
         ChoosePublisherForReferencePageViewModel _referenceInstitutionView;
         ChooseResearchJournalPageViewModel _referenceJournalView;
         ChooseIssuePageViewModel _referenceIssueView;
-        AddArticleWithoutReferencesViewModel _referenceArticleView;
+        AddArticleViewModel _referenceArticleView;
 
         WizardPageManager _mainPageManager;
         WizardPageManager _referencePageManager;
@@ -102,7 +102,7 @@ namespace ReferenceArchiver.ViewModel
             _institutionView = new ChooseInstitiutionAndPublisherPageViewModel(this, _institutions, _publishers);
             _journalView = new ChooseResearchJournalPageViewModel(this);
             _issueView = new ChooseIssuePageViewModel(this);
-            _articleView = new AddArticlePageViewModel(this);
+            _articleView = new AddArticleWithReferencesPageViewModel(this);
 
             _mainPageManager = new WizardPageManager();
             _mainPageManager.Add(_institutionView);
@@ -115,7 +115,7 @@ namespace ReferenceArchiver.ViewModel
             _referenceInstitutionView = new ChoosePublisherForReferencePageViewModel(this, _institutions, _publishers);
             _referenceJournalView = new ChooseResearchJournalPageViewModel(this);
             _referenceIssueView = new ChooseIssuePageViewModel(this);
-            _referenceArticleView = new AddArticleWithoutReferencesViewModel(this);
+            _referenceArticleView = new AddArticleViewModel(this);
 
             _referencePageManager = new WizardPageManager();
             _referencePageManager.Add(_referenceInstitutionView);

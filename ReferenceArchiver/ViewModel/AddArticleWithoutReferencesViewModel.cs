@@ -5,14 +5,14 @@ using System.Text;
 
 namespace ReferenceArchiver.ViewModel
 {
-    class AddArticleWithoutReferencesViewModel : WizardPageViewModelBase
+    class AddArticleViewModel : WizardPageViewModelBase
     {
         public override string Title
         {
             get { return "Podaj dane artykułu"; }
         }
 
-        public AddArticleWithoutReferencesViewModel(WizardViewModel parent)
+        public AddArticleViewModel(WizardViewModel parent)
             : base(parent)
         { }
     }

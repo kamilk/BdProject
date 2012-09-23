@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ReferenceArchiver.ViewModel
 {
-    class AddArticlePageViewModel : AddArticleWithoutReferencesViewModel
+    class AddArticleWithReferencesPageViewModel : AddArticleViewModel
     {
-        public AddArticlePageViewModel(WizardViewModel parent)
+        public AddArticleWithReferencesPageViewModel(WizardViewModel parent)
             : base(parent)
         { }
     }
