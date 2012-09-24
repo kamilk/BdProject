@@ -52,6 +52,9 @@ namespace ReferenceArchiver.View
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             _viewModel = (ChooseIssuePageViewModel)DataContext;
+            Issue issue = _viewModel.SelectedIssue;
+            if (issue != null && issue.IdWithinJournal.HasValue && issue.IdWithinJournal >= 0)
+                FillIssueData(issue);
         }
 
         private void FillIssueData(Issue issue)
