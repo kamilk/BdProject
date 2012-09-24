@@ -125,12 +125,12 @@ namespace ReferenceArchiver.Model
             throw new NotImplementedException();
         }
 
-        public override bool SaveInstitution(Institution institution)
+        public override string SaveInstitution(Institution institution)
         {
             throw new NotImplementedException();
         }
 
-        public override bool SavePublisher(Publisher publisher)
+        public override string SavePublisher(Publisher publisher)
         {
             throw new NotImplementedException();
         }

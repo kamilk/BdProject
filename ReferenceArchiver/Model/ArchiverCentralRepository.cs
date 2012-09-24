@@ -586,29 +586,32 @@ namespace ReferenceArchiver.Model
 
         #region Save methods
 
-        public override bool SaveInstitution(Institution institution)
+        public override string SaveInstitution(Institution institution)
         {
             var command = m_connection.CreateCommand();
-            command.CommandText = "INSERT INTO filo.INSTYTUCJE ( NAZWA ) VALUES ( :pNazwa )";
+            command.CommandText = "INSERT INTO filo.INSTYTUCJE ( NAZWA ) VALUES ( :pNazwa ) RETURNING ID INTO :pId";
             command.Parameters.Add(new OracleParameter("Nazwa", institution.Name ));
+            command.Parameters.Add(new OracleParameter("Id", OracleDbType.Int64, ParameterDirection.ReturnValue));
 
             if (command.ExecuteNonQuery() < 1)
-                return false;
-
-            return true;
+                return "-1";
+            string id = command.Parameters["Id"].Value.ToString();
+            return id;
         }
 
-        public override bool SavePublisher(Publisher publisher)
+        public override string SavePublisher(Publisher publisher)
         {
             var command = m_connection.CreateCommand();
-            command.CommandText = "INSERT INTO filo.WYDAWNICTWA ( ID_INST, TYTUL ) VALUES ( :pId_Inst, :pTytul )";
+            command.CommandText = "INSERT INTO filo.WYDAWNICTWA ( ID_INST, TYTUL ) VALUES ( :pId_Inst, :pTytul ) RETURNING ID INTO :pId";
             command.Parameters.Add(new OracleParameter("Id_Inst", publisher.InstitutionId));
             command.Parameters.Add(new OracleParameter("Tytul", publisher.Title));
+            command.Parameters.Add(new OracleParameter("Id", OracleDbType.Int64, ParameterDirection.ReturnValue));
 
             if (command.ExecuteNonQuery() < 1)
-                return false;
+                return "-1";
 
-            return true;
+            string id = command.Parameters["Id"].Value.ToString();
+            return id;
         }
 
         public override bool SaveResearchJournal(ResearchJournal journal)
