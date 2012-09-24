@@ -207,7 +207,12 @@ namespace ReferenceArchiver.ViewModel
 
         public bool IsInstitutionNameUnique(string name)
         {
-            bool result = false;
+            bool result = true;
+            foreach (Institution item in (List<Institution>)_institutions.CollectionView.SourceCollection)
+            {
+                if (item.Name == name)
+                    result = false;
+            }
             return result;
         }
 

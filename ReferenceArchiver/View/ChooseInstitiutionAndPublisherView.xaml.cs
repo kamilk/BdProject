@@ -24,7 +24,6 @@ namespace ReferenceArchiver.View
         #region Fields
 
         private ChooseInstitiutionAndPublisherPageViewModel viewModel;
-        private WizardViewModel wizardViewModel;
         private Institution choosenInstitution;
         private Publisher choosenPublisher;
 
@@ -111,15 +110,23 @@ namespace ReferenceArchiver.View
             if (institutionNameTextBox.Text.Length != 0)
             {
                 Institution inst = new Institution("", institutionNameTextBox.Text);
-                if (CentralRepository.Instance.SaveInstitution(inst))
+                if (viewModel.IsInstitutionNameUnique(inst.Name))
                 {
-                    inst = CentralRepository.Instance.GetInstitutionByName(inst.Name);
-                    viewModel.AddAndSelectInstitution(inst);
-                    result = true;
+                    if (CentralRepository.Instance.SaveInstitution(inst))
+                    {
+                        inst = CentralRepository.Instance.GetInstitutionByName(inst.Name);
+                        viewModel.AddAndSelectInstitution(inst);
+                        selectFirstInstitution();
+                        result = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Przy dodawaniu nowej instytucji do bazy wystąpił błąd!");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Przy dodawaniu nowej instytucji do bazy wystąpił błąd!");
+                    MessageBox.Show("W bazie istnieje już instytucja o podanej nazwie!");
                 }
             }
             else
