@@ -634,14 +634,14 @@ namespace ReferenceArchiver.Model
             var command = m_connection.CreateCommand();
             command.CommandText = 
                 "INSERT INTO filo.ZESZYTY ( ID_INST, ID_WYD, ID_SERIE, NR_W_SERII, NR_W_WYDAWNICTWIE, FL_ZWER, TYP ) " +
-                "VALUES ( :pId_Inst, :pId_Wyd :pId_Serie, :pNr_W_Serii, :pNr_W_Wyd, :pFl_Zwer, :pTyp )";
+                "VALUES ( :pId_Inst, :pId_Wyd, :pId_Serie, :pNr_W_Serii, :pNr_W_Wyd, :pFl_Zwer, :pTyp )";
            
             command.Parameters.Add(new OracleParameter("Id_Inst", issue.InstitutionId));
             command.Parameters.Add(new OracleParameter("Id_Wyd", issue.PublisherId));
             command.Parameters.Add(new OracleParameter("Id_Serie", issue.JournalId));
             command.Parameters.Add(new OracleParameter("Nr_W_Serii", OracleDbType.Long, issue.NumberWithinJournal, ParameterDirection.InputOutput));
             command.Parameters.Add(new OracleParameter("Nr_W_Wyd", OracleDbType.Long, issue.NumberWithinPublisher, ParameterDirection.InputOutput));
-            command.Parameters.Add(new OracleParameter("Fl_Zwer", OracleDbType.Char, issue.WasVerified, ParameterDirection.InputOutput));
+            command.Parameters.Add(new OracleParameter("Fl_Zwer", OracleDbType.Char, issue.WasVerified?'T':'N', ParameterDirection.InputOutput));
             command.Parameters.Add(new OracleParameter("Typ", issue.TypeSave));
 
 
