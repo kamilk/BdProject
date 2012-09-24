@@ -335,7 +335,7 @@ namespace ReferenceArchiver.Model
             throw new NotImplementedException();
         }
 
-        public override Publisher GetPublisherByName(string name)
+        public override Publisher GetPublisherByName(string name, string id_inst)
         {
             throw new NotImplementedException();
         }

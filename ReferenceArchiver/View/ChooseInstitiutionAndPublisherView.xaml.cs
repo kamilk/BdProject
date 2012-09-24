@@ -25,7 +25,7 @@ namespace ReferenceArchiver.View
 
         private ChooseInstitiutionAndPublisherPageViewModel viewModel;
         private Institution choosenInstitution;
-        private Publisher choosenPublisher;
+        //private Publisher choosenPublisher;
 
         #endregion
 
@@ -82,6 +82,21 @@ namespace ReferenceArchiver.View
             }
         }
 
+        private void publisherNameTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (Keyboard.Modifiers == ModifierKeys.Control)
+                {
+                    savePublisher();
+                }
+                else
+                {
+                    selectFirstPublisher();
+                }
+            }
+        }
+
         private void institutionsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (institutionsListBox.SelectedItem != null)
@@ -95,6 +110,21 @@ namespace ReferenceArchiver.View
             }
         }
 
+        private void publisherListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (publisherListBox.SelectedItem != null)
+            {
+                onSelectPublisher();
+            }
+        }
+
+        private void buttonDeselectInstitution_Click(object sender, RoutedEventArgs e)
+        {
+            institutionNameTextBox.Text = "";
+            publisherNameTextBox.Text = "";
+            institutionNameTextBox.Focus();
+        }
+
         #endregion
 
         #region Other Methods
@@ -102,6 +132,11 @@ namespace ReferenceArchiver.View
         private void selectFirstInstitution()
         {
             institutionsListBox.SelectedIndex = 0;
+        }
+
+        private void selectFirstPublisher()
+        {
+            publisherListBox.SelectedIndex = 0;
         }
 
         private bool saveInstitution()
@@ -141,13 +176,24 @@ namespace ReferenceArchiver.View
             bool result = false;
             if (publisherNameTextBox.Text.Length != 0 && choosenInstitution != null)
             {
-                if (CentralRepository.Instance.SavePublisher(new Publisher(choosenInstitution.Id.ToString(),"", publisherNameTextBox.Text)))
+                Publisher publisher = new Publisher(choosenInstitution.Id.ToString(),"", publisherNameTextBox.Text);
+                if (viewModel.IsPublisherUnique(publisher))
                 {
-                    result = true;
+                    if (CentralRepository.Instance.SavePublisher(publisher))
+                    {
+                        publisher = CentralRepository.Instance.GetPublisherByName(publisher.Title, publisher.InstitutionId);
+                        viewModel.AddAndSelectPublisher(publisher);
+                        selectFirstPublisher();
+                        result = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Przy dodawaniu nowego wydawnictwa do bazy wystąpił błąd!");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Przy dodawaniu nowego wydawnictwa do bazy wystąpił błąd!");
+                    MessageBox.Show("W bazie istnieje już dla określonej instytucji wydawnictwo o podanej nazwie!");
                 }
             }
             else
@@ -160,13 +206,19 @@ namespace ReferenceArchiver.View
         private void onSelectInstitution()
         {
             institutionNameTextBox.Text = institutionsListBox.SelectedItem.ToString();
-            choosenInstitution = (Institution)viewModel.Institutions.CurrentItem;
+            if (viewModel.Institutions.CurrentItem != null)
+            {
+                choosenInstitution = (Institution)viewModel.Institutions.CurrentItem;
+            }
             publisherNameTextBox.Focus();
             buttonAddPublisher.IsEnabled = true;
         }
 
-        #endregion
+        private void onSelectPublisher()
+        {
+            publisherNameTextBox.Text = publisherListBox.SelectedItem.ToString();
+        }
 
-
+        #endregion        
     }
 }

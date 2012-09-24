@@ -202,7 +202,13 @@ namespace ReferenceArchiver.ViewModel
             ((List<Institution>)_institutions.CollectionView.SourceCollection).Add(inst);
             ((List<Institution>)_institutions.CollectionView.SourceCollection).Sort((x, y) => x.Name.CompareTo(y.Name));
             _institutions.CollectionView.Refresh();
-            //_institutions.CollectionView.MoveCurrentTo(inst);
+        }
+
+        public void AddAndSelectPublisher(Publisher publisher)
+        {
+            ((List<Publisher>)_publishers.CollectionView.SourceCollection).Add(publisher);
+            ((List<Publisher>)_publishers.CollectionView.SourceCollection).Sort((x, y) => x.Title.CompareTo(y.Title));
+            _publishers.CollectionView.Refresh();
         }
 
         public bool IsInstitutionNameUnique(string name)
@@ -211,6 +217,17 @@ namespace ReferenceArchiver.ViewModel
             foreach (Institution item in (List<Institution>)_institutions.CollectionView.SourceCollection)
             {
                 if (item.Name == name)
+                    result = false;
+            }
+            return result;
+        }
+
+        public bool IsPublisherUnique(Publisher publisher)
+        {
+            bool result = true;
+            foreach (Publisher item in (List<Publisher>)_publishers.CollectionView.SourceCollection)
+            {
+                if (item.Title == publisher.Title && item.InstitutionId == publisher.InstitutionId)
                     result = false;
             }
             return result;

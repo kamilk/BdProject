@@ -96,11 +96,12 @@ namespace ReferenceArchiver.Model
             return result;
         }
 
-        public override Publisher GetPublisherByName(string name)
+        public override Publisher GetPublisherByName(string name, string id_inst)
         {
             var command = m_connection.CreateCommand();
-            command.CommandText = "SELECT ID_INST, ID, TYTUL FROM filo.WYDAWNICTWA WHERE TYTUL = :pNazwa";
+            command.CommandText = "SELECT ID_INST, ID, TYTUL FROM filo.WYDAWNICTWA WHERE TYTUL = :pNazwa AND ID_INST = :pId_inst";
             command.Parameters.Add(new OracleParameter("Nazwa", name));
+            command.Parameters.Add(new OracleParameter("Id_inst", id_inst));
 
             Publisher result = null;
 

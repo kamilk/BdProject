@@ -15,14 +15,14 @@
                 <Button Content="Dodaj nową" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="buttonAddInstitution" VerticalAlignment="Top" Width="75" Click="buttonAddInstitution_Click" />
                 <ListBox Margin="6,35" Name="institutionsListBox" ItemsSource="{Binding Path=Institutions}" IsSynchronizedWithCurrentItem="True" SelectionChanged="institutionsListBox_SelectionChanged" />
                 <Button Content="Otwórz okno zarządzania instytucjami" Height="23" HorizontalAlignment="Left" Margin="6,0,0,6" Name="button2" VerticalAlignment="Bottom" Width="248" />
-                <Button Content="Odznacz" Command="{Binding Path=DeselectInstitutionCommand}" Height="23" HorizontalAlignment="Right" Margin="0,0,6,6" Name="button5" VerticalAlignment="Bottom" Width="75" />
+                <Button Content="Odznacz" Command="{Binding Path=DeselectInstitutionCommand}" Height="23" HorizontalAlignment="Right" Margin="0,0,6,6" Name="buttonDeselectInstitution" VerticalAlignment="Bottom" Width="75" Click="buttonDeselectInstitution_Click" />
             </Grid>
         </GroupBox>
         <GroupBox Header="Wydawnictwo" HorizontalAlignment="Stretch" Margin="0,6,0,0" Name="groupBox2" VerticalAlignment="Stretch" Grid.Row="1">
             <Grid>
-                <TextBox Text="{Binding Path=PublisherFilteringString, Mode=TwoWay}" Height="23" Margin="6,6,87,0" Name="publisherNameTextBox" VerticalAlignment="Top" TextChanged="publisherNameTextBox_TextChanged" />
+                <TextBox Text="{Binding Path=PublisherFilteringString, Mode=TwoWay}" Height="23" Margin="6,6,87,0" Name="publisherNameTextBox" VerticalAlignment="Top" TextChanged="publisherNameTextBox_TextChanged" KeyDown="publisherNameTextBox_KeyDown" />
                 <Button Content="Dodaj nowe" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="buttonAddPublisher" VerticalAlignment="Top" Width="75" Click="buttonAddPublisher_Click" />
-                <ListBox Margin="6,35" Name="publisherListBox" ItemsSource="{Binding Path=Publishers}" IsSynchronizedWithCurrentItem="True" />
+                <ListBox Margin="6,35" Name="publisherListBox" ItemsSource="{Binding Path=Publishers}" IsSynchronizedWithCurrentItem="True" SelectionChanged="publisherListBox_SelectionChanged" />
                 <Button Content="Otwórz okno zarządzania wydawnictwami" Height="23" HorizontalAlignment="Left" Margin="6,0,0,6" Name="button4" VerticalAlignment="Bottom" Width="248" />
             </Grid>
         </GroupBox>
