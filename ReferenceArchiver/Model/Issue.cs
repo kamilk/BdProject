@@ -50,21 +50,56 @@ namespace ReferenceArchiver.Model
             this.YearOfPublication = rok_wydania;
             this.WasVerified = fl_zwer;
             this.TypeNumber = nr_typ;
-            this.TypeSave = typ;
 
             switch (typ)
             {
-                case "art": this.Type = IssueType.Normal;
+                case "art": 
+                    this.Type = IssueType.Normal;
+                    this.TypeSave = typ;
                     break;
-                case "hab": this.Type = IssueType.Habilitation;
+                case "hab": 
+                    this.Type = IssueType.Habilitation;
+                    this.TypeSave = typ;
                     break;
-                case "kon": this.Type = IssueType.Conference;
+                case "kon": 
+                    this.Type = IssueType.Conference;
+                    this.TypeSave = typ;
                     break;
-                case "mon": this.Type = IssueType.Monograph;
+                case "mon": 
+                    this.Type = IssueType.Monograph;
+                    this.TypeSave = typ;
                     break;
-                case "ses": this.Type = IssueType.Session;
+                case "ses": 
+                    this.Type = IssueType.Session;
+                    this.TypeSave = typ;
                     break;
-                case "sym": this.Type = IssueType.Symposium;
+                case "sym": 
+                    this.Type = IssueType.Symposium;
+                    this.TypeSave = typ;
+                    break;
+                case "Zwykły": 
+                    this.Type = IssueType.Normal;
+                    this.TypeSave = "art";
+                    break;
+                case "Konferencja": 
+                    this.Type = IssueType.Conference;
+                    this.TypeSave = "kon";
+                    break;
+                case "Praca habilitacyjna": 
+                    this.Type = IssueType.Habilitation;
+                    this.TypeSave = "hab";
+                    break;
+                case "Monografia": 
+                    this.Type = IssueType.Monograph;
+                    this.TypeSave = "mon";
+                    break;
+                case "Sesja": 
+                    this.Type = IssueType.Session;
+                    this.TypeSave = "ses";
+                    break;
+                case "Sympozjum naukowe": 
+                    this.Type = IssueType.Symposium;
+                    this.TypeSave = "sym";
                     break;
                 default:
                     //error....

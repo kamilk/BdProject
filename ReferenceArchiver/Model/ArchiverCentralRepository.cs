@@ -631,14 +631,17 @@ namespace ReferenceArchiver.Model
         
         public override bool SaveIssue(Issue issue)
         {
+            // Oracle cannot handle so many parameters, requires a split
+            // Add required, not-null data
             var command = m_connection.CreateCommand();
             command.CommandText = 
-                "INSERT INTO filo.ZESZYTY ( ID_INST, ID_WYD, ID_SERIE, NR_W_SERII, NR_W_WYDAWNICTWIE, FL_ZWER, TYP ) " +
-                "VALUES ( :pId_Inst, :pId_Wyd, :pId_Serie, :pNr_W_Serii, :pNr_W_Wyd, :pFl_Zwer, :pTyp )";
+                "INSERT INTO filo.ZESZYTY ( ID_INST, ID_WYD, ID_SERIE, ID_W_SERII, NR_W_SERII, NR_W_WYDAWNICTWIE, FL_ZWER, TYP ) " +
+                "VALUES ( :pId_Inst, :pId_Wyd, :pId_Serie, :pId_W_Serii, :pNr_W_Serii, :pNr_W_Wyd, :pFl_Zwer, :pTyp )";
            
             command.Parameters.Add(new OracleParameter("Id_Inst", issue.InstitutionId));
             command.Parameters.Add(new OracleParameter("Id_Wyd", issue.PublisherId));
             command.Parameters.Add(new OracleParameter("Id_Serie", issue.JournalId));
+            command.Parameters.Add(new OracleParameter("Id_W_Serii", OracleDbType.Long, null, ParameterDirection.InputOutput));
             command.Parameters.Add(new OracleParameter("Nr_W_Serii", OracleDbType.Long, issue.NumberWithinJournal, ParameterDirection.InputOutput));
             command.Parameters.Add(new OracleParameter("Nr_W_Wyd", OracleDbType.Long, issue.NumberWithinPublisher, ParameterDirection.InputOutput));
             command.Parameters.Add(new OracleParameter("Fl_Zwer", OracleDbType.Char, issue.WasVerified?'T':'N', ParameterDirection.InputOutput));
@@ -651,7 +654,7 @@ namespace ReferenceArchiver.Model
 
             //string id = null;
 
-            //using (var reader = command.ExecuteNonQuery())
+            //using (var reader = command.ExecuteReader())
             //{
             //    while (reader.Read())
             //    {
@@ -662,16 +665,20 @@ namespace ReferenceArchiver.Model
             //if (id == null)
             //    return false;
 
+            // Add rest of the data
             //var command2 = m_connection.CreateCommand();
-            //command2.CommandText = 
+            //command2.CommandText =
             //    "UPDATE filo.ZESZYTY " +
             //    "SET TYTUL_PL = :pTytul_Pl , ROK_WYDANIA = :pRok_Wyd , NR_TYP = :pNr_Typ " +
-            //    "WHERE ID = :pId";
+            //    "WHERE ID_INST = :pId_Inst , ID_WYD = :pId_Wyd , ID_SERIE = :pId_Serie, ID_W_SERII = :pId_W_Serii";
 
             //command2.Parameters.Add(new OracleParameter("Tytul_Pl", issue.Title));
             //command2.Parameters.Add(new OracleParameter("Rok_Wyd", issue.YearOfPublication));
             //command2.Parameters.Add(new OracleParameter("Nr_Typ", issue.TypeNumber));
-            //command2.Parameters.Add(new OracleParameter("Id", id));
+            //command2.Parameters.Add(new OracleParameter("Id_Inst", issue.InstitutionId));
+            //command2.Parameters.Add(new OracleParameter("Id_Wyd", issue.PublisherId));
+            //command2.Parameters.Add(new OracleParameter("Id_Serie", issue.JournalId));
+            //command2.Parameters.Add(new OracleParameter("Id_w_Serii", id));
 
             //if (command.ExecuteNonQuery() < 1)
             //    return false;
