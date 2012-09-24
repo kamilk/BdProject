@@ -60,6 +60,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Invenio\Marcxml.cs" />
+    <Compile Include="Invenio\Xml.cs" />
     <Compile Include="Model\AlienPublisher.cs" />
     <Compile Include="Model\Annotation.cs" />
     <Compile Include="Model\Article.cs" />

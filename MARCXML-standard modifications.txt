@@ -1,0 +1,14 @@
+901 - seria
+a- nazwa
+b- issn
+
+902- wydawnictwo
+a- nazwa
+
+903 - instytucja
+a- nazwa
+
+999 - bibliografia
+a- tytu³
+c- tytu³ ang
+g- data
