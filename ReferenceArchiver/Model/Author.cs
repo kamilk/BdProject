@@ -27,7 +27,7 @@ namespace ReferenceArchiver.Model
 
         public override string ToString()
         {
-            if (Name2 != null)
+            if (!string.IsNullOrWhiteSpace(Name2))
                 return string.Format("{0} {1} {2}", Name, Name2, LastName);
             else
                 return string.Format("{0} {1}", Name, LastName);

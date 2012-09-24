@@ -60,6 +60,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Invenio\Marcxml.cs" />
+    <Compile Include="Invenio\Xml.cs" />
     <Compile Include="Model\AlienPublisher.cs" />
     <Compile Include="Model\Annotation.cs" />
     <Compile Include="Model\Article.cs" />
@@ -115,6 +117,9 @@
     <Compile Include="View\ChooseResearchJournalView.xaml.cs">
       <DependentUpon>ChooseResearchJournalView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\NewAuthorWindow.xaml.cs">
+      <DependentUpon>NewAuthorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PieceOfStepDataControl.xaml.cs">
       <DependentUpon>PieceOfStepDataControl.xaml</DependentUpon>
     </Compile>
@@ -161,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ChooseResearchJournalView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewAuthorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
