@@ -206,7 +206,7 @@ namespace ReferenceArchiver.View
         private void onSelectInstitution()
         {
             institutionNameTextBox.Text = institutionsListBox.SelectedItem.ToString();
-            if (viewModel.Institutions.CurrentItem != null)
+            if (viewModel != null)
             {
                 choosenInstitution = (Institution)viewModel.Institutions.CurrentItem;
             }
