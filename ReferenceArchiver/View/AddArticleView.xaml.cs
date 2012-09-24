@@ -41,5 +41,14 @@ namespace ReferenceArchiver.View
             object affiliation = affiliationAutoCompleteBox.SelectedItem;
             _viewModel.AddAuthorship(author, affiliation);
         }
+
+        private void createAuthorButton_Click(object sender, RoutedEventArgs e)
+        {
+            var newAuthorWindow = new NewAuthorWindow();
+            if (newAuthorWindow.ShowDialog() == true)
+            {
+                MessageBox.Show(string.Format("{0} {1} {2}", newAuthorWindow.FirstName, newAuthorWindow.MiddleName, newAuthorWindow.LastName));
+            }
+        }
     }
 }
