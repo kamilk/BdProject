@@ -635,53 +635,23 @@ namespace ReferenceArchiver.Model
             // Add required, not-null data
             var command = m_connection.CreateCommand();
             command.CommandText = 
-                "INSERT INTO filo.ZESZYTY ( ID_INST, ID_WYD, ID_SERIE, ID_W_SERII, NR_W_SERII, NR_W_WYDAWNICTWIE, FL_ZWER, TYP ) " +
-                "VALUES ( :pId_Inst, :pId_Wyd, :pId_Serie, :pId_W_Serii, :pNr_W_Serii, :pNr_W_Wyd, :pFl_Zwer, :pTyp )";
+                "INSERT INTO filo.ZESZYTY ( ID_INST, ID_WYD, ID_SERIE, NR_W_SERII, NR_W_WYDAWNICTWIE, TYTUL_PL, ROK_WYDANIA, FL_ZWER, TYP, NR_TYP ) " +
+                "VALUES ( :pId_Inst, :pId_Wyd, :pId_Serie, :pNr_W_Serii, :pNr_W_Wyd, :pTytul_Pl, :pRok, :pFl_Zwer, :pTyp, :pNr_Typ )";
            
             command.Parameters.Add(new OracleParameter("Id_Inst", issue.InstitutionId));
             command.Parameters.Add(new OracleParameter("Id_Wyd", issue.PublisherId));
             command.Parameters.Add(new OracleParameter("Id_Serie", issue.JournalId));
-            command.Parameters.Add(new OracleParameter("Id_W_Serii", OracleDbType.Long, null, ParameterDirection.InputOutput));
             command.Parameters.Add(new OracleParameter("Nr_W_Serii", OracleDbType.Long, issue.NumberWithinJournal, ParameterDirection.InputOutput));
             command.Parameters.Add(new OracleParameter("Nr_W_Wyd", OracleDbType.Long, issue.NumberWithinPublisher, ParameterDirection.InputOutput));
+            command.Parameters.Add(new OracleParameter("Tytul_Pl", issue.Title));
+            command.Parameters.Add(new OracleParameter("Rok_Wyd", OracleDbType.Long, issue.YearOfPublication, ParameterDirection.InputOutput));
             command.Parameters.Add(new OracleParameter("Fl_Zwer", OracleDbType.Char, issue.WasVerified?'T':'N', ParameterDirection.InputOutput));
             command.Parameters.Add(new OracleParameter("Typ", issue.TypeSave));
-
+            command.Parameters.Add(new OracleParameter("Nr_Typ", issue.TypeNumber));
 
 
             if (command.ExecuteNonQuery() < 1)
                 return false;
-
-            //string id = null;
-
-            //using (var reader = command.ExecuteReader())
-            //{
-            //    while (reader.Read())
-            //    {
-            //        id = reader["ID_W_SERII"].ToString();
-            //    }
-            //}
-
-            //if (id == null)
-            //    return false;
-
-            // Add rest of the data
-            //var command2 = m_connection.CreateCommand();
-            //command2.CommandText =
-            //    "UPDATE filo.ZESZYTY " +
-            //    "SET TYTUL_PL = :pTytul_Pl , ROK_WYDANIA = :pRok_Wyd , NR_TYP = :pNr_Typ " +
-            //    "WHERE ID_INST = :pId_Inst , ID_WYD = :pId_Wyd , ID_SERIE = :pId_Serie, ID_W_SERII = :pId_W_Serii";
-
-            //command2.Parameters.Add(new OracleParameter("Tytul_Pl", issue.Title));
-            //command2.Parameters.Add(new OracleParameter("Rok_Wyd", issue.YearOfPublication));
-            //command2.Parameters.Add(new OracleParameter("Nr_Typ", issue.TypeNumber));
-            //command2.Parameters.Add(new OracleParameter("Id_Inst", issue.InstitutionId));
-            //command2.Parameters.Add(new OracleParameter("Id_Wyd", issue.PublisherId));
-            //command2.Parameters.Add(new OracleParameter("Id_Serie", issue.JournalId));
-            //command2.Parameters.Add(new OracleParameter("Id_w_Serii", id));
-
-            //if (command.ExecuteNonQuery() < 1)
-            //    return false;
 
             return true;
         }
@@ -690,18 +660,18 @@ namespace ReferenceArchiver.Model
         {
             var command = m_connection.CreateCommand();
             command.CommandText = 
-                "INSERT INTO filo.INSTYTUCJE ( ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK ) " +
+                "INSERT INTO filo.ARTYKULY ( ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK ) " +
                 "VALUES ( :pId_Inst, :pId_Wyd, :pId_Serie, :pId_Zesz, :pTytul, :pTytul_Pl, :pStr_Od, :pStr_Do, :pId_Wyd_Obce, :pJezyk )";
 
             command.Parameters.Add(new OracleParameter("Id_Inst", article.InstitutionId));
             command.Parameters.Add(new OracleParameter("Id_Wyd", article.PublisherId));
             command.Parameters.Add(new OracleParameter("Id_Serie", article.JournalId));
-            command.Parameters.Add(new OracleParameter("Id_Zesz", article.IssueId));
+            command.Parameters.Add(new OracleParameter("Id_Zesz", OracleDbType.Long, article.IssueId, ParameterDirection.InputOutput));
             command.Parameters.Add(new OracleParameter("Tytul", article.Title));
             command.Parameters.Add(new OracleParameter("Tytul_Pl", article.TitlePl));
-            command.Parameters.Add(new OracleParameter("Str_Od", article.PageBegin));
-            command.Parameters.Add(new OracleParameter("Str_Do", article.PageEnd));
-            command.Parameters.Add(new OracleParameter("Id_Wyd_Obce", article.AlienId));
+            command.Parameters.Add(new OracleParameter("Str_Od", OracleDbType.Long, article.PageBegin, ParameterDirection.InputOutput));
+            command.Parameters.Add(new OracleParameter("Str_Do", OracleDbType.Long, article.PageEnd, ParameterDirection.InputOutput));
+            command.Parameters.Add(new OracleParameter("Id_Wyd_Obce", OracleDbType.Long, article.AlienId, ParameterDirection.InputOutput));
             command.Parameters.Add(new OracleParameter("Jezyk", article.Lang));
 
             if (command.ExecuteNonQuery() < 1)
@@ -723,7 +693,7 @@ namespace ReferenceArchiver.Model
 
             command.Parameters.Add(new OracleParameter("Typ", alien_publisher.Type));
             command.Parameters.Add(new OracleParameter("Tytul", alien_publisher.Title));
-            command.Parameters.Add(new OracleParameter("Rok_Wyd", alien_publisher.YearOfPublication));
+            command.Parameters.Add(new OracleParameter("Rok_Wyd", OracleDbType.Long, alien_publisher.YearOfPublication, ParameterDirection.InputOutput));
             command.Parameters.Add(new OracleParameter("Nr", alien_publisher.Number));
             command.Parameters.Add(new OracleParameter("Kraj", alien_publisher.Country));
 
@@ -741,7 +711,7 @@ namespace ReferenceArchiver.Model
                 "VALUES ( :pOpis, :pNad_Kat_Id )";
 
             command.Parameters.Add(new OracleParameter("Opis", category.Info));
-            command.Parameters.Add(new OracleParameter("Nad_Kat_Id", category.AboveCategory));
+            command.Parameters.Add(new OracleParameter("Nad_Kat_Id", OracleDbType.Long, category.AboveCategory, ParameterDirection.InputOutput));
 
             if (command.ExecuteNonQuery() < 1)
                 return false;
@@ -776,7 +746,7 @@ namespace ReferenceArchiver.Model
                 "VALUES ( :pKlucz, :pArt_Id, :pKraj )";
 
             command.Parameters.Add(new OracleParameter("Klucz", keyword.Key));
-            command.Parameters.Add(new OracleParameter("Art_Id", keyword.ArticleId));
+            command.Parameters.Add(new OracleParameter("Art_Id", OracleDbType.Long, keyword.ArticleId, ParameterDirection.InputOutput));
             command.Parameters.Add(new OracleParameter("Kraj", keyword.Country));
 
             if (command.ExecuteNonQuery() < 1)

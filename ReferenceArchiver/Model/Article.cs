@@ -48,6 +48,23 @@ namespace ReferenceArchiver.Model
             this.Time = czas_wpr;
         }
 
+        // USE ONLY WHEN SAVING ARTICLE, ALL GET() REQUIRE THE ABOVE ONE FOR TIMESTAMP
+        public Article(long id, string id_inst, string id_wyd, string id_serie, int? id_zeszyty, string tytul,
+                       string tytul_pl, int? str_od, int? str_do, int? id_wyd_obce, string jezyk)
+        {
+            this.Id = id;
+            this.InstitutionId = id_inst;
+            this.PublisherId = id_wyd;
+            this.JournalId = id_serie;
+            this.IssueId = id_zeszyty;
+            this.Title = tytul;
+            this.TitlePl = tytul_pl;
+            this.PageBegin = str_od;
+            this.PageEnd = str_do;
+            this.AlienId = id_wyd_obce;
+            this.Lang = jezyk;
+        }
+
         public override string ToString()
         {
             var builder = new StringBuilder();
