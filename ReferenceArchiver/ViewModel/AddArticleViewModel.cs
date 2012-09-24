@@ -16,6 +16,7 @@ namespace ReferenceArchiver.ViewModel
         #region Fields
 
         private ObservableCollection<AuthorshipData> _authorships = new ObservableCollection<AuthorshipData>();
+        private ObservableCollection<Author> _authorsToChooseFrom = new ObservableCollection<Author>();
 
         #endregion
 
@@ -39,7 +40,10 @@ namespace ReferenceArchiver.ViewModel
         {
             Languages = CollectionViewSource.GetDefaultView(CentralRepository.Instance.GetLanguages());
             Languages.MoveCurrentToFirst();
-            AuthorsToChooseFrom = CollectionViewSource.GetDefaultView(CentralRepository.Instance.GetAuthors());
+
+            _authorsToChooseFrom = new ObservableCollection<Author>(CentralRepository.Instance.GetAuthors());
+            AuthorsToChooseFrom = CollectionViewSource.GetDefaultView(_authorsToChooseFrom);
+
             InstitutionsToChooseFrom = CollectionViewSource.GetDefaultView(CentralRepository.Instance.GetInstitutions());
             Authorships = CollectionViewSource.GetDefaultView(_authorships);
 
@@ -58,6 +62,13 @@ namespace ReferenceArchiver.ViewModel
             var affiliationTyped = affiliation as Institution;
             if (author != null && affiliation != null)
                 _authorships.Add(new AuthorshipData() { Author = authorTyped, Affiliation = affiliationTyped });
+        }
+
+        public void AddAuthor(string firstName, string middleName, string lastName)
+        {
+            var author = new Author(-1, lastName, firstName, middleName, "PL");
+            CentralRepository.Instance.SaveAuthor(author);
+            _authorsToChooseFrom.Add(author);
         }
 
         private void RemoveAuthorship()

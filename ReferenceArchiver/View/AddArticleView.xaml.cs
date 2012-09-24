@@ -48,6 +48,7 @@ namespace ReferenceArchiver.View
             if (newAuthorWindow.ShowDialog() == true)
             {
                 MessageBox.Show(string.Format("{0} {1} {2}", newAuthorWindow.FirstName, newAuthorWindow.MiddleName, newAuthorWindow.LastName));
+                _viewModel.AddAuthor(newAuthorWindow.FirstName, newAuthorWindow.MiddleName, newAuthorWindow.LastName);
             }
         }
     }
