@@ -78,9 +78,6 @@ namespace ReferenceArchiver.View
                     _publisherNumber = int.Parse(numberWithinPublisherBox.Text);
                 }
 
-                //numberWithinJournalBox.Text = "";
-                //numberWithinPublisherBox.Text = "";
-
                 yearBox.Text = "";
                 titleBox.Text = "";
                 typeNumberBox.Text = "";
@@ -128,7 +125,7 @@ namespace ReferenceArchiver.View
                                         _publisherNumber,                                               //nr_w_wydawnictwie
                                         titleBox.Text,
                                         int.Parse(yearBox.Text),
-                                        false,
+                                        'T',
                                         typeCombo.Text,
                                         typeNumberBox.Text);
 
