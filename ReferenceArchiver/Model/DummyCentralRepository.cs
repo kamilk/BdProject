@@ -409,5 +409,10 @@ namespace ReferenceArchiver.Model
         {
             throw new NotImplementedException();
         }
+
+        public override void SaveArticleWithAuthorshipsAndReferences(Article article, IList<Authorship> authorships, IList<Article> references)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

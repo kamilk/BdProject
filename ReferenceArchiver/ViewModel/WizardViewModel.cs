@@ -4,6 +4,7 @@ using System.ComponentModel;
 using ReferenceArchiver.Model;
 using ReferenceArchiver.ViewModel.Helpers;
 using System.Windows.Input;
+using System.Windows;
 
 namespace ReferenceArchiver.ViewModel
 {
@@ -110,6 +111,9 @@ namespace ReferenceArchiver.ViewModel
             _mainPageManager.Add(_issueView);
             _mainPageManager.Add(_articleView);
 
+            _mainPageManager.CanNavigateBeyondEnd = true;
+            _mainPageManager.EndReached += new EventHandler(MainPageManager_EndReached);
+
             PageManager = _mainPageManager;
 
             _referenceInstitutionView = new ChoosePublisherForReferencePageViewModel(this, _institutions, _publishers);
@@ -124,7 +128,7 @@ namespace ReferenceArchiver.ViewModel
             _referencePageManager.Add(_referenceArticleView);
 
             _referencePageManager.CanNavigateBeyondBeginning = true;
-            _referencePageManager.BeginningReached += new EventHandler(_referencePageManager_BeginningReached);
+            _referencePageManager.BeginningReached += new EventHandler(ReferencePageManager_BeginningReached);
 
             _institutionView.DataLockedInChanged += new EventHandler(InstitutionView_DataLockedInChanged);
             _institutionView.IsDataCompleteChanged += new EventHandler(InstitutionView_IsDataCompleteChanged);
@@ -141,7 +145,7 @@ namespace ReferenceArchiver.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(parameterName));
         }
 
-        private void _referencePageManager_BeginningReached(object sender, EventArgs e)
+        private void ReferencePageManager_BeginningReached(object sender, EventArgs e)
         {
             PageManager = _mainPageManager;
         }
@@ -152,9 +156,15 @@ namespace ReferenceArchiver.ViewModel
             NotifyPropertyChanged("SelectedPublisher");
         }
 
-        void InstitutionView_IsDataCompleteChanged(object sender, EventArgs e)
+        private void InstitutionView_IsDataCompleteChanged(object sender, EventArgs e)
         {
             PageManager.RefreshCanNavigate();
+        }
+
+        private void MainPageManager_EndReached(object sender, EventArgs e)
+        {
+            CentralRepository.Instance.SaveArticleWithAuthorshipsAndReferences(
+                _articleView.GetArticle(), _articleView.GetAuthorships(), _articleView.GetReferences());
         }
     }
 }

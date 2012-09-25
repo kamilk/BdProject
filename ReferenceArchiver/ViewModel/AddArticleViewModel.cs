@@ -23,6 +23,8 @@ namespace ReferenceArchiver.ViewModel
         #region Properties
 
         public override string Title { get { return "Podaj dane artykułu"; } }
+        public string ArticleTitle { get; set; }
+        public string ArticlePolishTitle { get; set; }
         public ICollectionView Languages { get; private set; }
         public ICollectionView AuthorsToChooseFrom { get; private set; }
         public ICollectionView InstitutionsToChooseFrom { get; private set; }
@@ -55,6 +57,32 @@ namespace ReferenceArchiver.ViewModel
         #endregion
 
         #region Methods
+
+        public Article GetArticle()
+        {
+            return new Article()
+            {
+                Title = ArticleTitle,
+                TitlePl = ArticlePolishTitle,
+                Lang = ((Language)Languages.CurrentItem).CountryCode
+            };
+        }
+
+        public IList<Authorship> GetAuthorships()
+        {
+            IList<Authorship> result = 
+                (from authorshipData in _authorships
+                select new Authorship
+                {
+                    AuthorId = authorshipData.Author.Id,
+                    InstitutionId = authorshipData.Affiliation.Id
+                }).ToList();
+
+            for (int i = 0; i < result.Count; i++)
+                result[i].Number = i + 1;
+
+            return result;
+        }
 
         public void AddAuthorship(object author, object affiliation)
         {

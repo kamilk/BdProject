@@ -69,6 +69,7 @@ namespace ReferenceArchiver.Model
         public abstract bool AddAnnotationToArticle(Article article, Article annotation, int annotation_number);
         public abstract bool AddAuthorshipToArticle(Article article, Author author, int authorship_number);
         public abstract bool AddLanguageToCountry(Country country, string lang);
+        public abstract void SaveArticleWithAuthorshipsAndReferences(Article article, IList<Authorship> authorships, IList<Article> references);
 
         // Delete
         // REQUIRES ID FIELDS TO BE FILLED CORRECTLY, USE GET METHOD BEFORE UPDATE TO RECEIVE ID'S

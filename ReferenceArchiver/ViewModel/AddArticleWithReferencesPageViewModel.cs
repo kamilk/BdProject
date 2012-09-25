@@ -48,6 +48,21 @@ namespace ReferenceArchiver.ViewModel
             RemoveReferenceCommand = new DelegateCommand(RemoveReference);
         }
 
+        public Article GetArticle()
+        {
+            return AddArticleDataContext.GetArticle();
+        }
+
+        public IList<Authorship> GetAuthorships()
+        {
+            return AddArticleDataContext.GetAuthorships();
+        }
+
+        public IList<Article> GetReferences()
+        {
+            return _selectedArticles.ToList();
+        }
+
         public void AddReference(Article article)
         {
             if (article != null)

@@ -5,11 +5,11 @@ using System.Text;
 
 namespace ReferenceArchiver.Model
 {
-    class Authorship
+    public class Authorship
     {
-        int ArticleId { get; set; }
-        int Number { get; set; }
-        int AuthorId { get; set; }
-        string InstitutionId { get; set; }
+        public int ArticleId { get; set; }
+        public int Number { get; set; }
+        public int AuthorId { get; set; }
+        public string InstitutionId { get; set; }
     }
 }

@@ -12,7 +12,11 @@
             <RowDefinition Height="338*" />
         </Grid.RowDefinitions>
         <Label Content="Tytuł:" Height="28" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Top" />
-        <my:AutoCompleteBox Margin="45,2,5,0" Name="autoCompleteBox1" VerticalAlignment="Top" />
+        <TextBox Text="{Binding Path=ArticleTitle}" Height="23" Margin="38,2,0,0" Name="textBox3" VerticalAlignment="Top" />
+        <Label Content="Tytuł polski:" Height="28" HorizontalAlignment="Left" Margin="0,34,0,0" Name="label5" VerticalAlignment="Top" />
+        <TextBox  Text="{Binding Path=ArticlePolishTitle}" Height="23" Margin="79,36,0,0" Name="textBox4" VerticalAlignment="Top" />
+        <Label Content="Język:" Height="28" HorizontalAlignment="Left" Margin="-1,66,0,0" Name="label4" VerticalAlignment="Top" />
+        <ComboBox ItemsSource="{Binding Path=Languages}" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name"  Height="23" HorizontalAlignment="Left" Margin="38,68,0,0" Name="langaugesComboBox" VerticalAlignment="Top" Width="120" />
         <GroupBox Header="Strony" Margin="1,100,0,0" Name="groupBox1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="226">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -25,10 +29,6 @@
                 <Label Content="do" Height="28" HorizontalAlignment="Left" Margin="0,9,0,0" Name="label3" VerticalAlignment="Top" Grid.Column="1" />
             </Grid>
         </GroupBox>
-        <Label Content="Język:" Height="28" HorizontalAlignment="Left" Margin="-1,66,0,0" Name="label4" VerticalAlignment="Top" />
-        <ComboBox ItemsSource="{Binding Path=Languages}" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name"  Height="23" HorizontalAlignment="Left" Margin="38,68,0,0" Name="langaugesComboBox" VerticalAlignment="Top" Width="120" />
-        <Label Content="Tytuł polski:" Height="28" HorizontalAlignment="Left" Margin="0,34,0,0" Name="label5" VerticalAlignment="Top" />
-        <my:AutoCompleteBox Margin="79,36,5,0" Name="autoCompleteBox2" VerticalAlignment="Top" />
         <GroupBox Header="Autorzy" Name="groupBox2" Grid.Row="1">
             <Grid>
                 <Grid Margin="0,0,0,132">
