@@ -206,9 +206,9 @@ namespace ReferenceArchiver.Model
             {
                 while (reader.Read())
                 {
-                    result = new Issue(reader.GetString(0), reader.GetString(1), reader.GetString(2), (int)reader["ID_W_SERII"],
-                                         (int)reader["NR_W_SERII"], (int)reader["NR_W_WYDAWNICTWIE"], reader.GetString(6), reader["ROK_WYDANIA"] as short?,
-                                         (string)reader["FL_ZWER"] == "T", reader.GetString(9), reader["NR_TYP"] as string);
+                    result = new Issue(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt16(3),
+                                         reader.GetInt16(4), reader.GetInt16(5), reader.GetString(6), reader["ROK_WYDANIA"] as int?,
+                                         (string)reader["FL_ZWER"] == "T", reader.GetString(9), reader.GetString(10));
                 }
             }
 
@@ -584,9 +584,9 @@ namespace ReferenceArchiver.Model
             command.Parameters.Add(new OracleParameter("Id", OracleDbType.Int64, ParameterDirection.ReturnValue));
 
             if (command.ExecuteNonQuery() < 1)
-                return "-1";
-            string id = command.Parameters["Id"].Value.ToString();
-            return id;
+                return "";
+
+            return command.Parameters["Id"].Value.ToString();
         }
 
         public override string SavePublisher(Publisher publisher)
@@ -598,38 +598,36 @@ namespace ReferenceArchiver.Model
             command.Parameters.Add(new OracleParameter("Id", OracleDbType.Int64, ParameterDirection.ReturnValue));
 
             if (command.ExecuteNonQuery() < 1)
-                return "-1";
+                return "";
 
-            string id = command.Parameters["Id"].Value.ToString();
-            return id;
+            return command.Parameters["Id"].Value.ToString();
         }
 
-        public override bool SaveResearchJournal(ResearchJournal journal)
+        public override string SaveResearchJournal(ResearchJournal journal)
         {
             var command = m_connection.CreateCommand();
             command.CommandText =
                 "INSERT INTO filo.SERIE ( ID_INST, ID_WYD, TYTUL, ISSN ) " +
-                "VALUES ( :pId_Inst, :pId_Wyd, :pTytul, :pIssn )";
+                "VALUES ( :pId_Inst, :pId_Wyd, :pTytul, :pIssn ) RETURNING ID INTO :pId";
 
             command.Parameters.Add(new OracleParameter("Id_Inst", journal.InstitutionId));
             command.Parameters.Add(new OracleParameter("Id_Wyd", journal.PublisherId));
             command.Parameters.Add(new OracleParameter("Tytul", journal.Title));
             command.Parameters.Add(new OracleParameter("Issn", journal.ISSN));
+            command.Parameters.Add(new OracleParameter("Id", OracleDbType.Int64, ParameterDirection.ReturnValue));
 
             if (command.ExecuteNonQuery() < 1)
-                return false;
+                return "";
 
-            return true;
+            return command.Parameters["Id"].Value.ToString();
         }
 
-        public override bool SaveIssue(Issue issue)
+        public override string SaveIssue(Issue issue)
         {
-            // Oracle cannot handle so many parameters, requires a split
-            // Add required, not-null data
             var command = m_connection.CreateCommand();
             command.CommandText =
                 "INSERT INTO filo.ZESZYTY ( ID_INST, ID_WYD, ID_SERIE, NR_W_SERII, NR_W_WYDAWNICTWIE, TYTUL_PL, ROK_WYDANIA, FL_ZWER, TYP, NR_TYP ) " +
-                "VALUES ( :pId_Inst, :pId_Wyd, :pId_Serie, :pNr_W_Serii, :pNr_W_Wyd, :pTytul_Pl, :pRok, :pFl_Zwer, :pTyp, :pNr_Typ )";
+                "VALUES ( :pId_Inst, :pId_Wyd, :pId_Serie, :pNr_W_Serii, :pNr_W_Wyd, :pTytul_Pl, :pRok, :pFl_Zwer, :pTyp, :pNr_Typ ) RETURNING ID_W_SERII INTO :pId";
 
             command.Parameters.Add(new OracleParameter("Id_Inst", issue.InstitutionId));
             command.Parameters.Add(new OracleParameter("Id_Wyd", issue.PublisherId));
@@ -641,12 +639,12 @@ namespace ReferenceArchiver.Model
             command.Parameters.Add(new OracleParameter("Fl_Zwer", OracleDbType.Char, issue.WasVerified ? 'T' : 'N', ParameterDirection.InputOutput));
             command.Parameters.Add(new OracleParameter("Typ", issue.TypeSave));
             command.Parameters.Add(new OracleParameter("Nr_Typ", issue.TypeNumber));
-
+            command.Parameters.Add(new OracleParameter("Id", OracleDbType.Int64, ParameterDirection.ReturnValue));
 
             if (command.ExecuteNonQuery() < 1)
-                return false;
+                return "";
 
-            return true;
+            return command.Parameters["Id"].Value.ToString();
         }
 
         public override bool SaveArticle(Article article)
@@ -654,27 +652,58 @@ namespace ReferenceArchiver.Model
             return SaveArticle(article, null);
         }
 
-        public override bool SaveAlienPublisher(AlienPublisher alien_publisher)
+        private bool SaveArticle(Article article, DbTransaction transaction)
+        {
+            var command = m_connection.CreateCommand();
+
+            if (transaction != null)
+                command.Transaction = transaction;
+
+            command.CommandText =
+                "INSERT INTO filo.ARTYKULY ( ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK ) " +
+                "VALUES ( :pId_Inst, :pId_Wyd, :pId_Serie, :pId_Zesz, :pTytul, :pTytul_Pl, :pStr_Od, :pStr_Do, :pId_Wyd_Obce, :pJezyk )" +
+                "RETURNING ID INTO :pNewArticleId";
+
+            command.Parameters.Add(new OracleParameter("Id_Inst", article.InstitutionId));
+            command.Parameters.Add(new OracleParameter("Id_Wyd", article.PublisherId));
+            command.Parameters.Add(new OracleParameter("Id_Serie", article.JournalId));
+            command.Parameters.Add(new OracleParameter("Id_Zesz", OracleDbType.Long, article.IssueId, ParameterDirection.InputOutput));
+            command.Parameters.Add(new OracleParameter("Tytul", article.Title));
+            command.Parameters.Add(new OracleParameter("Tytul_Pl", article.TitlePl));
+            command.Parameters.Add(new OracleParameter("Str_Od", OracleDbType.Long, article.PageBegin, ParameterDirection.InputOutput));
+            command.Parameters.Add(new OracleParameter("Str_Do", OracleDbType.Long, article.PageEnd, ParameterDirection.InputOutput));
+            command.Parameters.Add(new OracleParameter("Id_Wyd_Obce", OracleDbType.Long, article.AlienId, ParameterDirection.InputOutput));
+            command.Parameters.Add(new OracleParameter("Jezyk", article.Lang));
+
+            command.Parameters.Add(new OracleParameter("NewArticleId", OracleDbType.Decimal, ParameterDirection.ReturnValue));
+
+            if (command.ExecuteNonQuery() < 1)
+                return false;
+
+            OracleDecimal idInOracleType = (OracleDecimal)command.Parameters["NewArticleId"].Value;
+            article.Id = (long)idInOracleType.Value;
+
+            return true;
+        }
+
+        public override string SaveAlienPublisher(AlienPublisher alien_publisher)
         {
             var command = m_connection.CreateCommand();
             command.CommandText =
                 "INSERT INTO filo.WYDAWNICTWA_OBCE ( TYP, TYTUL, ROK_WYDANIA, NUMER, KRAJ ) " +
-                "VALUES ( :pTyp, :pTytul, :pRok_Wyd, :pNr, :pKraj )";
-
-            //command.CommandText =
-            //    "INSERT INTO filo.WYDAWNICTWA_OBCE ( TYP, TYTUL, ROK_WYDANIA, NUMER ) " +
-            //    "VALUES ( :pTyp, :pTytul, :pRok_Wyd, :pNr )";
+                "VALUES ( :pTyp, :pTytul, :pRok_Wyd, :pNr, :pKraj ) RETURNING ID INTO :pId";
 
             command.Parameters.Add(new OracleParameter("Typ", alien_publisher.Type));
             command.Parameters.Add(new OracleParameter("Tytul", alien_publisher.Title));
             command.Parameters.Add(new OracleParameter("Rok_Wyd", OracleDbType.Long, alien_publisher.YearOfPublication, ParameterDirection.InputOutput));
             command.Parameters.Add(new OracleParameter("Nr", alien_publisher.Number));
             command.Parameters.Add(new OracleParameter("Kraj", alien_publisher.Country));
+            command.Parameters.Add(new OracleParameter("Id", OracleDbType.Int64, ParameterDirection.ReturnValue));
 
             if (command.ExecuteNonQuery() < 1)
-                return false;
+                return "";
 
-            return true;
+            return command.Parameters["Id"].Value.ToString();
         }
 
         public override bool SaveCategory(Category category)
@@ -693,22 +722,23 @@ namespace ReferenceArchiver.Model
             return true;
         }
 
-        public override bool SaveAuthor(Author author)
+        public override string SaveAuthor(Author author)
         {
             var command = m_connection.CreateCommand();
             command.CommandText =
                 "INSERT INTO filo.AUTORZY ( NAZWISKO , IMIE , IMIE2 , NARODOWOSC ) " +
-                "VALUES ( :pNazw , :pImie , :pImie2 , :pNar )";
+                "VALUES ( :pNazw , :pImie , :pImie2 , :pNar ) RETURNING ID INTO :pId";
 
             command.Parameters.Add(new OracleParameter("Nazw", author.LastName));
             command.Parameters.Add(new OracleParameter("Imie", author.Name));
             command.Parameters.Add(new OracleParameter("Imie2", author.Name2));
             command.Parameters.Add(new OracleParameter("Nar", author.Nationality));
+            command.Parameters.Add(new OracleParameter("Id", OracleDbType.Int64, ParameterDirection.ReturnValue));
 
             if (command.ExecuteNonQuery() < 1)
-                return false;
+                return "";
 
-            return true;
+            return command.Parameters["Id"].Value.ToString();
         }
 
         // WSZYSTKIE SLOWA KLUCZE PISZEMY MALYMI
@@ -1348,40 +1378,6 @@ namespace ReferenceArchiver.Model
             command.CommandText = "DELETE FROM filo.autorstwo WHERE id_art=:pIdArt";
             command.Parameters.Add(new OracleParameter("IdArt", article.Id));
             command.ExecuteNonQuery();
-        }
-
-        private bool SaveArticle(Article article, DbTransaction transaction)
-        {
-            var command = m_connection.CreateCommand();
-
-            if (transaction != null)
-                command.Transaction = transaction;
-
-            command.CommandText =
-                "INSERT INTO filo.ARTYKULY ( ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK ) " +
-                "VALUES ( :pId_Inst, :pId_Wyd, :pId_Serie, :pId_Zesz, :pTytul, :pTytul_Pl, :pStr_Od, :pStr_Do, :pId_Wyd_Obce, :pJezyk )" +
-                "RETURNING ID INTO :pNewArticleId";
-
-            command.Parameters.Add(new OracleParameter("Id_Inst", article.InstitutionId));
-            command.Parameters.Add(new OracleParameter("Id_Wyd", article.PublisherId));
-            command.Parameters.Add(new OracleParameter("Id_Serie", article.JournalId));
-            command.Parameters.Add(new OracleParameter("Id_Zesz", OracleDbType.Long, article.IssueId, ParameterDirection.InputOutput));
-            command.Parameters.Add(new OracleParameter("Tytul", article.Title));
-            command.Parameters.Add(new OracleParameter("Tytul_Pl", article.TitlePl));
-            command.Parameters.Add(new OracleParameter("Str_Od", OracleDbType.Long, article.PageBegin, ParameterDirection.InputOutput));
-            command.Parameters.Add(new OracleParameter("Str_Do", OracleDbType.Long, article.PageEnd, ParameterDirection.InputOutput));
-            command.Parameters.Add(new OracleParameter("Id_Wyd_Obce", OracleDbType.Long, article.AlienId, ParameterDirection.InputOutput));
-            command.Parameters.Add(new OracleParameter("Jezyk", article.Lang));
-
-            command.Parameters.Add(new OracleParameter("NewArticleId", OracleDbType.Decimal, ParameterDirection.ReturnValue));
-
-            if (command.ExecuteNonQuery() < 1)
-                return false;
-
-            OracleDecimal idInOracleType = (OracleDecimal)command.Parameters["NewArticleId"].Value;
-            article.Id = (long)idInOracleType.Value;
-
-            return true;
         }
 
         #endregion

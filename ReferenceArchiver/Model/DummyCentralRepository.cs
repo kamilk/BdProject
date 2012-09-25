@@ -135,12 +135,12 @@ namespace ReferenceArchiver.Model
             throw new NotImplementedException();
         }
 
-        public override bool SaveResearchJournal(ResearchJournal journal)
+        public override string SaveResearchJournal(ResearchJournal journal)
         {
             throw new NotImplementedException();
         }
 
-        public override bool SaveIssue(Issue issue)
+        public override string SaveIssue(Issue issue)
         {
             throw new NotImplementedException();
         }
@@ -185,7 +185,7 @@ namespace ReferenceArchiver.Model
             throw new NotImplementedException();
         }
 
-        public override bool SaveAlienPublisher(AlienPublisher alien_publisher)
+        public override string SaveAlienPublisher(AlienPublisher alien_publisher)
         {
             throw new NotImplementedException();
         }
@@ -195,7 +195,7 @@ namespace ReferenceArchiver.Model
             throw new NotImplementedException();
         }
 
-        public override bool SaveAuthor(Author author)
+        public override string SaveAuthor(Author author)
         {
             throw new NotImplementedException();
         }

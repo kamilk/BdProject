@@ -55,12 +55,12 @@ namespace ReferenceArchiver.Model
         // Save
         public abstract string SaveInstitution(Institution institution);
         public abstract string SavePublisher(Publisher publisher);
-        public abstract bool SaveResearchJournal(ResearchJournal journal);
-        public abstract bool SaveIssue(Issue issue);
+        public abstract string SaveResearchJournal(ResearchJournal journal);
+        public abstract string SaveIssue(Issue issue);
         public abstract bool SaveArticle(Article article);
-        public abstract bool SaveAlienPublisher(AlienPublisher alien_publisher);
+        public abstract string SaveAlienPublisher(AlienPublisher alien_publisher);
         public abstract bool SaveCategory(Category category);
-        public abstract bool SaveAuthor(Author author);
+        public abstract string SaveAuthor(Author author);
         public abstract bool SaveKeyword(Keyword keyword);
         public abstract bool SaveCountry(Country country);
         // Add, basically the same as Save, but you can Add many categories/authorships/annotations to the same article

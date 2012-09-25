@@ -41,7 +41,8 @@ namespace ReferenceArchiver.View
             {
                 ResearchJournal researchJournal = new ResearchJournal(publisher.InstitutionId, publisher.IdWithinInstitution, null, titleBox.Text, issnBox.Text);
 
-                if ( !ArchiverCentralRepository.Instance.SaveResearchJournal(researchJournal))
+                string savedId = ArchiverCentralRepository.Instance.SaveResearchJournal(researchJournal);
+                if (string.IsNullOrWhiteSpace(savedId))
                 {
                     MessageBox.Show("Przy dodawaniu nowej serii do bazy wystąpił błąd!");
                 }
