@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using ReferenceArchiver.Model;
 
-namespace ReferenceArchiver.ViewModel
+namespace ReferenceArchiver.Model
 {
     class AuthorshipData
     {

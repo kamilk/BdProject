@@ -11,7 +11,7 @@ using ReferenceArchiver.ViewModel.Helpers;
 
 namespace ReferenceArchiver.ViewModel
 {
-    class AddArticleWithReferencesPageViewModel : AddArticleViewModel
+    class AddArticleWithReferencesPageViewModel : WizardPageViewModelBase
     {
         #region Fields
 
@@ -21,6 +21,7 @@ namespace ReferenceArchiver.ViewModel
 
         #region Properties
 
+        public override string Title { get { return "Podaj dane artykułu"; } }
         public AddArticleViewModel AddArticleDataContext { get; private set; }
         public ICollectionView ArticlesToChooseFrom { get; private set; }
         public ICollectionView SelectedArticles { get; private set; }

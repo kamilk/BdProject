@@ -167,7 +167,13 @@ namespace ReferenceArchiver.ViewModel
             
             Languages.MoveCurrentTo(_languages.FirstOrDefault(
                 language => language.CountryCode == article.Lang));
-            
+
+            IEnumerable<AuthorshipData> newAuthorships = 
+                CentralRepository.Instance.GetAuthorshipDataForArticle(article);
+
+            _authorships.Clear();
+            foreach (var authorship in newAuthorships)
+                _authorships.Add(authorship);
         }
 
         private void RemoveAuthorship()

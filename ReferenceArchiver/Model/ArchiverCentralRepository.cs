@@ -572,6 +572,56 @@ namespace ReferenceArchiver.Model
             return result;
         }
 
+        public override IEnumerable<AuthorshipData> GetAuthorshipDataForArticle(Article article)
+        {
+            using (DbCommand command = m_connection.CreateCommand())
+            {
+                command.CommandText = @"
+                SELECT 
+                  autorzy.ID AS author_id, 
+                  autorzy.imie AS author_first_name, 
+                  autorzy.imie2 AS author_middle_name, 
+                  autorzy.nazwisko AS author_last_name, 
+                  autorzy.narodowosc AS author_nationality,
+                  instytucje.id AS institution_id,
+                  instytucje.nazwa AS institution_name
+                FROM autorstwo
+                JOIN autorzy ON autorstwo.id_aut=autorzy.id
+                JOIN instytucje ON instytucje.id=autorstwo.id_inst
+                WHERE autorstwo.id_art = :pArtId
+                ORDER BY autorstwo.nr";
+                command.Parameters.Add(new OracleParameter("ArtId", article.Id));
+
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    var result = new List<AuthorshipData>();
+                    while (reader.Read())
+                    {
+                        var institution = new Institution()
+                        {
+                            Id = reader["institution_id"] as string,
+                            Name = reader["institution_name"] as string
+                        };
+
+                        var author = new Author(
+                            (int)reader["author_id"], 
+                            reader["author_last_name"] as string, 
+                            reader["author_first_name"] as string, 
+                            reader["author_middle_name"] as string, 
+                            reader["author_nationality"] as string);
+
+                        result.Add(new AuthorshipData()
+                        {
+                            Author = author,
+                            Affiliation = institution
+                        });
+                    }
+
+                    return result;
+                }
+            }
+        }
+
         #endregion
 
         #region Save methods
