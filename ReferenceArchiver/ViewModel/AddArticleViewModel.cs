@@ -15,6 +15,12 @@ namespace ReferenceArchiver.ViewModel
     {
         #region Fields
 
+        private Article _editedArticle;
+        private string _articleTitle;
+        private string _articlePolishTitle;
+        private int? _startPageNumber;
+        private int? _endPageNumber;
+        IEnumerable<Language> _languages;
         private ObservableCollection<AuthorshipData> _authorships = new ObservableCollection<AuthorshipData>();
         private ObservableCollection<Author> _authorsToChooseFrom = new ObservableCollection<Author>();
 
@@ -23,10 +29,56 @@ namespace ReferenceArchiver.ViewModel
         #region Properties
 
         public override string Title { get { return "Podaj dane artykułu"; } }
-        public string ArticleTitle { get; set; }
-        public string ArticlePolishTitle { get; set; }
-        public int? StartPageNumber { get; set; }
-        public int? EndPageNumber { get; set; }
+
+        public string ArticleTitle
+        {
+            get { return _articleTitle; }
+            set
+            {
+                _articleTitle = value;
+                NotifyPropertyChanged("ArticleTitle");
+            }
+        }
+
+        public string ArticlePolishTitle
+        {
+            get
+            {
+                return _articlePolishTitle;
+            }
+            set
+            {
+                _articlePolishTitle = value;
+                NotifyPropertyChanged("ArticlePolishTitle");
+            }
+        }
+        
+        public int? StartPageNumber
+        {
+            get
+            {
+                return _startPageNumber;
+            }
+            set
+            {
+                _startPageNumber = value;
+                NotifyPropertyChanged("StartPageNumber");
+            }
+        }
+        
+        public int? EndPageNumber
+        {
+            get
+            {
+                return _endPageNumber;
+            }
+            set
+            {
+                _endPageNumber = value;
+                NotifyPropertyChanged("EndPageNumber");
+            }
+        }
+
         public ICollectionView Languages { get; private set; }
         public ICollectionView AuthorsToChooseFrom { get; private set; }
         public ICollectionView InstitutionsToChooseFrom { get; private set; }
@@ -42,7 +94,8 @@ namespace ReferenceArchiver.ViewModel
         public AddArticleViewModel(WizardViewModel parent)
             : base(parent)
         {
-            Languages = CollectionViewSource.GetDefaultView(CentralRepository.Instance.GetLanguages());
+            _languages = CentralRepository.Instance.GetLanguages();
+            Languages = CollectionViewSource.GetDefaultView(_languages);
             Languages.MoveCurrentToFirst();
 
             _authorsToChooseFrom = new ObservableCollection<Author>(CentralRepository.Instance.GetAuthors());
@@ -101,6 +154,20 @@ namespace ReferenceArchiver.ViewModel
             var author = new Author(-1, lastName, firstName, middleName, nationality.Code);
             CentralRepository.Instance.SaveAuthor(author);
             _authorsToChooseFrom.Add(author);
+        }
+
+        public void SetEditedArticle(Article article)
+        {
+            _editedArticle = article;
+
+            ArticleTitle = article.Title;
+            ArticlePolishTitle = article.TitlePl;
+            StartPageNumber = article.PageBegin;
+            EndPageNumber = article.PageEnd;
+            
+            Languages.MoveCurrentTo(_languages.FirstOrDefault(
+                language => language.CountryCode == article.Lang));
+            
         }
 
         private void RemoveAuthorship()

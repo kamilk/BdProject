@@ -8,7 +8,7 @@ namespace ReferenceArchiver.Model
     /// <summary>
     /// Zeszyt
     /// </summary>
-    class Issue
+    public class Issue
     {
         public string InstitutionId;                    // id_inst
         public string PublisherId;                      // id_wyd

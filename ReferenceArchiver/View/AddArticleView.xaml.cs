@@ -50,5 +50,15 @@ namespace ReferenceArchiver.View
                 _viewModel.AddAuthor(newAuthorWindow.FirstName, newAuthorWindow.MiddleName, newAuthorWindow.LastName, newAuthorWindow.Nationality);
             }
         }
+
+        private void searchForArticleToEditButton_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new SearchForArticleToEditWindow();
+            if (window.ShowDialog() == true)
+            {
+                Article selectedArticle = window.SelectedArticle;
+                _viewModel.SetEditedArticle(selectedArticle);
+            }
+        }
     }
 }

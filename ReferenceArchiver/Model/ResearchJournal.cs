@@ -8,7 +8,7 @@ namespace ReferenceArchiver.Model
     /// <summary>
     /// Seria
     /// </summary>
-    class ResearchJournal
+    public class ResearchJournal
     {
         public string InstitutionId { get; set; }      // id_inst
         public string PublisherId { get; set; }        // id_wyd

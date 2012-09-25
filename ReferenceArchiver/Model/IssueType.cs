@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace ReferenceArchiver.Model
 {
-    enum IssueType
+    public enum IssueType
     {
         Normal,
         Habilitation,

@@ -8,16 +8,16 @@
              d:DesignHeight="378" d:DesignWidth="489" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="166" />
-            <RowDefinition Height="338*" />
+            <RowDefinition Height="189*" />
+            <RowDefinition Height="189*" />
         </Grid.RowDefinitions>
-        <Label Content="Tytuł:" Height="28" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Top" />
-        <TextBox Text="{Binding Path=ArticleTitle}" Height="23" Margin="38,2,0,0" Name="textBox3" VerticalAlignment="Top" />
-        <Label Content="Tytuł polski:" Height="28" HorizontalAlignment="Left" Margin="0,34,0,0" Name="label5" VerticalAlignment="Top" />
-        <TextBox  Text="{Binding Path=ArticlePolishTitle}" Height="23" Margin="79,36,0,0" Name="textBox4" VerticalAlignment="Top" />
-        <Label Content="Język:" Height="28" HorizontalAlignment="Left" Margin="-1,66,0,0" Name="label4" VerticalAlignment="Top" />
-        <ComboBox ItemsSource="{Binding Path=Languages}" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name"  Height="23" HorizontalAlignment="Left" Margin="38,68,0,0" Name="langaugesComboBox" VerticalAlignment="Top" Width="120" />
-        <GroupBox Header="Strony" Margin="1,100,0,0" Name="groupBox1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="226">
+        <Label Content="Tytuł:" Height="28" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Top" Margin="0,29,0,0" />
+        <TextBox Text="{Binding Path=ArticleTitle}" Height="23" Margin="38,31,0,0" Name="textBox3" VerticalAlignment="Top" />
+        <Label Content="Tytuł polski:" Height="28" HorizontalAlignment="Left" Margin="0,63,0,0" Name="label5" VerticalAlignment="Top" />
+        <TextBox  Text="{Binding Path=ArticlePolishTitle}" Height="23" Margin="79,65,0,0" Name="textBox4" VerticalAlignment="Top" />
+        <Label Content="Język:" Height="28" HorizontalAlignment="Left" Margin="-1,95,0,0" Name="label4" VerticalAlignment="Top" />
+        <ComboBox ItemsSource="{Binding Path=Languages}" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name"  Height="23" HorizontalAlignment="Left" Margin="38,97,0,0" Name="langaugesComboBox" VerticalAlignment="Top" Width="120" />
+        <GroupBox Header="Strony" Margin="1,129,0,0" Name="groupBox1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="226">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
@@ -31,7 +31,7 @@
         </GroupBox>
         <GroupBox Header="Autorzy" Name="groupBox2" Grid.Row="1">
             <Grid>
-                <Grid Margin="0,0,0,132">
+                <Grid Height="57" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="204*" />
                         <ColumnDefinition Width="192*" />
@@ -55,5 +55,6 @@
                 <Button Content="W dół" Command="{Binding Path=MoveAuthorshipDownCommand}" Height="23" HorizontalAlignment="Right" Margin="0,115,5,0" Name="moveAuthorshipDownButton" VerticalAlignment="Top" Width="60" />
             </Grid>
         </GroupBox>
+        <Button Content="Wyszukaj artykuł do edycji" Height="23" HorizontalAlignment="Left" Name="searchForArticleToEditButton" VerticalAlignment="Top" Width="169" Click="searchForArticleToEditButton_Click" />
     </Grid>
 </UserControl>

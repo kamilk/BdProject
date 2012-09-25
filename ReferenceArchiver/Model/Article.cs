@@ -9,7 +9,7 @@ namespace ReferenceArchiver.Model
     /// Artykuł
     /// Assuming that TIMESTAMP will work itself inside the database.
     /// </summary>
-    class Article
+    public class Article
     {
         public long Id { get; set; }                                  // id
         public string InstitutionId { get; set; }                    // id_inst

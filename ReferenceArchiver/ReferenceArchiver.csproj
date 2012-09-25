@@ -123,6 +123,9 @@
     <Compile Include="View\PieceOfStepDataControl.xaml.cs">
       <DependentUpon>PieceOfStepDataControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SearchForArticleToEditWindow.xaml.cs">
+      <DependentUpon>SearchForArticleToEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SelectedContextView.xaml.cs">
       <DependentUpon>SelectedContextView.xaml</DependentUpon>
     </Compile>
@@ -174,6 +177,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PieceOfStepDataControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SearchForArticleToEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
