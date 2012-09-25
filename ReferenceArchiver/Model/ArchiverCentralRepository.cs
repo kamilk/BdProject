@@ -1112,8 +1112,8 @@ namespace ReferenceArchiver.Model
 
             command.Parameters.Add(new OracleParameter("Tytul_pl", issue.Title));
             command.Parameters.Add(new OracleParameter("Rok_Wyd", issue.YearOfPublication));
-            command.Parameters.Add(new OracleParameter("Fl", issue.WasVerified));
-            command.Parameters.Add(new OracleParameter("Typ", issue.Type));
+            command.Parameters.Add(new OracleParameter("Fl_Zwer", OracleDbType.Char, issue.WasVerified ? 'T' : 'N', ParameterDirection.InputOutput));
+            command.Parameters.Add(new OracleParameter("Typ", issue.TypeSave));
             command.Parameters.Add(new OracleParameter("Nr", issue.TypeNumber));
             command.Parameters.Add(new OracleParameter("Id_Inst", issue.InstitutionId));
             command.Parameters.Add(new OracleParameter("Id_Wyd", issue.PublisherId));
