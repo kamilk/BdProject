@@ -147,7 +147,7 @@ namespace ReferenceArchiver.View
                 Institution inst = new Institution("", institutionNameTextBox.Text);
                 if (viewModel.IsInstitutionNameUnique(inst.Name))
                 {
-                    if ((inst.Id = CentralRepository.Instance.SaveInstitution(inst)) != "-1")
+                    if ((inst.Id = CentralRepository.Instance.SaveInstitution(inst)) != "")
                     {
                         viewModel.AddAndSelectInstitution(inst);
                         selectFirstInstitution();
@@ -178,7 +178,7 @@ namespace ReferenceArchiver.View
                 Publisher publisher = new Publisher(choosenInstitution.Id.ToString(),"", publisherNameTextBox.Text);
                 if (viewModel.IsPublisherUnique(publisher))
                 {
-                    if ((publisher.IdWithinInstitution = CentralRepository.Instance.SavePublisher(publisher)) != "-1")
+                    if ((publisher.IdWithinInstitution = CentralRepository.Instance.SavePublisher(publisher)) != "")
                     {
                         viewModel.AddAndSelectPublisher(publisher);
                         selectFirstPublisher();
