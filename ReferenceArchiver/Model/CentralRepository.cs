@@ -39,6 +39,7 @@ namespace ReferenceArchiver.Model
         // Returns 0 when Author is not the article author in the database.
         // Returns -1 on error (when author is twice recorded for the same article, or when 2 articles have the same ID)
         public abstract int GetAuthorAfiliationForArticle(Article article, Author author);
+        public abstract IEnumerable<Country> GetCountries();
         // Gives the country code for language (from Article table)
         public abstract Country GetCountryForLanguage(string lang);
         // Returns null when no country of given code, or FIRST AND ONLY FIRST occurence in database for the code. 

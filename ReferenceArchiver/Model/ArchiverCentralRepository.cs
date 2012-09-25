@@ -475,28 +475,17 @@ namespace ReferenceArchiver.Model
             return result;
         }
 
+        public override IEnumerable<Country> GetCountries()
+        {
+            return GetCountries(null, null);
+        }
+
         public override Country GetCountryForLanguage(string lang)
         {
-            var command = m_connection.CreateCommand();
-            command.CommandText =
-                "SELECT KOD, NAZWA, FL_AKT " +
-                "FROM filo.KRAJE " +
-                "WHERE KOD = (SELECT KOD FROM filo.KRAJE_JEZYKI WHERE JEZYK = :pLang";
-
-            command.Parameters.Add(new OracleParameter("Lang", lang));
-
-            Country result = null;
-
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    result = new Country(reader.GetString(0), reader.GetString(1), reader.GetString(2));
-                    return result;
-                }
-            }
-
-            return result;
+            return GetCountries(
+                "WHERE KOD = (SELECT KOD FROM filo.KRAJE_JEZYKI WHERE JEZYK = :pLang",
+                new List<OracleParameter> { new OracleParameter("Lang", lang) })
+                .FirstOrDefault();
         }
 
         public override Country GetCountryByCode(string code)
@@ -1283,6 +1272,31 @@ namespace ReferenceArchiver.Model
                                          reader["ID_ZESZYTY"] as int?, reader.GetString(5), reader["TYTUL_PL"] as string, reader["STR_OD"] as int?,
                                          reader["STR_DO"] as int?, reader["ID_WYD_OBCE"] as int?, reader.GetString(10), (DateTime)reader["CZAS_WPR"]));
                 }
+                return result;
+            }
+        }
+
+        private IEnumerable<Country> GetCountries(string where, IEnumerable<OracleParameter> parameters)
+        {
+            var command = m_connection.CreateCommand();
+            command.CommandText =
+                "SELECT KOD, NAZWA, FL_AKT " +
+                "FROM filo.KRAJE";
+            if (!string.IsNullOrWhiteSpace(where))
+                command.CommandText += " " + where;
+
+            if (parameters != null)
+                foreach (var parameter in parameters)
+                    command.Parameters.Add(parameter);
+
+            using (var reader = command.ExecuteReader())
+            {
+                var result = new List<Country>();
+                while (reader.Read())
+                {
+                    result.Add(new Country(reader.GetString(0), reader.GetString(1), reader.GetString(2)));
+                }
+
                 return result;
             }
         }

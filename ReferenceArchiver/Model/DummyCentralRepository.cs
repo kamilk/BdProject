@@ -404,5 +404,10 @@ namespace ReferenceArchiver.Model
         {
             throw new NotImplementedException();
         }
+
+        public override IEnumerable<Country> GetCountries()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

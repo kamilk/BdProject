@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ReferenceArchiver.Model;
 
 namespace ReferenceArchiver.View
 {
@@ -29,6 +30,9 @@ namespace ReferenceArchiver.View
         public string LastName
         { get { return lastNameTextBox.Text; } }
 
+        public Country Nationality
+        { get { return (Country)countriesComboBox.SelectedItem; } }
+
         #endregion
 
         #region Constructors
@@ -43,6 +47,13 @@ namespace ReferenceArchiver.View
         private void okButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = true;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {            
+            countriesComboBox.ItemsSource = CentralRepository.Instance.GetCountries();
+            countriesComboBox.DisplayMemberPath = "Name";
+            countriesComboBox.SelectedIndex = 0;
         }
     }
 }

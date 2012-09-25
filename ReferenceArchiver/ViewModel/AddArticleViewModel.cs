@@ -64,9 +64,9 @@ namespace ReferenceArchiver.ViewModel
                 _authorships.Add(new AuthorshipData() { Author = authorTyped, Affiliation = affiliationTyped });
         }
 
-        public void AddAuthor(string firstName, string middleName, string lastName)
+        public void AddAuthor(string firstName, string middleName, string lastName, Country nationality)
         {
-            var author = new Author(-1, lastName, firstName, middleName, "PL");
+            var author = new Author(-1, lastName, firstName, middleName, nationality.Code);
             CentralRepository.Instance.SaveAuthor(author);
             _authorsToChooseFrom.Add(author);
         }

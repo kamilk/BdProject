@@ -5,11 +5,11 @@ using System.Text;
 
 namespace ReferenceArchiver.Model
 {
-    class Country
+    public class Country
     {
-        public string Code;
-        public string Name;
-        public string Flag;
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string Flag { get; set; }
 
         public Country(string code, string name, string flag)
         {
