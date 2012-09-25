@@ -25,6 +25,8 @@ namespace ReferenceArchiver.ViewModel
         public override string Title { get { return "Podaj dane artykułu"; } }
         public string ArticleTitle { get; set; }
         public string ArticlePolishTitle { get; set; }
+        public int? StartPageNumber { get; set; }
+        public int? EndPageNumber { get; set; }
         public ICollectionView Languages { get; private set; }
         public ICollectionView AuthorsToChooseFrom { get; private set; }
         public ICollectionView InstitutionsToChooseFrom { get; private set; }
@@ -64,6 +66,8 @@ namespace ReferenceArchiver.ViewModel
             {
                 Title = ArticleTitle,
                 TitlePl = ArticlePolishTitle,
+                PageBegin = StartPageNumber,
+                PageEnd = EndPageNumber,
                 Lang = ((Language)Languages.CurrentItem).CountryCode
             };
         }

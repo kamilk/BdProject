@@ -764,10 +764,30 @@ namespace ReferenceArchiver.Model
 
                     DbCommand command = m_connection.CreateCommand();
                     command.Transaction = transaction;
-                    command.CommandText = "INSERT INTO filo.bibliografia VALUES (:pArtId, :pNumber, :pRefArtId)";
+                    command.CommandText = 
+                        "INSERT INTO filo.bibliografia (id_art, nr_kolejny, bib_art) " +
+                        "VALUES (:pArtId, :pNumber, :pRefArtId)";
                     command.Parameters.Add(new OracleParameter("ArtId", article.Id));
                     command.Parameters.Add(new OracleParameter("Number", i + 1));
                     command.Parameters.Add(new OracleParameter("RefArtId", reference.Id));
+                    command.ExecuteNonQuery();
+                }
+
+                for (int i = 0; i < authorships.Count; i++)
+                {
+                    Authorship authorship = authorships[i];
+                    authorship.Number = i + 1;
+                    authorship.ArticleId = article.Id;
+
+                    DbCommand command = m_connection.CreateCommand();
+                    command.Transaction = transaction;
+                    command.CommandText = 
+                        "INSERT INTO filo.autorstwo (id_art, nr, id_aut, id_inst) " +
+                        "VALUES (:pIdArt, :pNumber, :pIdAuth, :pIdInst)";
+                    command.Parameters.Add(new OracleParameter("IdArt", authorship.ArticleId));
+                    command.Parameters.Add(new OracleParameter("Number", authorship.Number));
+                    command.Parameters.Add(new OracleParameter("IdAuth", authorship.AuthorId));
+                    command.Parameters.Add(new OracleParameter("IdInst", authorship.InstitutionId));
                     command.ExecuteNonQuery();
                 }
 
@@ -1279,7 +1299,7 @@ namespace ReferenceArchiver.Model
                 List<Article> result = new List<Article>();
                 while (reader.Read())
                 {
-                    result.Add(new Article((long)reader["ID"], reader.GetString(1), reader.GetString(2), reader.GetString(3),
+                    result.Add(new Article((long)reader["ID"], reader["ID_INST"] as string, reader["ID_WYD"] as string, reader["ID_ZESZYTY"] as string,
                                          reader["ID_ZESZYTY"] as int?, reader.GetString(5), reader["TYTUL_PL"] as string, reader["STR_OD"] as int?,
                                          reader["STR_DO"] as int?, reader["ID_WYD_OBCE"] as int?, reader.GetString(10), (DateTime)reader["CZAS_WPR"]));
                 }
