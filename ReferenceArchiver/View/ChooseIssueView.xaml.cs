@@ -210,5 +210,18 @@ namespace ReferenceArchiver.View
 
             editButton.Content = "Edytuj zeszyt";
         }
+
+        private void searchPublicity_Click(object sender, RoutedEventArgs e)
+        {
+            Issue issue = null;
+            int numberWithinPublisher;
+            if (int.TryParse(numberWithinPublisherBox.Text, out numberWithinPublisher))
+            {
+                issue = CentralRepository.Instance.GetIssueByNumberWithinPublisher(
+                     _viewModel.WizardViewModel.SelectedPublisher, numberWithinPublisher);
+            }
+            FillIssueData(issue);
+            _viewModel.SelectedIssue = issue;
+        }
     }
 }
