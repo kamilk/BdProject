@@ -23,10 +23,10 @@
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                <TextBox Height="23" Margin="39,11,6,0" Name="textBox1" VerticalAlignment="Top" />
-                <TextBox Margin="30,11,6,0" Name="textBox2" VerticalAlignment="Top" Grid.Column="1" />
                 <Label Content="Od" Height="28" HorizontalAlignment="Left" Margin="6,9,0,0" Name="label2" VerticalAlignment="Top" />
+                <TextBox Text="{Binding Path=StartPageNumber}" Height="23" Margin="39,11,6,0" Name="textBox1" VerticalAlignment="Top" />
                 <Label Content="do" Height="28" HorizontalAlignment="Left" Margin="0,9,0,0" Name="label3" VerticalAlignment="Top" Grid.Column="1" />
+                <TextBox Text="{Binding Path=EndPageNumber}" Margin="30,11,6,0" Name="textBox2" VerticalAlignment="Top" Grid.Column="1" />
             </Grid>
         </GroupBox>
         <GroupBox Header="Autorzy" Name="groupBox2" Grid.Row="1">
