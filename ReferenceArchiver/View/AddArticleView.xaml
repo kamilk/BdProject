@@ -42,7 +42,7 @@
                     <Button Content="Dodaj" Height="23" Margin="4,31,5,0" Name="addAuthorshipButton" VerticalAlignment="Top" Grid.Column="2" Click="addAuthorshipButton_Click" />
                     <Label Content="Nazwisko i imię" Height="28" HorizontalAlignment="Left" Margin="6,0,0,0" Name="label6" VerticalAlignment="Top" />
                     <Label Content="Afiliacja" Grid.Column="1" Height="28" HorizontalAlignment="Left" Name="label7" VerticalAlignment="Top" />
-                    <Button Content="Dodaj nowego..." Height="23" HorizontalAlignment="Right" Margin="0,1,8,0" Name="button2" VerticalAlignment="Top" Width="92" />
+                    <Button Content="Dodaj nowego..." Height="23" HorizontalAlignment="Right" Margin="0,1,8,0" Name="createAuthorButton" VerticalAlignment="Top" Width="92" Click="createAuthorButton_Click" />
                 </Grid>
                 <DataGrid ItemsSource="{Binding Path=Authorships}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Name="authorshipDataGrid" Margin="0,57,70,0">
                     <DataGrid.Columns>

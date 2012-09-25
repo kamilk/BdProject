@@ -52,8 +52,8 @@ namespace ReferenceArchiver.Model
 
 
         // Save
-        public abstract bool SaveInstitution(Institution institution);
-        public abstract bool SavePublisher(Publisher publisher);
+        public abstract string SaveInstitution(Institution institution);
+        public abstract string SavePublisher(Publisher publisher);
         public abstract bool SaveResearchJournal(ResearchJournal journal);
         public abstract bool SaveIssue(Issue issue);
         public abstract bool SaveArticle(Article article);
