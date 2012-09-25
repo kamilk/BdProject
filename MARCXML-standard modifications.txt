@@ -8,6 +8,9 @@ a- nazwa
 903 - instytucja
 a- nazwa
 
+904 - kategorie
+a- nazwa
+
 999 - bibliografia
 a- tytu³
 c- tytu³ ang

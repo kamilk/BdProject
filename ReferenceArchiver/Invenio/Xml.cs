@@ -67,6 +67,14 @@ namespace ReferenceArchiver.Invenio
             record.AppendChild(node);
         }
 
+        public void AddCategory(Category category)
+        {
+            XmlNode node = this.CreateDatafield("904");
+            XmlNode categ= this.CreateSubfield(category.Info, "a");
+            node.AppendChild(categ);
+            record.AppendChild(node);
+        }
+
         public void AddIssue(Issue issue)
         {
             XmlNode node = this.CreateDatafield("830");
