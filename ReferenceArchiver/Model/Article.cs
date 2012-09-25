@@ -73,5 +73,15 @@ namespace ReferenceArchiver.Model
                 builder.AppendFormat(" ({0})", TitlePl);
             return builder.ToString();
         }
+
+        public void SetIssue(Issue issue)
+        {
+            InstitutionId = issue.InstitutionId;
+            PublisherId = issue.PublisherId;
+            JournalId = issue.JournalId;
+            IssueId = issue.IdWithinJournal;
+
+            AlienId = null;
+        }
     }
 }

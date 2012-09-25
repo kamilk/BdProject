@@ -163,8 +163,10 @@ namespace ReferenceArchiver.ViewModel
 
         private void MainPageManager_EndReached(object sender, EventArgs e)
         {
+            Article article = _articleView.GetArticle();
+            article.SetIssue(_issueView.SelectedIssue);
             CentralRepository.Instance.SaveArticleWithAuthorshipsAndReferences(
-                _articleView.GetArticle(), _articleView.GetAuthorships(), _articleView.GetReferences());
+                article, _articleView.GetAuthorships(), _articleView.GetReferences());
         }
     }
 }

@@ -1279,7 +1279,7 @@ namespace ReferenceArchiver.Model
                 List<Article> result = new List<Article>();
                 while (reader.Read())
                 {
-                    result.Add(new Article((long)reader["ID"], reader.GetString(1), reader.GetString(2), reader.GetString(3),
+                    result.Add(new Article((long)reader["ID"], reader["ID_INST"] as string, reader["ID_WYD"] as string, reader["ID_ZESZYTY"] as string,
                                          reader["ID_ZESZYTY"] as int?, reader.GetString(5), reader["TYTUL_PL"] as string, reader["STR_OD"] as int?,
                                          reader["STR_DO"] as int?, reader["ID_WYD_OBCE"] as int?, reader.GetString(10), (DateTime)reader["CZAS_WPR"]));
                 }
