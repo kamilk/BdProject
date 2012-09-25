@@ -31,6 +31,8 @@ namespace ReferenceArchiver.View
         int _publisherNumber = 0;
         int _seriesNumber = 0;
 
+        bool _issueFound = false;
+
         public ChooseIssueView()
         {
             InitializeComponent();
@@ -61,6 +63,7 @@ namespace ReferenceArchiver.View
         {
             if (issue == null)
             {
+                _issueFound = false;
                 numberWithinJournalBox.IsEnabled = false;
                 numberWithinPublisherBox.IsEnabled = false;
 
@@ -95,6 +98,7 @@ namespace ReferenceArchiver.View
             }
             else
             {
+                _issueFound = true;
                 numberWithinJournalBox.Text = issue.NumberWithinJournal.ToString();
                 numberWithinPublisherBox.Text = issue.NumberWithinPublisher.ToString();
                 yearBox.Text = issue.YearOfPublication != null ? issue.YearOfPublication.ToString() : "";
@@ -119,32 +123,40 @@ namespace ReferenceArchiver.View
         {
             if (editButton.Content.Equals("Dodaj zeszyt"))
             {
-                //dodajemy zeszyt
-                Issue issue = new Issue(_viewModel.WizardViewModel.SelectedJournal.InstitutionId,       //id_inst
-                                        _viewModel.WizardViewModel.SelectedJournal.PublisherId,         //id_wyd
-                                        _viewModel.WizardViewModel.SelectedJournal.IdWithinPublisher,   //id_serie
-                                        1,                                                              //id_w_serii
-                                        _seriesNumber,                                                  //nr_w_serii
-                                        _publisherNumber,                                               //nr_w_wydawnictwie
-                                        titleBox.Text,
-                                        int.Parse(yearBox.Text),
-                                        true,
-                                        typeCombo.Text,
-                                        typeNumberBox.Text);
+                if (!_issueFound)
+                {
+                    //dodajemy zeszyt (nie istnieje zeszyt o podanym numerze)
+                    Issue issue = new Issue(_viewModel.WizardViewModel.SelectedJournal.InstitutionId,       //id_inst
+                                            _viewModel.WizardViewModel.SelectedJournal.PublisherId,         //id_wyd
+                                            _viewModel.WizardViewModel.SelectedJournal.IdWithinPublisher,   //id_serie
+                                            null,                                                           //id_w_serii
+                                            _seriesNumber,                                                  //nr_w_serii
+                                            _publisherNumber,                                               //nr_w_wydawnictwie
+                                            titleBox.Text,
+                                            int.Parse(yearBox.Text),
+                                            true,
+                                            typeCombo.Text,
+                                            typeNumberBox.Text);
 
-                ArchiverCentralRepository.Instance.SaveIssue(issue);
-                
-                //_viewModel.
+                    ArchiverCentralRepository.Instance.SaveIssue(issue);
+                }
+                else
+                {
+                    //zmieniamy zeszyt juz istniejacy
+                    Issue issue = new Issue(_viewModel.WizardViewModel.SelectedJournal.InstitutionId,       //id_inst
+                                            _viewModel.WizardViewModel.SelectedJournal.PublisherId,         //id_wyd
+                                            _viewModel.WizardViewModel.SelectedJournal.IdWithinPublisher,   //id_serie
+                                            null,                                                           //id_w_serii
+                                            _seriesNumber,                                                  //nr_w_serii
+                                            _publisherNumber,                                               //nr_w_wydawnictwie
+                                            titleBox.Text,
+                                            int.Parse(yearBox.Text),
+                                            true,
+                                            typeCombo.Text,
+                                            typeNumberBox.Text);
 
-                //ArchiverCentralRepository.Instance.SaveResearchJournal(researchJournal);
-                //viewModel.AddAndSelectJournal(researchJournal);
-                // * */
-                //ResearchJournal researchJournal = new ResearchJournal(publisher.InstitutionId, publisher.IdWithinInstitution, null, titleBox.Text, issnBox.Text);
-                //ArchiverCentralRepository.Instance.SaveResearchJournal(researchJournal);
-                //viewModel.AddAndSelectJournal(researchJournal);
-                //Issue(string id_inst, string id_wyd, string id_serie, int id_w_serii, int nr_w_serii, int nr_w_wydawnictwie,
-                //        string tytul_pl, int? rok_wydania, bool fl_zwer, string typ, string nr_typ)
-                //_viewModel.WizardViewModel.SelectedInstitution.Id
+                    ArchiverCentralRepository.Instance.UpdateIssue(issue);
+                }
             }
             else
             {
