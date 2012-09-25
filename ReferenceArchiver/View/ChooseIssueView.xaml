@@ -13,7 +13,7 @@
                 <Label Content="Nr w serii:" Height="28" HorizontalAlignment="Left" Margin="52,6,0,0" Name="label2" VerticalAlignment="Top" />
                 <TextBox Height="23" Margin="120,8,67,0" Name="numberWithinJournalBox" VerticalAlignment="Top" />
                 <Button Content="Szukaj" HorizontalAlignment="Right" Margin="0,7,6,0" Name="searchJournal" Width="55" Click="searchJournal_Click" Height="23" VerticalAlignment="Top" />
-                <Button Content="Szukaj" Height="23" HorizontalAlignment="Right" Margin="0,36,6,0" Name="searchPublicity" VerticalAlignment="Top" Width="55" Command="{Binding Path=SearchByNumberWithinPublisherCommand}"/>
+                <Button Content="Szukaj" Height="23" HorizontalAlignment="Right" Margin="0,36,6,0" Name="searchPublicity" VerticalAlignment="Top" Width="55" Command="{Binding Path=SearchByNumberWithinPublisherCommand}" Click="searchPublicity_Click" />
             </Grid>
         </GroupBox>
         <GroupBox Header="Dane zeszytu" Height="189" HorizontalAlignment="Left" Margin="0,104,0,0" Name="groupBox2" VerticalAlignment="Top" Width="339">

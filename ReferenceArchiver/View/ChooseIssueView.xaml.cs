@@ -146,7 +146,7 @@ namespace ReferenceArchiver.View
                     Issue issue = new Issue(_viewModel.WizardViewModel.SelectedJournal.InstitutionId,       //id_inst
                                             _viewModel.WizardViewModel.SelectedJournal.PublisherId,         //id_wyd
                                             _viewModel.WizardViewModel.SelectedJournal.IdWithinPublisher,   //id_serie
-                                            null,                                                           //id_w_serii
+                                            _viewModel.SelectedIssue.IdWithinJournal,                                                           //id_w_serii
                                             _seriesNumber,                                                  //nr_w_serii
                                             _publisherNumber,                                               //nr_w_wydawnictwie
                                             titleBox.Text,
@@ -209,6 +209,19 @@ namespace ReferenceArchiver.View
             typeNumberBox.IsEnabled = false;
 
             editButton.Content = "Edytuj zeszyt";
+        }
+
+        private void searchPublicity_Click(object sender, RoutedEventArgs e)
+        {
+            Issue issue = null;
+            int numberWithinPublisher;
+            if (int.TryParse(numberWithinPublisherBox.Text, out numberWithinPublisher))
+            {
+                issue = CentralRepository.Instance.GetIssueByNumberWithinPublisher(
+                     _viewModel.WizardViewModel.SelectedPublisher, numberWithinPublisher);
+            }
+            FillIssueData(issue);
+            _viewModel.SelectedIssue = issue;
         }
     }
 }
