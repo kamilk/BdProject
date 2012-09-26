@@ -8,6 +8,9 @@ using System.Windows;
 
 namespace ReferenceArchiver.ViewModel
 {
+    /// <summary>
+    /// Main ViewModel class for MainWindow view.
+    /// </summary>
     class WizardViewModel : INotifyPropertyChanged
     {
         ChooseInstitiutionAndPublisherPageViewModel _institutionView;
@@ -27,12 +30,16 @@ namespace ReferenceArchiver.ViewModel
         List<Publisher> _publishers;
 
         private WizardPageManager _pageManager;
+
+        /// <summary>
+        /// Gets or sets the page manager.
+        /// </summary>
+        /// <value>
+        /// The page manager.
+        /// </value>
         public WizardPageManager PageManager
         {
-            get
-            {
-                return _pageManager;
-            }
+            get { return _pageManager; }
             set
             {
                 _pageManager = value;
@@ -40,6 +47,12 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets the institution selected by the user, or null if none has been selected yet.
+        /// </summary>
+        /// <value>
+        /// The selected institution.
+        /// </value>
         public Institution SelectedInstitution
         {
             get
@@ -48,6 +61,12 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets the publisher selected by the user, or null if none has been selected yet.
+        /// </summary>
+        /// <value>
+        /// The selected publisher.
+        /// </value>
         public Publisher SelectedPublisher
         {
             get
@@ -56,32 +75,63 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets the research journal selected by the user, or null if none has been selected yet.
+        /// </summary>
+        /// <value>
+        /// The selected journal.
+        /// </value>
         public ResearchJournal SelectedJournal
         { get { return _journalView.IsDataLockedIn ? _journalView.SelectedJournal : null; } }
 
         DelegateCommand _navigateForwardCommand;
+
+        /// <summary>
+        /// Gets the command which should be executed when the user makes a request to go the next
+        /// page of the wizard.
+        /// </summary>
+        /// <value>
+        /// The navigate forward command.
+        /// </value>
         public ICommand NavigateForwardCommand
         {
             get
             {
                 if (_navigateForwardCommand == null)
-                    _navigateForwardCommand = new DelegateCommand(_pageManager.NavigateForward);
+                    _navigateForwardCommand = new DelegateCommand(PageManager.NavigateForward);
                 return _navigateForwardCommand;
             }
         }
 
         DelegateCommand _navigateBackwardCommand;
+
+        /// <summary>
+        /// Gets the command which should be executed when the user makes a request to go the previous
+        /// page of the wizard.
+        /// </summary>
+        /// <value>
+        /// The navigate backward command.
+        /// </value>
         public ICommand NavigateBackwardCommand
         {
             get
             {
                 if (_navigateBackwardCommand == null)
-                    _navigateBackwardCommand = new DelegateCommand(_pageManager.NavigateBackward);
+                    _navigateBackwardCommand = new DelegateCommand(PageManager.NavigateBackward);
                 return _navigateBackwardCommand;
             }
         }
 
         DelegateCommand _navigateToAddingReferenceArticleCommand;
+
+        /// <summary>
+        /// Gets the command which should be executed when the user makes a request to go the screen
+        /// for adding an article for the purpose of including it in the currently edited article's
+        /// references.
+        /// </summary>
+        /// <value>
+        /// The navigate to adding reference article command.
+        /// </value>
         public ICommand NavigateToAddingReferenceArticleCommand
         {
             get
@@ -94,6 +144,9 @@ namespace ReferenceArchiver.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WizardViewModel" /> class.
+        /// </summary>
         public WizardViewModel()
         {
             _institutions = new List<Institution>(CentralRepository.Instance.GetInstitutions());
@@ -111,7 +164,7 @@ namespace ReferenceArchiver.ViewModel
             _mainPageManager.Add(_issueView);
             _mainPageManager.Add(_articleView);
 
-            _mainPageManager.CanNavigateBeyondEnd = true;
+            _mainPageManager.AllowNavigationBeyondEnd = true;
             _mainPageManager.EndReached += new EventHandler(MainPageManager_EndReached);
 
             PageManager = _mainPageManager;
@@ -127,7 +180,7 @@ namespace ReferenceArchiver.ViewModel
             _referencePageManager.Add(_referenceIssueView);
             _referencePageManager.Add(_referenceArticleView);
 
-            _referencePageManager.CanNavigateBeyondBeginning = true;
+            _referencePageManager.AllowNavigationBeyondBeginning = true;
             _referencePageManager.BeginningReached += new EventHandler(ReferencePageManager_BeginningReached);
 
             _institutionView.DataLockedInChanged += new EventHandler(InstitutionView_DataLockedInChanged);

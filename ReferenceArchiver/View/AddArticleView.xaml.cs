@@ -25,6 +25,9 @@ namespace ReferenceArchiver.View
     {
         private AddArticleViewModel _viewModel;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddArticleView" /> class.
+        /// </summary>
         public AddArticleView()
         {
             InitializeComponent();

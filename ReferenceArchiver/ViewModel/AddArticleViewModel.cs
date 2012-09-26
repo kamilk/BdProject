@@ -11,6 +11,9 @@ using ReferenceArchiver.ViewModel.Helpers;
 
 namespace ReferenceArchiver.ViewModel
 {
+    /// <summary>
+    /// A ViewModel for AddArticleView view.
+    /// </summary>
     class AddArticleViewModel : WizardPageViewModelBase
     {
         #region Fields
@@ -23,22 +26,107 @@ namespace ReferenceArchiver.ViewModel
         #region Properties
 
         public override string Title { get { return "Podaj dane artykułu"; } }
+
+        /// <summary>
+        /// Gets or sets the article title.
+        /// </summary>
+        /// <value>
+        /// The article title.
+        /// </value>
         public string ArticleTitle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the polish title for the article.
+        /// </summary>
+        /// <value>
+        /// The article polish title.
+        /// </value>
         public string ArticlePolishTitle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the start page number.
+        /// </summary>
+        /// <value>
+        /// The start page number.
+        /// </value>
         public int? StartPageNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets the end page number.
+        /// </summary>
+        /// <value>
+        /// The end page number.
+        /// </value>
         public int? EndPageNumber { get; set; }
+
+        /// <summary>
+        /// Gets an ICollectionView for the languages the user may choose from.
+        /// </summary>
+        /// <value>
+        /// The languages.
+        /// </value>
         public ICollectionView Languages { get; private set; }
+
+        /// <summary>
+        /// Gets an ICollectionView for the authors the user may choose from.
+        /// </summary>
+        /// <value>
+        /// The authors to choose from.
+        /// </value>
         public ICollectionView AuthorsToChooseFrom { get; private set; }
+
+        /// <summary>
+        /// Gets an ICollectionView for the institutuions the user may choose from.
+        /// </summary>
+        /// <value>
+        /// The institutions to choose from.
+        /// </value>
         public ICollectionView InstitutionsToChooseFrom { get; private set; }
+
+        /// <summary>
+        /// Gets an ICollectionView for the authorships which should be displayed for the current
+        /// article.
+        /// </summary>
+        /// <value>
+        /// The authorships.
+        /// </value>
         public ICollectionView Authorships { get; private set; }
+
+        /// <summary>
+        /// Gets the command which should be executed when the user requests the currenlty selected
+        /// authorship to be moved up.
+        /// </summary>
+        /// <value>
+        /// The move authorship up command.
+        /// </value>
         public ICommand MoveAuthorshipUpCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command which should be executed when the user requests the currenlty selected
+        /// authorship to be moved down.
+        /// </summary>
+        /// <value>
+        /// The move authorship down command.
+        /// </value>
         public ICommand MoveAuthorshipDownCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command which should be executed when the user requests the currenlty selected
+        /// authorship to be removed.
+        /// </summary>
+        /// <value>
+        /// The remove authorship command.
+        /// </value>
         public ICommand RemoveAuthorshipCommand { get; private set; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddArticleViewModel" /> class.
+        /// </summary>
+        /// <param name="parent">The parent.</param>
         public AddArticleViewModel(WizardViewModel parent)
             : base(parent)
         {
@@ -60,6 +148,10 @@ namespace ReferenceArchiver.ViewModel
 
         #region Methods
 
+        /// <summary>
+        /// Gets the article created from user-specified data.
+        /// </summary>
+        /// <returns></returns>
         public Article GetArticle()
         {
             return new Article()
@@ -72,6 +164,10 @@ namespace ReferenceArchiver.ViewModel
             };
         }
 
+        /// <summary>
+        /// Gets the authorships for the currently edited article.
+        /// </summary>
+        /// <returns></returns>
         public IList<Authorship> GetAuthorships()
         {
             IList<Authorship> result = 
@@ -88,6 +184,11 @@ namespace ReferenceArchiver.ViewModel
             return result;
         }
 
+        /// <summary>
+        /// Adds the authorship to the currently edited article.
+        /// </summary>
+        /// <param name="author">The author.</param>
+        /// <param name="affiliation">The affiliation.</param>
         public void AddAuthorship(object author, object affiliation)
         {
             var authorTyped = author as Author;
@@ -96,6 +197,13 @@ namespace ReferenceArchiver.ViewModel
                 _authorships.Add(new AuthorshipData() { Author = authorTyped, Affiliation = affiliationTyped });
         }
 
+        /// <summary>
+        /// Adds the author to the currently edited article.
+        /// </summary>
+        /// <param name="firstName">First name.</param>
+        /// <param name="middleName">Middle name.</param>
+        /// <param name="lastName">Last name.</param>
+        /// <param name="nationality">Nationality.</param>
         public void AddAuthor(string firstName, string middleName, string lastName, Country nationality)
         {
             var author = new Author(-1, lastName, firstName, middleName, nationality.Code);

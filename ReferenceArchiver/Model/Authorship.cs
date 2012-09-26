@@ -5,6 +5,9 @@ using System.Text;
 
 namespace ReferenceArchiver.Model
 {
+    /// <summary>
+    /// An entity for data of the database table Autorstwo.
+    /// </summary>
     public class Authorship
     {
         public long ArticleId { get; set; }
