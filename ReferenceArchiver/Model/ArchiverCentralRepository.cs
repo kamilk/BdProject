@@ -206,9 +206,9 @@ namespace ReferenceArchiver.Model
             {
                 while (reader.Read())
                 {
-                    result = new Issue(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt16(3),
-                                         reader.GetInt16(4), reader.GetInt16(5), reader.GetString(6), reader["ROK_WYDANIA"] as int?,
-                                         (string)reader["FL_ZWER"] == "T", reader.GetString(9), reader.GetString(10));
+                    result = new Issue(reader.GetString(0), reader.GetString(1), reader.GetString(2), (int)reader["ID_W_SERII"],
+                                         (int)reader["NR_W_SERII"], (int)reader["NR_W_WYDAWNICTWIE"], reader.GetString(6), reader["ROK_WYDANIA"] as short?,
+                                         (string)reader["FL_ZWER"] == "T", reader.GetString(9), reader["NR_TYP"] as string);
                 }
             }
 
