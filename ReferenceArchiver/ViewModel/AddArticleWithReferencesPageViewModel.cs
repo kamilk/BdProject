@@ -106,6 +106,8 @@ namespace ReferenceArchiver.ViewModel
             RemoveReferenceCommand = new DelegateCommand(RemoveReference);
 
             ShouldExportToInvenio = false;
+
+            AddArticleDataContext.EditedArticleChanged += AddArticleDataContext_EditedArticleChanged;
         }
 
         #endregion
@@ -168,6 +170,16 @@ namespace ReferenceArchiver.ViewModel
             int currentPosition = SelectedArticles.CurrentPosition;
             if (currentPosition >= 0)
                 _selectedArticles.RemoveAt(currentPosition);
+        }
+
+        private void AddArticleDataContext_EditedArticleChanged(object sender, EditedArticleEventArgs e)
+        {
+            IEnumerable<Article> references = CentralRepository.Instance
+                .GetReferencedArticlesForArticle(e.Article);
+
+            _selectedArticles.Clear();
+            foreach (var reference in references)
+                _selectedArticles.Add(reference);
         }
 
         #endregion

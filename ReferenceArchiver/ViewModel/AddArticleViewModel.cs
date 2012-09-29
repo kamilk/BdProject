@@ -168,6 +168,12 @@ namespace ReferenceArchiver.ViewModel
 
         #endregion
 
+        #region Events
+
+        public event EventHandler<EditedArticleEventArgs> EditedArticleChanged;
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
@@ -277,6 +283,9 @@ namespace ReferenceArchiver.ViewModel
             _authorships.Clear();
             foreach (var authorship in newAuthorships)
                 _authorships.Add(authorship);
+
+            if (EditedArticleChanged != null)
+                EditedArticleChanged(this, new EditedArticleEventArgs(article));
         }
 
         private void RemoveAuthorship()

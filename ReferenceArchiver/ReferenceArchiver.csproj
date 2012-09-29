@@ -87,6 +87,7 @@
     <Compile Include="ViewModel\ChoosePublisherForReferencePageViewModel.cs" />
     <Compile Include="ViewModel\ChooseResearchJournalPageViewModel.cs" />
     <Compile Include="ViewModel\Helpers\DelegateCommand.cs" />
+    <Compile Include="ViewModel\Helpers\EditedArticleEventArgs.cs" />
     <Compile Include="ViewModel\Helpers\IssueTypeWrapper.cs" />
     <Compile Include="ViewModel\Helpers\NavigationDirection.cs" />
     <Compile Include="ViewModel\Helpers\SearchableCollectionViewWrapper.cs" />
