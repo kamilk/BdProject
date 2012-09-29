@@ -446,7 +446,7 @@ namespace ReferenceArchiver.Model
             command.CommandText = string.Format(
                 @"SELECT {0} 
                 FROM filo.bibliografia 
-                JOIN filo.artykuly ON bibliografia.id_art=artykuly.id
+                JOIN filo.artykuly ON bibliografia.bib_art=artykuly.id
                 WHERE bibliografia.id_art = :pIdArt
                 ORDER BY bibliografia.nr_kolejny", 
                 ArticleDatabaseColumns);
