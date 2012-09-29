@@ -72,6 +72,7 @@
     <Compile Include="Model\Country.cs" />
     <Compile Include="Model\DummyCentralRepository.cs" />
     <Compile Include="Model\CentralRepository.cs" />
+    <Compile Include="Model\Helpers\OracleParameterHelper.cs" />
     <Compile Include="Model\Institution.cs" />
     <Compile Include="Model\Issue.cs" />
     <Compile Include="Model\IssueType.cs" />
@@ -79,6 +80,9 @@
     <Compile Include="Model\Language.cs" />
     <Compile Include="Model\Publisher.cs" />
     <Compile Include="Model\ResearchJournal.cs" />
+    <Compile Include="Model\SqlBuilders\InsertArticleCommand.cs" />
+    <Compile Include="Model\SqlBuilders\SaveArticleCommandBase.cs" />
+    <Compile Include="Model\SqlBuilders\UpdateArticleCommand.cs" />
     <Compile Include="ViewModel\AddArticleWithReferencesPageViewModel.cs" />
     <Compile Include="ViewModel\AddArticleViewModel.cs" />
     <Compile Include="ViewModel\ChooseExternalPublisherViewModel.cs" />
@@ -218,6 +222,7 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.Common;
 using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
+using ReferenceArchiver.Model.SqlBuilders;
 
 namespace ReferenceArchiver.Model
 {
@@ -726,35 +727,18 @@ namespace ReferenceArchiver.Model
 
         private bool SaveArticle(Article article, DbTransaction transaction)
         {
-            var command = m_connection.CreateCommand();
+            DbCommand dbCommand = m_connection.CreateCommand();
 
             if (transaction != null)
-                command.Transaction = transaction;
+                dbCommand.Transaction = transaction;
 
-            command.CommandText =
-                "INSERT INTO filo.ARTYKULY ( ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK ) " +
-                "VALUES ( :pId_Inst, :pId_Wyd, :pId_Serie, :pId_Zesz, :pTytul, :pTytul_Pl, :pStr_Od, :pStr_Do, :pId_Wyd_Obce, :pJezyk )" +
-                "RETURNING ID INTO :pNewArticleId";
-
-            command.Parameters.Add(new OracleParameter("Id_Inst", article.InstitutionId));
-            command.Parameters.Add(new OracleParameter("Id_Wyd", article.PublisherId));
-            command.Parameters.Add(new OracleParameter("Id_Serie", article.JournalId));
-            command.Parameters.Add(new OracleParameter("Id_Zesz", OracleDbType.Long, article.IssueId, ParameterDirection.InputOutput));
-            command.Parameters.Add(new OracleParameter("Tytul", article.Title));
-            command.Parameters.Add(new OracleParameter("Tytul_Pl", article.TitlePl));
-            command.Parameters.Add(new OracleParameter("Str_Od", OracleDbType.Long, article.PageBegin, ParameterDirection.InputOutput));
-            command.Parameters.Add(new OracleParameter("Str_Do", OracleDbType.Long, article.PageEnd, ParameterDirection.InputOutput));
-            command.Parameters.Add(new OracleParameter("Id_Wyd_Obce", OracleDbType.Long, article.AlienId, ParameterDirection.InputOutput));
-            command.Parameters.Add(new OracleParameter("Jezyk", article.Lang));
-
-            command.Parameters.Add(new OracleParameter("NewArticleId", OracleDbType.Decimal, ParameterDirection.ReturnValue));
-
-            if (command.ExecuteNonQuery() < 1)
+            SaveArticleCommandBase saveCommand = SaveArticleCommandBase.CreateSaveCommandForArticle(
+                article, dbCommand);
+            
+            if (!saveCommand.Execute())
                 return false;
 
-            OracleDecimal idInOracleType = (OracleDecimal)command.Parameters["NewArticleId"].Value;
-            article.Id = (long)idInOracleType.Value;
-
+            article.Id = saveCommand.ArticleId;
             return true;
         }
 

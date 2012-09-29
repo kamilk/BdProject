@@ -208,7 +208,7 @@ namespace ReferenceArchiver.ViewModel
         /// <returns></returns>
         public Article GetArticle()
         {
-            return new Article()
+            var article = new Article()
             {
                 Title = ArticleTitle,
                 TitlePl = ArticlePolishTitle,
@@ -216,6 +216,11 @@ namespace ReferenceArchiver.ViewModel
                 PageEnd = EndPageNumber,
                 Lang = ((Language)Languages.CurrentItem).CountryCode
             };
+
+            if (_editedArticle != null)
+                article.Id = _editedArticle.Id;
+
+            return article;
         }
 
         /// <summary>
