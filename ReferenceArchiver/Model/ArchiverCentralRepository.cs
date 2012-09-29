@@ -727,15 +727,10 @@ namespace ReferenceArchiver.Model
 
         private bool SaveArticle(Article article, DbTransaction transaction)
         {
-            DbCommand dbCommand = m_connection.CreateCommand();
-
-            if (transaction != null)
-                dbCommand.Transaction = transaction;
-
             SaveArticleCommandBase saveCommand = SaveArticleCommandBase.CreateSaveCommandForArticle(
-                article, dbCommand);
+                article, m_connection.CreateCommand());
             
-            if (!saveCommand.Execute())
+            if (!saveCommand.Execute(transaction))
                 return false;
 
             article.Id = saveCommand.ArticleId;
@@ -1426,7 +1421,7 @@ namespace ReferenceArchiver.Model
         {
             var command = m_connection.CreateCommand();
             command.Transaction = transaction;
-            command.CommandText = "DELETE FROM filo.autorstwo WHERE id_art=:pIdArt";
+            command.CommandText = "DELETE FROM filo.bibliografia WHERE id_art=:pIdArt";
             command.Parameters.Add(new OracleParameter("IdArt", article.Id));
             command.ExecuteNonQuery();
         }
