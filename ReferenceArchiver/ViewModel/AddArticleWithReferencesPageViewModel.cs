@@ -77,6 +77,15 @@ namespace ReferenceArchiver.ViewModel
         /// </value>
         public ICommand RemoveReferenceCommand { get; private set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the article should be exported to Invenio
+        /// XML on save.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the article should be exported to Invenio; otherwise, <c>false</c>.
+        /// </value>
+        public bool ShouldExportToInvenio { get; set; }
+
         #endregion
 
         #region Constructors
@@ -95,6 +104,8 @@ namespace ReferenceArchiver.ViewModel
             MoveReferenceUpCommand = new DelegateCommand(MoveReferenceUp);
             MoveReferenceDownCommand = new DelegateCommand(MoveReferenceDown);
             RemoveReferenceCommand = new DelegateCommand(RemoveReference);
+
+            ShouldExportToInvenio = false;
         }
 
         #endregion

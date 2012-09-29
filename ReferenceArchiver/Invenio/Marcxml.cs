@@ -139,10 +139,9 @@ namespace ReferenceArchiver.Invenio
 
         private void ProcessBibliography(Article article)
         {
-            IEnumerable<Annotation> bibliolist = db.GetAnnotationsForArticle(article);
-            foreach (var item in bibliolist)
+            IEnumerable<Article> bibliolist = db.GetReferencedArticlesForArticle(article);
+            foreach (Article biblioarticle in bibliolist)
             {
-                Article biblioarticle = db.GetArticleById(item.Id_Art);
                 this.xmlmanager.AddBiblioArticle(biblioarticle);
             }
         }

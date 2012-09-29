@@ -50,6 +50,7 @@ namespace ReferenceArchiver.Model
         // Null on errors. Takes the first matching language for country, assuming 1 country has 1 language only.
         public abstract string GetLanguageForCountry(Country country);
         public abstract IEnumerable<Language> GetLanguages();
+        public abstract IEnumerable<Article> GetReferencedArticlesForArticle(Article article);
 
 
         // Save

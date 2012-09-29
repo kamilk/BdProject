@@ -5,6 +5,8 @@ using ReferenceArchiver.Model;
 using ReferenceArchiver.ViewModel.Helpers;
 using System.Windows.Input;
 using System.Windows;
+using Microsoft.Win32;
+using ReferenceArchiver.Invenio;
 
 namespace ReferenceArchiver.ViewModel
 {
@@ -220,6 +222,17 @@ namespace ReferenceArchiver.ViewModel
             article.SetIssue(_issueView.SelectedIssue);
             CentralRepository.Instance.SaveArticleWithAuthorshipsAndReferences(
                 article, _articleView.GetAuthorships(), _articleView.GetReferences());
+
+            if (_articleView.ShouldExportToInvenio)
+            {
+                var dialog = new SaveFileDialog();
+                dialog.Title = "Wybierz lokalizację dla pliku Invenio";
+                dialog.DefaultExt = ".xml";
+                dialog.Filter = "XML Documents (.xml)|*.xml";
+
+                if (dialog.ShowDialog() == true)
+                    new Marcxml().GenerateXml(article, dialog.FileName);
+            }
         }
     }
 }

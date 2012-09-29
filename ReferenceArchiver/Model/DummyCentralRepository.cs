@@ -414,5 +414,10 @@ namespace ReferenceArchiver.Model
         {
             throw new NotImplementedException();
         }
+
+        public override IEnumerable<Article> GetReferencedArticlesForArticle(Article article)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
