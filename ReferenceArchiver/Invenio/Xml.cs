@@ -107,6 +107,18 @@ namespace ReferenceArchiver.Invenio
             record.AppendChild(node);
         }
 
+        public void AddAlienPublisher(AlienPublisher publisher)
+        {
+            XmlNode node = this.CreateDatafield("902");
+            XmlNode title = this.CreateSubfield(publisher.Title, "a");
+            XmlNode number = this.CreateSubfield(publisher.Number, "b");
+            XmlNode date = this.CreateSubfield(publisher.YearOfPublication.ToString(), "c");
+            node.AppendChild(title);
+            node.AppendChild(number);
+            node.AppendChild(date);
+            record.AppendChild(node);
+        }
+
         public void AddInstitution(Institution institution)
         {
             XmlNode node = this.CreateDatafield("903");

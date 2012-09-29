@@ -11,6 +11,11 @@ a- nazwa
 904 - kategorie
 a- nazwa
 
+905 - obce wydawnictwo
+a- nazwa
+b- numer
+c- rok wydania
+
 999 - bibliografia
 a- tytu³
 c- tytu³ ang

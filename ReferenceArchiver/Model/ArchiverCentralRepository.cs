@@ -11,6 +11,12 @@ namespace ReferenceArchiver.Model
 {
     class ArchiverCentralRepository : CentralRepository
     {
+        #region Constants
+
+        private const string ArticleDatabaseColumns = "artykuly.ID, artykuly.ID_INST, artykuly.ID_WYD, artykuly.ID_SERIE, artykuly.ID_ZESZYTY, artykuly.TYTUL, artykuly.TYTUL_PL, artykuly.STR_OD, artykuly.STR_DO, artykuly.ID_WYD_OBCE, artykuly.JEZYK, artykuly.CZAS_WPR";
+
+        #endregion
+
         #region Fields
 
         private DbConnection m_connection;
@@ -178,9 +184,9 @@ namespace ReferenceArchiver.Model
             {
                 while (reader.Read())
                 {
-                    result.Add(new Issue(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt16(3),
-                                         reader.GetInt16(4), reader.GetInt16(5), reader.GetString(6), reader["ROK_WYDANIA"] as int?,
-                                         (string)reader["FL_ZWER"] == "T", reader.GetString(9), reader.GetString(10)));
+                    result.Add(new Issue(reader.GetString(0), reader.GetString(1), reader.GetString(2), (int)reader["ID_W_SERII"],
+                                         (int)reader["NR_W_SERII"], (int)reader["NR_W_WYDAWNICTWIE"], reader.GetString(6), reader["ROK_WYDANIA"] as short?,
+                                         (string)reader["FL_ZWER"] == "T", reader.GetString(9), reader["NR_TYP"] as string));
                 }
             }
 
@@ -206,9 +212,9 @@ namespace ReferenceArchiver.Model
             {
                 while (reader.Read())
                 {
-                    result = new Issue(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt16(3),
-                                         reader.GetInt16(4), reader.GetInt16(5), reader.GetString(6), reader["ROK_WYDANIA"] as int?,
-                                         (string)reader["FL_ZWER"] == "T", reader.GetString(9), reader.GetString(10));
+                    result = new Issue(reader.GetString(0), reader.GetString(1), reader.GetString(2), (int)reader["ID_W_SERII"],
+                                         (int)reader["NR_W_SERII"], (int)reader["NR_W_WYDAWNICTWIE"], reader.GetString(6), reader["ROK_WYDANIA"] as short?,
+                                         (string)reader["FL_ZWER"] == "T", reader.GetString(9), reader["NR_TYP"] as string);
                 }
             }
 
@@ -381,7 +387,7 @@ namespace ReferenceArchiver.Model
             {
                 while (reader.Read())
                 {
-                    result.Add(new Author(reader.GetInt16(0), reader.GetString(1), reader.GetString(2), reader.GetString(3),
+                    result.Add(new Author((int)reader["ID"], reader.GetString(1), reader.GetString(2), reader["IMIE2"] as string,
                                           reader.GetString(4)));
                 }
             }
@@ -432,6 +438,22 @@ namespace ReferenceArchiver.Model
             }
 
             return result;
+        }
+
+        public override IEnumerable<Article> GetReferencedArticlesForArticle(Article article)
+        {
+            DbCommand command = m_connection.CreateCommand();
+            command.CommandText = string.Format(
+                @"SELECT {0} 
+                FROM filo.bibliografia 
+                JOIN filo.artykuly ON bibliografia.id_art=artykuly.id
+                WHERE bibliografia.id_art = :pIdArt
+                ORDER BY bibliografia.nr_kolejny", 
+                ArticleDatabaseColumns);
+            command.Parameters.Add(new OracleParameter("IdArt", article.Id));
+
+            DbDataReader reader = command.ExecuteReader();
+            return ReadArticles(reader);
         }
 
         // RETURNS NULL ON id < 0
@@ -1360,9 +1382,8 @@ namespace ReferenceArchiver.Model
         private IEnumerable<Article> GetArticles(string where, IEnumerable<OracleParameter> parameters)
         {
             var queryBuilder = new StringBuilder();
-            queryBuilder.Append("SELECT ID, ID_INST, ID_WYD, ID_SERIE, ID_ZESZYTY, TYTUL, TYTUL_PL, STR_OD, STR_DO, ID_WYD_OBCE, JEZYK, CZAS_WPR " +
-                            "FROM filo.ARTYKULY ");
-            if (where != null && where.Length > 0)
+            queryBuilder.AppendFormat("SELECT {0} FROM filo.ARTYKULY ", ArticleDatabaseColumns);
+            if (!string.IsNullOrWhiteSpace(where))
                 queryBuilder.AppendFormat("WHERE {0}", where);
 
             var command = m_connection.CreateCommand();
@@ -1376,15 +1397,20 @@ namespace ReferenceArchiver.Model
 
             using (var reader = command.ExecuteReader())
             {
-                List<Article> result = new List<Article>();
-                while (reader.Read())
-                {
-                    result.Add(new Article((long)reader["ID"], reader["ID_INST"] as string, reader["ID_WYD"] as string, reader["ID_ZESZYTY"] as string,
-                                         reader["ID_ZESZYTY"] as int?, reader.GetString(5), reader["TYTUL_PL"] as string, reader["STR_OD"] as int?,
-                                         reader["STR_DO"] as int?, reader["ID_WYD_OBCE"] as int?, reader.GetString(10), (DateTime)reader["CZAS_WPR"]));
-                }
-                return result;
+                return ReadArticles(reader);
             }
+        }
+
+        private static IEnumerable<Article> ReadArticles(DbDataReader reader)
+        {
+            List<Article> result = new List<Article>();
+            while (reader.Read())
+            {
+                result.Add(new Article((long)reader["ID"], reader["ID_INST"] as string, reader["ID_WYD"] as string, reader["ID_ZESZYTY"] as string,
+                                     reader["ID_ZESZYTY"] as int?, reader.GetString(5), reader["TYTUL_PL"] as string, reader["STR_OD"] as int?,
+                                     reader["STR_DO"] as int?, reader["ID_WYD_OBCE"] as int?, reader.GetString(10), (DateTime)reader["CZAS_WPR"]));
+            }
+            return result;
         }
 
         private IEnumerable<Country> GetCountries(string where, IEnumerable<OracleParameter> parameters)

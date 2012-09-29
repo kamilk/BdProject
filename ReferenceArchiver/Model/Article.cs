@@ -6,8 +6,7 @@ using System.Text;
 namespace ReferenceArchiver.Model
 {
     /// <summary>
-    /// Artykuł
-    /// Assuming that TIMESTAMP will work itself inside the database.
+    /// An entity for data of the database table Artykuly.
     /// </summary>
     public class Article
     {
@@ -74,6 +73,10 @@ namespace ReferenceArchiver.Model
             return builder.ToString();
         }
 
+        /// <summary>
+        /// Sets the article ids so that the article belongs to the issue.
+        /// </summary>
+        /// <param name="issue">The issue.</param>
         public void SetIssue(Issue issue)
         {
             InstitutionId = issue.InstitutionId;

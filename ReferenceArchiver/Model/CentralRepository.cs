@@ -51,6 +51,7 @@ namespace ReferenceArchiver.Model
         public abstract string GetLanguageForCountry(Country country);
         public abstract IEnumerable<Language> GetLanguages();
         public abstract IEnumerable<AuthorshipData> GetAuthorshipDataForArticle(Article article);
+        public abstract IEnumerable<Article> GetReferencedArticlesForArticle(Article article);
 
 
         // Save

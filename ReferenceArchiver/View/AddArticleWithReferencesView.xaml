@@ -4,14 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="479" d:DesignWidth="472" xmlns:my="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" MinHeight="480" MinWidth="470" xmlns:my1="clr-namespace:ReferenceArchiver.View" Loaded="UserControl_Loaded">
+             d:DesignHeight="618" d:DesignWidth="472" xmlns:my="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" MinHeight="480" MinWidth="470" xmlns:my1="clr-namespace:ReferenceArchiver.View" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="329*" />
             <RowDefinition Height="151*" />
         </Grid.RowDefinitions>
         <my1:AddArticleView x:Name="addArticleWithoutReferencesView1" DataContext="{Binding Path=AddArticleDataContext}" />
-        <GroupBox Grid.Row="1" Header="Bibliografia" Name="groupBox3">
+        <GroupBox Grid.Row="1" Header="Bibliografia" Name="groupBox3" Margin="0,0,0,21">
             <Grid>
                 <my:AutoCompleteBox ItemsSource="{Binding Path=ArticlesToChooseFrom}" Margin="51,6,279,0" Name="articlesAutoCompleteBox" VerticalAlignment="Top" />
                 <Button Content="Dodaj" Height="23" HorizontalAlignment="Right" Margin="0,7,198,0" Name="addReferenceButton" VerticalAlignment="Top" Width="75" Click="addReferenceButton_Click" />
@@ -29,5 +29,6 @@
                 <Button Content="Wprowadź nowy" Height="23" HorizontalAlignment="Right" Margin="0,7,4,0" Name="button3" VerticalAlignment="Top" Width="107" Command="{Binding Path=WizardViewModel.NavigateToAddingReferenceArticleCommand}" />
             </Grid>
         </GroupBox>
+        <CheckBox Content="Eksportuj do Invenio przy zapisie" IsChecked="{Binding Path=ShouldExportToInvenio}" Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,0,-1" Name="checkBox1" Height="16" VerticalAlignment="Bottom" />
     </Grid>
 </UserControl>

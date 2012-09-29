@@ -9,6 +9,9 @@ using ReferenceArchiver.ViewModel.Helpers;
 
 namespace ReferenceArchiver.ViewModel
 {
+    /// <summary>
+    /// A ViewModel for ChooseIssuePageView view.
+    /// </summary>
     class ChooseIssuePageViewModel : WizardPageViewModelBase
     {
         #region Fields
@@ -29,6 +32,12 @@ namespace ReferenceArchiver.ViewModel
             get { return "Wybierz zeszyt"; }
         }
 
+        /// <summary>
+        /// Gets or sets the selected issue.
+        /// </summary>
+        /// <value>
+        /// The selected issue.
+        /// </value>
         public Issue SelectedIssue
         {
             get { return _selectedIssue; }
@@ -39,6 +48,12 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets an ICollectionView exposing a list of issue types the user can choose from.
+        /// </summary>
+        /// <value>
+        /// The issue types.
+        /// </value>
         public ICollectionView IssueTypes
         {
             get
@@ -52,6 +67,12 @@ namespace ReferenceArchiver.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets or sets the type number.
+        /// </summary>
+        /// <value>
+        /// The type number.
+        /// </value>
         public string TypeNumber
         {
             get { return _selectedIssue == null ? string.Empty : _selectedIssue.TypeNumber; }
@@ -68,6 +89,10 @@ namespace ReferenceArchiver.ViewModel
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ChooseIssuePageViewModel" /> class.
+        /// </summary>
+        /// <param name="parent">The parent.</param>
         public ChooseIssuePageViewModel(WizardViewModel parent)
             : base(parent)
         { }

@@ -15,23 +15,27 @@ namespace ReferenceArchiver.Invenio
         private Xml xmlmanager;
         private ArchiverCentralRepository db;
 
-        Marcxml()
+        /// <summary>
+        /// Creates Marclxml
+        /// </summary>
+        public Marcxml()
         {
             db = new ArchiverCentralRepository();
             xmlmanager = new Xml();
         }
 
-        public void CreateMarcxml(string path)
-        {
-            this.xmlmanager.SaveXml(path);
-        }
-
-        public void ProcessArticle(int articleid)
+        /// <summary>
+        /// Generates Xml
+        /// </summary>
+        /// <param name="articleid">Article Id</param>
+        /// <param name="PathAndName">Path where file will be created and it's name</param>
+        public void GenerateXml(int articleid, string PathAndName)
         {
             if (db.IsConnected == true)
             {
                 Article temparticle = db.GetArticleById(articleid);
                 ProcessData(temparticle);
+                this.xmlmanager.SaveXml(PathAndName);
             }
             else
             {
@@ -39,11 +43,17 @@ namespace ReferenceArchiver.Invenio
             }
         }
 
-        public void ProcessArticle(Article article)
+        /// <summary>
+        /// Generates Xml
+        /// </summary>
+        /// <param name="article">Article</param>
+        /// <param name="PathAndName">Path where file will be created and it's name</param>
+        public void GenerateXml(Article article, string PathAndName)
         {
             if (db.IsConnected == true)
             {
                 ProcessData(article);
+                this.xmlmanager.SaveXml(PathAndName);
             }
             else
             {
@@ -57,15 +67,21 @@ namespace ReferenceArchiver.Invenio
 
             Publisher publisher = this.ChoosePublisher(article);
             xmlmanager.AddPublisher(publisher);
-            
+
             Institution institution = this.ChooseInstitution(article);
             xmlmanager.AddInstitution(institution);
 
             ResearchJournal journal = this.ChooseJournal(article, publisher);
-            xmlmanager.AddResearchJournal(journal);
+            if (journal != null)
+            {
+                xmlmanager.AddResearchJournal(journal);
+                Issue issue = this.ChooseIssue(article, journal);
+                if (issue != null)
+                {
+                    xmlmanager.AddIssue(issue);
+                }
+            }
 
-            Issue issue = this.ChooseIssue(article,journal);
-            xmlmanager.AddIssue(issue);
 
             this.ProcessCategory(article);
             this.ProcessBibliography(article);
@@ -82,12 +98,12 @@ namespace ReferenceArchiver.Invenio
             return null;
         }
 
-        private ResearchJournal ChooseJournal(Article article,Publisher publisher)
+        private ResearchJournal ChooseJournal(Article article, Publisher publisher)
         {
             IEnumerable<ResearchJournal> jaournals = db.GetJournalsForPublisher(publisher);
             foreach (var journal in jaournals)
             {
-                if (journal.IdWithinPublisher == article.JournalId) return journal ;
+                if (journal.IdWithinPublisher == article.JournalId) return journal;
             }
             return null;
         }
@@ -123,10 +139,9 @@ namespace ReferenceArchiver.Invenio
 
         private void ProcessBibliography(Article article)
         {
-            IEnumerable<Annotation> bibliolist = db.GetAnnotationsForArticle(article);
-            foreach (var item in bibliolist)
+            IEnumerable<Article> bibliolist = db.GetReferencedArticlesForArticle(article);
+            foreach (Article biblioarticle in bibliolist)
             {
-                Article biblioarticle = db.GetArticleById(item.Id_Art);
                 this.xmlmanager.AddBiblioArticle(biblioarticle);
             }
         }
